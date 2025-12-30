@@ -13,6 +13,7 @@ struct ViewLogin: View {
     @FocusState var emailIsFocused: Bool
     @FocusState var passwordIsFocused: Bool
     @EnvironmentObject var coordinator : RouteCoordinator
+    @State private var isAlertShown: Bool = false
     var body: some View {
         Text("EMS Login")
             .font(.largeTitle)
@@ -47,12 +48,12 @@ struct ViewLogin: View {
             else {
                 SecureField("Password", text: $viewModel.password)
                     .padding()
+                    .autocorrectionDisabled(true)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(passwordIsFocused ? COLOR_BLUE : COLOR_GRAY.opacity(0.5))
                     )
                     .focused($passwordIsFocused)
-                    .autocorrectionDisabled(true)
             }
             Button{
                 showPassword.toggle()
@@ -64,16 +65,28 @@ struct ViewLogin: View {
         }
         .padding()
         Button{
-            coordinator.navigate(to:.tabbar)
+            Task{
+                await viewModel.login()
+                if viewModel.isAuthenticated{
+                coordinator.navigate(to:.tabbar)
+                }
+            else {
+                isAlertShown = true
+                }
+            }
+            
+            
         } label:{
             Text("Login")
                 .foregroundColor(.white)
                 .font(.system(size: 18, weight: .semibold))
                 .frame(maxWidth: .infinity, minHeight: 48)
                 .background(viewModel.isFormValid ?
-                    
                     Color.blue.gradient : Color.gray.gradient)
                 .cornerRadius(12)
+        }
+        .alert(isPresented:$isAlertShown) {
+            Alert(title: Text("Error"), message: Text("Invalid Credentials"), dismissButton: .default(Text("OK")))
         }
         .padding()
             .padding(.bottom, 40)
@@ -85,6 +98,8 @@ struct ViewLogin: View {
                 .foregroundStyle(Color.blue.gradient)
         }
         Spacer()
+        
     }
+        
 }
 

@@ -34,8 +34,12 @@ struct ViewSplash:View{
                         angle=360
                         scaledValue=1.2
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//                            coordinator.navigate(to:.tabbar)
-                            coordinator.navigate(to: .login)
+                            if UserDefaults.standard.bool(forKey:"isUserLoggedIn"){
+                                coordinator.navigate(to: .tabbar)
+                            }
+                            else {
+                                coordinator.navigate(to: .tabbar)
+                            }
                         }
                     }
             }

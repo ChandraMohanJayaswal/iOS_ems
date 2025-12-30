@@ -5,6 +5,7 @@
 //  Created by MacMini on 25/12/2025.
 //
 
+import KeychainSwift
 import SwiftUI
 struct ViewSideMenu: View{
     @EnvironmentObject var coordinator: RouteCoordinator
@@ -38,6 +39,20 @@ struct ViewSideMenu: View{
                     }
                     Divider()
                         .background(.gray)
+                    
+                    Button{
+                        UserDefaults.standard.set(false, forKey: "isUserLoggedIn")
+                        coordinator.selectedTab = 0
+                        KeychainSwift().clear()
+                        coordinator.navigate(to: .login)
+                        if let bundleID = Bundle.main.bundleIdentifier {
+                            UserDefaults.standard.removePersistentDomain(forName: bundleID)
+                        }
+                    } label:{
+                        SideMenuTabs(title:"Sign Out", icon:"door.right.hand.open")
+                    }
+                    Divider()
+                        .background(.gray)
                     Spacer()
                 }
                 .frame(width:300)
@@ -66,10 +81,10 @@ struct SideMenuUserProfile: View{
                 .background(.blue)
                 .clipShape(RoundedRectangle(cornerRadius:10))
             VStack(alignment:.leading){
-                Text("Bibek Chand")
+                Text("\(UserDefaults.standard.string(forKey: "firstName") ?? "NA") \(UserDefaults.standard.string(forKey: "lastName") ?? "NA")")
                     .font(.title2)
                     .foregroundStyle(Color.black)
-                Text("bibekchand843@gmail.com")
+                Text("\(UserDefaults.standard.string(forKey: "emailAddress") ?? "NA")")
                     .foregroundStyle(Color.gray)
                     .font(.caption)
             }
