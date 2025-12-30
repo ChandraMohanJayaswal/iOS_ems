@@ -10,6 +10,6 @@ import SwiftUI
 
 struct ViewUtility: View {
     var body: some View{
-        Text("Lost")
+        Text("Utility")
     }
 }
