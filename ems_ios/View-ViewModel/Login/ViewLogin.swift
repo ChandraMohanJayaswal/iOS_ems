@@ -37,13 +37,13 @@ struct ViewLogin: View {
         ZStack(alignment:.trailing){
             if showPassword{
                 TextField("Password", text: $viewModel.password)
+                    .textInputAutocapitalization(.never)
                     .padding()
                     .background(
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(passwordIsFocused ? COLOR_BLUE : COLOR_GRAY.opacity(0.5))
                     )
                     .focused($passwordIsFocused)
-                    .autocorrectionDisabled(true)
             }
             else {
                 SecureField("Password", text: $viewModel.password)

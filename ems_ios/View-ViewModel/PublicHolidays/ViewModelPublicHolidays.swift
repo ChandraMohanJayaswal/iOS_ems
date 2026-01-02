@@ -11,14 +11,14 @@ import KeychainSwift
 
 class ViewModelPublicHolidays: ObservableObject{
     let manager  = NetworkManager()
-    @Published var publicHolidayList : [[String: String]]
+    @Published var allpublicHolidayList : [[String: String]]
+    @Published var searchedPublicHolidayList : [[String: String]] = []
     @Published var fiscalYearList: Set<String>
     @Published var selectedYear: String
-//    @Published var
     init() {
         fiscalYearList = ["All"]
         selectedYear = "All"
-        publicHolidayList = []
+        allpublicHolidayList = []
     }
     func fetchFiscalYearFromServer () async{
         await manager.fetchFiscalYear { (result) in
@@ -27,12 +27,25 @@ class ViewModelPublicHolidays: ObservableObject{
             }
         }
     }
+    func searchPublicHolidays(){
+        if selectedYear == "All"{
+            searchedPublicHolidayList = allpublicHolidayList
+        }
+        else {
+            self.searchedPublicHolidayList.removeAll()
+            for item in self.allpublicHolidayList{
+                if item["fiscalYear"] == self.selectedYear{
+                    self.searchedPublicHolidayList.append(item)
+                }
+            }
+        }
+    }
     func fetchPublicHolidaysFromServer() async{
         await manager.fetchPublicHolidays{ list in
+            self.allpublicHolidayList.removeAll()
             for item in list{
                 let dict = ["date": item.date, "description": item.description, "fiscalYear": item.fiscalYearRes.fiscalYear]
-                print(dict)
-                self.publicHolidayList.append(dict)
+                self.allpublicHolidayList.append(dict)
             }
         }
     }

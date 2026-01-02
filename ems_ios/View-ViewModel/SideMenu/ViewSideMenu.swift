@@ -41,7 +41,6 @@ struct ViewSideMenu: View{
                         .background(.gray)
                     
                     Button{
-                        UserDefaults.standard.set(false, forKey: "isUserLoggedIn")
                         coordinator.selectedTab = TABINDEX.HOME.rawValue
                         KeychainSwift().clear()
                         coordinator.navigate(to: .login)

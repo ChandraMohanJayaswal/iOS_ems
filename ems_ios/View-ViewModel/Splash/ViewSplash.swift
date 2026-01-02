@@ -38,7 +38,7 @@ struct ViewSplash:View{
                                 coordinator.navigate(to: .tabbar)
                             }
                             else {
-                                coordinator.navigate(to: .tabbar)
+                                coordinator.navigate(to: .login)
                             }
                         }
                     }
