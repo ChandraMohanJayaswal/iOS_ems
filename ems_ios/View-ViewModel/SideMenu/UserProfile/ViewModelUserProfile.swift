@@ -21,7 +21,6 @@ class ViewModelUserProfile: ObservableObject{
     @Published var gender: Gender
     @Published var mobileNumber:String
     @Published var emailAddress:String
-    let networkManager = NetworkManager()
     init() {
         self.role = UserDefaults.standard.string(forKey: "title") ?? "NA"
         self.firstName = UserDefaults.standard.string(forKey:"firstName") ?? "NA"

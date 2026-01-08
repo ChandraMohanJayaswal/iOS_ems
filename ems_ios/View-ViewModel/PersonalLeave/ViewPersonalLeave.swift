@@ -7,12 +7,51 @@
 
 import SwiftUI
 struct ViewPersonalLeave: View {
+    @StateObject var viewModel = ViewModelPersonalLeave()
     var body: some View {
         NavigationStack{
-            Text("Hello, World!")
+            Form{
+                Section{
+                    Picker("Line Manager", selection: $viewModel.selectedLineManager){
+                        ForEach(0..<3){ value in
+                            Text("Something")
+                                .tag(value)
+                        }
+                    }
+                    
+                    Picker("Leave Type", selection: $viewModel.selectedLeaveType){
+                        ForEach(0..<3){ value in
+                            Text("Something")
+                                .tag(value)
+                        }
+                    }
+                    DatePicker("Date", selection: $viewModel.leaveRequestedDateTime, displayedComponents: [.date, .hourAndMinute])
+                    DatePicker("Leave From Date", selection: $viewModel.leaveFromDate, displayedComponents: [.date])
+                    DatePicker("Leave To Date", selection: $viewModel.leaveToDate, displayedComponents: [.date])
+                    TextField("Description", text: $viewModel.description, axis:.vertical)
+                        .autocorrectionDisabled(true)
+                }
+                Section{
+                    Button{
+                        //do something here
+                        print("Send data to server")
+                    } label:{
+                        HStack{
+                            Spacer()
+                            Text("Submit")
+                            Image(systemName:"paperplane")
+                            Spacer()
+                        }
+                    }
+                }
+            }
                 .navigationTitle("Personal Leaves")
                 .navigationBarTitleDisplayMode( .inline )
                 .modifier(ToolbarSideMenu())
         }
     }
+}
+
+#Preview{
+    ViewPersonalLeave()
 }

@@ -13,3 +13,7 @@ enum TABINDEX: Int{
     case LEAVEREQUESTS = 2
     case PERSONALLEAVES = 3
 }
+enum UISTATE{
+    case loading
+    case idle
+}

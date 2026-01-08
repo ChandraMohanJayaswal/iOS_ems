@@ -10,21 +10,28 @@ import Combine
 import KeychainSwift
 
 class ViewModelPublicHolidays: ObservableObject{
-    let manager  = NetworkManager()
     @Published var allpublicHolidayList : [[String: String]]
-    @Published var searchedPublicHolidayList : [[String: String]] = []
-    @Published var fiscalYearList: Set<String>
+    @Published var searchedPublicHolidayList : [[String: String]]
+    @Published var fiscalYearList: [String]
     @Published var selectedYear: String
     init() {
-        fiscalYearList = ["All"]
-        selectedYear = "All"
-        allpublicHolidayList = []
+        self.allpublicHolidayList = []
+        self.searchedPublicHolidayList = []
+        self.fiscalYearList = ["All"]
+        self.selectedYear = "All"
     }
     func fetchFiscalYearFromServer () async{
-        await manager.fetchFiscalYear { (result) in
-            for item in result {
-                self.fiscalYearList.insert(item.fiscalYear)
+        fiscalYearList = ["All"]
+        let apiClient = DefaultAPIClient<FiscalYearEndPoint>()
+        do {
+            let data = try await apiClient.request(FiscalYearEndPoint.getFiscalYear)
+            let decoded = try JSONDecoder().decode(FiscalYearAPIResponse.self, from: data)
+            for year in decoded.data.list{
+                fiscalYearList.append(year.fiscalYear)
             }
+        }
+        catch{
+            print(error.localizedDescription)
         }
     }
     func searchPublicHolidays(){
@@ -41,12 +48,19 @@ class ViewModelPublicHolidays: ObservableObject{
         }
     }
     func fetchPublicHolidaysFromServer() async{
-        await manager.fetchPublicHolidays{ list in
-            self.allpublicHolidayList.removeAll()
-            for item in list{
+        self.allpublicHolidayList.removeAll()
+        let apiClient = DefaultAPIClient<FiscalYearEndPoint>()
+        do{
+            let data = try await apiClient.request(FiscalYearEndPoint.getPublicHoliday)
+            let decoded = try JSONDecoder().decode(PublicHolidayAPIResponse.self, from: data)
+            for item in decoded.data.list{
                 let dict = ["date": item.date, "description": item.description, "fiscalYear": item.fiscalYearRes.fiscalYear]
                 self.allpublicHolidayList.append(dict)
             }
+            
+        }
+        catch{
+            print(error.localizedDescription)
         }
     }
 }

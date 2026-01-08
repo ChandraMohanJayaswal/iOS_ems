@@ -33,22 +33,9 @@
 		9A57A8D72EFD0B4600E6FF0D /* ems_iosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ems_iosUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		9A099BA02F03CE940075DAFC /* Exceptions for "ems_ios" folder in "ems_ios" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Untitled.swift,
-			);
-			target = 9A57A8BF2EFD0B4500E6FF0D /* ems_ios */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		9A57A8C22EFD0B4500E6FF0D /* ems_ios */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				9A099BA02F03CE940075DAFC /* Exceptions for "ems_ios" folder in "ems_ios" target */,
-			);
 			path = ems_ios;
 			sourceTree = "<group>";
 		};

@@ -5,7 +5,7 @@
 //  Created by MacMini on 30/12/2025.
 //
 
-struct PublicHolidaysResponse: Codable{
+struct PublicHolidayAPIResponse: Codable{
     let data : PublicHolidaysResponseList
 }
 struct PublicHolidaysResponseList: Codable{

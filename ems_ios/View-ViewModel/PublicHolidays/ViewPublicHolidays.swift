@@ -13,7 +13,7 @@ struct ViewPublicHolidays : View{
             if !viewModel.fiscalYearList.isEmpty && !viewModel.allpublicHolidayList.isEmpty{
                 Form{
                     Picker("Select Year", selection:$viewModel.selectedYear){
-                        ForEach(Array(viewModel.fiscalYearList), id:\.self){ year in
+                        ForEach(viewModel.fiscalYearList, id:\.self){ year in
                             Text("\(year)").tag(year)
                         }
                     }
