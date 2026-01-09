@@ -10,7 +10,6 @@ import SwiftUI
 struct ViewUserProfile: View {
     @EnvironmentObject var coordinator: RouteCoordinator
     @StateObject var viewModel = ViewModelUserProfile()
-    @State private var isPresented:Bool = false
     var body: some View{
         NavigationStack{
             Form{
@@ -50,13 +49,13 @@ struct ViewUserProfile: View {
                 
             }
             Button{
-                    isPresented.toggle()
+                    viewModel.isSheetShown.toggle()
                 }label:{
                     Text("Edit Info")
                     Image(systemName: "pencil")
                         .frame(width:30, height:30)
                 }
-            .sheet(isPresented:$isPresented){
+            .sheet(isPresented:$viewModel.isSheetShown){
                 VStack{
                     Form{
                         Section{
@@ -75,7 +74,7 @@ struct ViewUserProfile: View {
                     }
                     Button{
                         //send data to server
-                        isPresented = false
+                        viewModel.isSheetShown = false
                     }label:{
                         HStack{
                             Text("Save")

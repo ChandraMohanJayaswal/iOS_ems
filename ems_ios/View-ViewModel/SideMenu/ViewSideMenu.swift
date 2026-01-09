@@ -9,18 +9,18 @@ import KeychainSwift
 import SwiftUI
 struct ViewSideMenu: View{
     @EnvironmentObject var coordinator: RouteCoordinator
-    @State private var showBackground:Bool = false
+    @StateObject var viewModel = ViewModelSideMenu()
     var body: some View{
         ZStack{
-            if showBackground{
-                            Rectangle()
-                                .opacity(0.2)
-                                .ignoresSafeArea()
-                                .onTapGesture{
-                                    withAnimation(.easeInOut){
-                                        coordinator.navigate(to:.tabbar)
-                                    }
-                                }
+            if viewModel.showBackground{
+            Rectangle()
+                .opacity(0.2)
+                .ignoresSafeArea()
+                .onTapGesture{
+                    withAnimation(.easeInOut){
+                        coordinator.navigate(to:.tabbar)
+                    }
+                }
             }
             HStack{
                 VStack{
@@ -41,12 +41,7 @@ struct ViewSideMenu: View{
                         .background(.gray)
                     
                     Button{
-                        coordinator.selectedTab = TABINDEX.HOME.rawValue
-                        KeychainSwift().clear()
-                        coordinator.navigate(to: .login)
-                        if let bundleID = Bundle.main.bundleIdentifier {
-                            UserDefaults.standard.removePersistentDomain(forName: bundleID)
-                        }
+                        viewModel.signOut(coordinator: coordinator)
                     } label:{
                         SideMenuTabs(title:"Sign Out", icon:"door.right.hand.open")
                     }
@@ -60,7 +55,7 @@ struct ViewSideMenu: View{
             }
         }.onAppear{
             DispatchQueue.main.asyncAfter(deadline:.now()+0.1){
-                showBackground = true
+                viewModel.showBackground = true
             }
         }
     }

@@ -10,11 +10,16 @@ struct ViewPublicHolidays : View{
     var body: some View{
         NavigationStack{
             VStack{
-            if !viewModel.fiscalYearList.isEmpty && !viewModel.allpublicHolidayList.isEmpty{
+                if viewModel.uiState == .loading{
+                    ProgressView()
+            }
+            else {
                 Form{
                     Picker("Select Year", selection:$viewModel.selectedYear){
-                        ForEach(viewModel.fiscalYearList, id:\.self){ year in
-                            Text("\(year)").tag(year)
+                        Text("All")
+                            .tag("All")
+                        ForEach(viewModel.fiscalYearList){ item in
+                            Text("\(item.fiscalYear)").tag(item.fiscalYear)
                         }
                     }
                     .onChange(of:viewModel.selectedYear){
@@ -22,14 +27,11 @@ struct ViewPublicHolidays : View{
                     }
                     .pickerStyle(.menu)
                     List{
-                        ForEach(viewModel.searchedPublicHolidayList.indices, id:\.self){ item in
-                            PublicHolidaysCard(date: viewModel.allpublicHolidayList[item]["date"] ?? "NA", fiscalYear: viewModel.allpublicHolidayList[item]["fiscalYear"] ?? "NA", description: viewModel.allpublicHolidayList[item]["description"] ?? "NA")
+                        ForEach(viewModel.searchedPublicHolidayList ){ item in
+                            PublicHolidaysCard(date: item.date, fiscalYear:item.fiscalYearRes.fiscalYear, showingYear: item.fiscalYearRes.showingYear, description: item.description, viewModel: viewModel)
                         }
                     }
                 }
-            }
-            else {
-                ProgressView()
                 }
             }
             .modifier(ToolbarSideMenu())
@@ -61,7 +63,9 @@ struct ViewPublicHolidays : View{
 struct PublicHolidaysCard: View{
     var date: String
     var fiscalYear: String
+    var showingYear: String
     var description: String
+    @ObservedObject var viewModel: ViewModelPublicHolidays
     @State var isPresented: Bool = false
     var body: some View{
         VStack(alignment:.leading){
@@ -71,21 +75,17 @@ struct PublicHolidaysCard: View{
                 Text("Fiscal year:" + fiscalYear)
             }
             Spacer()
-            Text("Description: " + description)
+            Text("Description: " + viewModel.truncateDescription(description))
         }
         .onTapGesture{
             isPresented.toggle()
         }
         .sheet(isPresented: $isPresented){
             NavigationStack{
-                VStack(alignment:.leading){
-                    HStack{
-                        Text("Date: " + date)
-                        Spacer()
-                        Text("Fiscal year:" + fiscalYear)
-                    }
+                VStack(alignment:.leading, spacing:20){
+                    Text("Date: " + date)
+                    Text("Fiscal year:" + showingYear)
                     Text("Description: " + description)
-                    Spacer()
                 }
                 .padding()
                 .toolbar{

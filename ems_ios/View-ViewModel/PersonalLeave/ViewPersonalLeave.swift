@@ -20,9 +20,9 @@ struct ViewPersonalLeave: View {
                     }
                     
                     Picker("Leave Type", selection: $viewModel.selectedLeaveType){
-                        ForEach(0..<3){ value in
-                            Text("Something")
-                                .tag(value)
+                        Text("None Selected").tag(0)
+                        ForEach(viewModel.leaveTypeList, id:\.id){ item in
+                            Text("\(item.applyFor)").tag(item.id)
                         }
                     }
                     DatePicker("Date", selection: $viewModel.leaveRequestedDateTime, displayedComponents: [.date, .hourAndMinute])
@@ -48,6 +48,11 @@ struct ViewPersonalLeave: View {
                 .navigationTitle("Personal Leaves")
                 .navigationBarTitleDisplayMode( .inline )
                 .modifier(ToolbarSideMenu())
+        }
+        .onAppear{
+            Task{
+                await viewModel.fetchLeaveTypeFromServer()
+            }
         }
     }
 }

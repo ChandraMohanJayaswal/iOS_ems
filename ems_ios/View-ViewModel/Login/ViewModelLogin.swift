@@ -11,6 +11,7 @@ import SwiftUI
 import KeychainSwift
 class ViewModelLogin: ObservableObject{
     @Published var email:String
+    @Published var isAlertShown:Bool
     @Published var password:String
     @Published var isAuthenticated:Bool
     @Published var uiState : UISTATE = .idle
@@ -18,6 +19,7 @@ class ViewModelLogin: ObservableObject{
         self.email = ""
         self.password = ""
         self.isAuthenticated = false
+        self.isAlertShown = false
     }
     var isFormValid: Bool{
         return !email.isEmpty && !password.isEmpty

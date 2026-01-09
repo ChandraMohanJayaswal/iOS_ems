@@ -13,7 +13,6 @@ struct ViewLogin: View {
     @FocusState var emailIsFocused: Bool
     @FocusState var passwordIsFocused: Bool
     @EnvironmentObject var coordinator : RouteCoordinator
-    @State private var isAlertShown: Bool = false
     var body: some View {
         if viewModel.uiState == .loading{
             ProgressView()
@@ -75,7 +74,7 @@ struct ViewLogin: View {
                         coordinator.navigate(to:.tabbar)
                     }
                     else {
-                        isAlertShown = true
+                        viewModel.isAlertShown = true
                     }
                 }
                 
@@ -89,7 +88,7 @@ struct ViewLogin: View {
                                 Color.blue.gradient : Color.gray.gradient)
                     .cornerRadius(12)
             }
-            .alert(isPresented:$isAlertShown) {
+            .alert(isPresented:$viewModel.isAlertShown) {
                 Alert(title: Text("Error"), message: Text("Invalid Credentials"), dismissButton: .default(Text("OK")))
             }
             .padding()

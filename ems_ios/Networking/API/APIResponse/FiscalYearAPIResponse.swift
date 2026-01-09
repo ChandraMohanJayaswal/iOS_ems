@@ -9,9 +9,10 @@ struct FiscalYearAPIResponse:Decodable{
     let data: FiscalYearResponseData
 }
 struct FiscalYearResponseData:Decodable{
-    let list: [FiscalYear]
+    let list: [FiscalYearAPIResponseFiscalYear]
 }
-struct FiscalYear:Decodable{
+struct FiscalYearAPIResponseFiscalYear:Decodable, Identifiable{
+    let id: Int
     let fiscalYear:String
 }
 

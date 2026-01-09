@@ -21,6 +21,7 @@ class ViewModelUserProfile: ObservableObject{
     @Published var gender: Gender
     @Published var mobileNumber:String
     @Published var emailAddress:String
+    @Published var isSheetShown: Bool = false
     init() {
         self.role = UserDefaults.standard.string(forKey: "title") ?? "NA"
         self.firstName = UserDefaults.standard.string(forKey:"firstName") ?? "NA"
@@ -30,9 +31,4 @@ class ViewModelUserProfile: ObservableObject{
         self.mobileNumber = UserDefaults.standard.string(forKey: "mobileNumber") ?? "NA"
         self.emailAddress = UserDefaults.standard.string(forKey: "emailAddress") ?? "NA"
     }
-//    func login() async{
-//        await networkManager.login{ data in
-//            self.firstName = data.data.user.firstName
-//        }
-//    }
 }
