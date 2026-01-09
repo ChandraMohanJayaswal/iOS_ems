@@ -83,16 +83,22 @@ struct PublicHolidaysCard: View{
         .sheet(isPresented: $isPresented){
             NavigationStack{
                 VStack(alignment:.leading, spacing:20){
+                    Divider()
                     Text("Date: " + date)
-                    Text("Fiscal year:" + showingYear)
+                    Divider()
+                    Text("Fiscal year: " + showingYear)
+                    Divider()
                     Text("Description: " + description)
+                    Divider()
                 }
                 .padding()
                 .toolbar{
                     Button("Close"){
                         isPresented.toggle()
                     }
+                    .foregroundStyle(.red)
                 }
+                Spacer()
             }
         }
         .padding()

@@ -25,7 +25,6 @@ struct ViewPersonalLeave: View {
                             Text("\(item.applyFor)").tag(item.id)
                         }
                     }
-                    DatePicker("Date", selection: $viewModel.leaveRequestedDateTime, displayedComponents: [.date, .hourAndMinute])
                     DatePicker("Leave From Date", selection: $viewModel.leaveFromDate, displayedComponents: [.date])
                     DatePicker("Leave To Date", selection: $viewModel.leaveToDate, displayedComponents: [.date])
                     TextField("Description", text: $viewModel.description, axis:.vertical)
@@ -33,6 +32,9 @@ struct ViewPersonalLeave: View {
                 }
                 Section{
                     Button{
+                        Task{
+                        await viewModel.postPersonalLeaveToServer()
+                        }
                         //do something here
                         print("Send data to server")
                     } label:{

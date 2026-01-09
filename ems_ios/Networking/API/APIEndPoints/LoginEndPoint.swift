@@ -32,7 +32,7 @@ enum LoginEndPoint: APIEndPoint{
     var parameters: [String: Any]? {
         switch self {
         case .login(let username, let password):
-            return ["username":username, "password": password]
+            return ["username": username, "password": password]
         }
     }
 }
