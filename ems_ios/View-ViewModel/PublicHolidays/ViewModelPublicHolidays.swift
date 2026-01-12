@@ -12,7 +12,7 @@ import KeychainSwift
 class ViewModelPublicHolidays: ObservableObject{
     @Published var allpublicHolidayList : [PublicHolidaysAPIResponseDetails]
     @Published var searchedPublicHolidayList : [PublicHolidaysAPIResponseDetails]
-    @Published var fiscalYearList: [FiscalYearAPIResponseFiscalYear]
+    @Published var fiscalYearList: [FiscalYear]
     @Published var selectedYear: String
     @Published var uiState: UISTATE = .idle
     init() {

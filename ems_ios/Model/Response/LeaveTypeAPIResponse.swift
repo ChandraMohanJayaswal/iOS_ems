@@ -7,10 +7,8 @@
 struct LeaveTypeAPIResponse: Decodable{
     let data: LeaveTypeAPIResponseData
 }
+
 struct LeaveTypeAPIResponseData: Decodable{
-    let list: [LeaveTypeAPIResponseList]
+    let list: [LeaveType]
 }
-struct LeaveTypeAPIResponseList: Decodable{
-    let id:Int
-    let applyFor: String
-}
+

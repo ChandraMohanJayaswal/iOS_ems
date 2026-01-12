@@ -16,7 +16,7 @@ class ViewModelPersonalLeave: ObservableObject{
         }
     }
     
-    @Published var leaveTypeList: [LeaveTypeAPIResponseList]
+    @Published var leaveTypeList: [LeaveType]
     @Published var leaveFromDate: Date
     {
         didSet{
