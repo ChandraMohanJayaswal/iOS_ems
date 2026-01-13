@@ -5,15 +5,16 @@
 //  Created by MacMini on 08/01/2026.
 //
 import Foundation
-enum LoginEndPoint: APIEndPoint{
+
+enum EndPointLogin: APIEndPoint{
     case login(username: String, password:String)
     var baseURL: URL {
-        return URL(string: "http://localhost:9090/auth")!
+        return URL(string: "http://localhost:9090")!
     }
     var path: String {
         switch self {
         case .login:
-            return "/login"
+            return "/auth/login"
         }
     }
     var method: HTTPMethod{

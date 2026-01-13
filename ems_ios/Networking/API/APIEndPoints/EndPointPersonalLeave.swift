@@ -6,23 +6,29 @@
 //
 import Foundation
 import KeychainSwift
-enum PersonalLeaveEndPoint: APIEndPoint {
+
+enum EndPointPersonalLeave: APIEndPoint {
+    
     case postPersonalLeave(lineManagerId: Int, leaveTypeId: Int, leaveFromDate: String, leaveToDate: String, description: String, leaveStatusId: Int, leaveStatusComment: String)
+    
     var baseURL: URL{
-        return URL(string: "http://localhost:9090/api")!
+        return URL(string: "http://localhost:9090")!
     }
+    
     var path: String{
         switch self{
         case .postPersonalLeave:
-           return "/personalLeave"
+           return "/api/personalLeave"
         }
     }
+    
     var method: HTTPMethod{
         switch self{
         case .postPersonalLeave:
             return .post
         }
     }
+    
     var headers: [String : String]?{
         switch self{
         case .postPersonalLeave:
@@ -30,6 +36,7 @@ enum PersonalLeaveEndPoint: APIEndPoint {
                     "Content-Type": "application/json"]
         }
     }
+    
     var parameters: [String : Any]?{
         switch self{
         case .postPersonalLeave(let lineManagerId, let leaveTypeId, let leaveFromDate, let leaveToDate, let description, let leaveStatusId, let leaveStatusComment):

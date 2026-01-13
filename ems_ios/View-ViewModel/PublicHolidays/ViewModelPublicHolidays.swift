@@ -24,9 +24,9 @@ class ViewModelPublicHolidays: ObservableObject{
     func fetchFiscalYearFromServer () async{
         self.uiState = .loading
         fiscalYearList = []
-        let apiClient = DefaultAPIClient<FiscalYearEndPoint>()
+        let apiClient = DefaultAPIClient<EndPointFiscalYear>()
         do {
-            let data = try await apiClient.request(FiscalYearEndPoint.getFiscalYear)
+            let data = try await apiClient.request(EndPointFiscalYear.getFiscalYear)
             let decoded = try JSONDecoder().decode(FiscalYearAPIResponse.self, from: data)
             for item in decoded.data?.fiscalYearList ?? []{
                 fiscalYearList.append(item)
@@ -53,9 +53,9 @@ class ViewModelPublicHolidays: ObservableObject{
     func fetchPublicHolidaysFromServer() async{
         self.uiState = .loading
         self.allpublicHolidayList.removeAll()
-        let apiClient = DefaultAPIClient<FiscalYearEndPoint>()
+        let apiClient = DefaultAPIClient<EndPointFiscalYear>()
         do{
-            let data = try await apiClient.request(FiscalYearEndPoint.getPublicHoliday)
+            let data = try await apiClient.request(EndPointFiscalYear.getPublicHoliday)
             let decoded = try JSONDecoder().decode(PublicHolidayAPIResponse.self, from: data)
             if let publicHolidayList =  decoded.data?.publicHolidayList{
                 for item in publicHolidayList {

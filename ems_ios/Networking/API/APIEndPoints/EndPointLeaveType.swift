@@ -7,15 +7,16 @@
 
 import Foundation
 import KeychainSwift
-enum LeaveTypeEndPoint: APIEndPoint{
+
+enum EndPointLeaveType: APIEndPoint{
     case getLeaveTypes
     var baseURL: URL {
-      URL(string:"http://localhost:9090/api")!
+      URL(string:"http://localhost:9090")!
     }
     var path: String{
         switch self{
         case .getLeaveTypes:
-            return "/leaveType"
+            return "/api/leaveType"
         }
     }
     var method: HTTPMethod{

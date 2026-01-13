@@ -6,18 +6,19 @@
 //
 import KeychainSwift
 import Foundation
-enum FiscalYearEndPoint: APIEndPoint{
+
+enum EndPointFiscalYear: APIEndPoint{
     case getFiscalYear
     case getPublicHoliday
     var baseURL: URL{
-        return URL(string:"http://localhost:9090/api")!
+        return URL(string:"http://localhost:9090")!
     }
     var path: String{
         switch self{
         case .getFiscalYear:
-            return "/fiscalYear"
+            return "/api/fiscalYear"
         case .getPublicHoliday:
-            return "/publicHoliday"
+            return "/api/publicHoliday"
         }
     }
     var method: HTTPMethod{

@@ -24,10 +24,10 @@ class ViewModelLogin: ObservableObject{
     var isFormValid: Bool{
         return !email.isEmpty && !password.isEmpty
     }
-    func login() async{
+    func login() async {
         self.uiState = .loading
-        let loginEnum = LoginEndPoint.login(username: self.email, password: self.password)
-        let apiClient = DefaultAPIClient<LoginEndPoint>()
+        let loginEnum = EndPointLogin.login(username: self.email, password: self.password)
+        let apiClient = DefaultAPIClient<EndPointLogin>()
         do {
             let data = try await apiClient.request(loginEnum)
             let decoded = try JSONDecoder().decode(LoginResponse.self, from: data)

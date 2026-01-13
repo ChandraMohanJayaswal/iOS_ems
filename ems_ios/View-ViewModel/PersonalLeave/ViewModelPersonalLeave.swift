@@ -35,8 +35,8 @@ class ViewModelPersonalLeave: ObservableObject{
     }
     func fetchLeaveTypeFromServer()async{
         leaveTypeList.removeAll()
-        let leaveTypeEnum = LeaveTypeEndPoint.getLeaveTypes
-        let apiClient = DefaultAPIClient<LeaveTypeEndPoint>()
+        let leaveTypeEnum = EndPointLeaveType.getLeaveTypes
+        let apiClient = DefaultAPIClient<EndPointLeaveType>()
         do{
             
             let data = try await apiClient.request(leaveTypeEnum)
@@ -51,8 +51,8 @@ class ViewModelPersonalLeave: ObservableObject{
     }
     func postPersonalLeaveToServer() async{
         self.uiState = .loading
-        let personalLeaveEnum = PersonalLeaveEndPoint.postPersonalLeave(lineManagerId: 1, leaveTypeId: self.selectedLeaveType, leaveFromDate: formatDateForServer(self.leaveFromDate), leaveToDate: formatDateForServer(self.leaveToDate), description: self.description, leaveStatusId: 1, leaveStatusComment: "Some Comment")
-        let apiClient = DefaultAPIClient<PersonalLeaveEndPoint>()
+        let personalLeaveEnum = EndPointPersonalLeave.postPersonalLeave(lineManagerId: 1, leaveTypeId: self.selectedLeaveType, leaveFromDate: formatDateForServer(self.leaveFromDate), leaveToDate: formatDateForServer(self.leaveToDate), description: self.description, leaveStatusId: 1, leaveStatusComment: "Some Comment")
+        let apiClient = DefaultAPIClient<EndPointPersonalLeave>()
         do{
             _ = try await apiClient.request(personalLeaveEnum)
         }

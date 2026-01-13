@@ -13,10 +13,12 @@ enum HTTPMethod: String{
     case patch = "PATCH"
     case delete = "DELETE"
 }
+
 enum APIError: Error{
     case invalidResponse
     case invalidData
 }
+
 protocol APIEndPoint{
     var baseURL :  URL { get }
     var path: String { get }
@@ -24,10 +26,12 @@ protocol APIEndPoint{
     var headers: [String: String]? { get }
     var parameters: [String: Any]? { get }
 }
+
 protocol APIClient{
     associatedtype EndPointType: APIEndPoint
     func request(_ endpoint: EndPointType) async throws -> Data
 }
+
 final class DefaultAPIClient<EndpointType: APIEndPoint>{
     func request(_ endpoint: EndpointType) async throws -> Data{
         let urlComponents = endpoint.baseURL.appending(path: endpoint.path)
