@@ -9,11 +9,13 @@ struct PublicHoliday: Codable, Identifiable{
     let id: Int?
     let fiscalYear: String?
     let showingYear: String?
+    
     enum CodingKeys: String, CodingKey{
         case id = "id"
         case fiscalYear = "fiscalYear"
         case showingYear = "showingYear"
     }
+    
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         do {

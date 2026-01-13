@@ -10,10 +10,12 @@ import Foundation
 struct LeaveType: Decodable{
     let id:Int?
     let typeOfLeave: String?
+    
     enum CodingKeys: String, CodingKey{
         case id = "id"
         case typeOfLeave = "applyFor"
     }
+    
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         do {

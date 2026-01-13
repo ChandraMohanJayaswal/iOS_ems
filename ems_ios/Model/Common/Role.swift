@@ -9,9 +9,11 @@ import Foundation
 
 struct Role: Decodable{
     let title: String?
+    
     enum CodingKeys: String, CodingKey{
         case title = "title"
     }
+    
     init(from decoder: any Decoder) throws{
         let container = try decoder.container(keyedBy: CodingKeys.self)
         do{

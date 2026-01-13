@@ -10,10 +10,12 @@ import Foundation
 struct FiscalYear:Decodable, Identifiable{
     let id: Int?
     let fiscalYear:String?
+    
     enum CodingKeys: String, CodingKey{
         case id = "id"
         case fiscalYear = "fiscalYear"
     }
+    
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         do {

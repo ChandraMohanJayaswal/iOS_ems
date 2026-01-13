@@ -10,10 +10,12 @@ import Foundation
 struct LoginData: Decodable {
     let token: String?
     let user: User?
+    
     enum CodingKeys: String, CodingKey{
         case token = "token"
         case user = "user"
     }
+    
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         

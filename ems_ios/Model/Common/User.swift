@@ -15,6 +15,7 @@ struct User: Decodable{
     let mobileNumber:String?
     let emailAddress:String?
     let role: Role?
+    
     enum CodingKeys: String, CodingKey{
         case firstName = "firstName"
         case lastName = "lastName"
