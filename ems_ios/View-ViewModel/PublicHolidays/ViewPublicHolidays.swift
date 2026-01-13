@@ -19,7 +19,7 @@ struct ViewPublicHolidays : View{
                         Text("All")
                             .tag("All")
                         ForEach(viewModel.fiscalYearList){ item in
-                            Text("\(item.fiscalYear)").tag(item.fiscalYear)
+                            Text("\(item.fiscalYear ?? "NA")").tag(item.fiscalYear)
                         }
                     }
                     .onChange(of:viewModel.selectedYear){
@@ -28,7 +28,7 @@ struct ViewPublicHolidays : View{
                     .pickerStyle(.menu)
                     List{
                         ForEach(viewModel.searchedPublicHolidayList ){ item in
-                            PublicHolidaysCard(date: item.date, fiscalYear:item.fiscalYearRes.fiscalYear, showingYear: item.fiscalYearRes.showingYear, description: item.description, viewModel: viewModel)
+                            PublicHolidaysCard(date: item.date ?? "NA", fiscalYear:item.fiscalYear?.fiscalYear ?? "NA",  showingYear: item.fiscalYear?.showingYear ?? "NA", description: item.description ?? "NA", viewModel: viewModel)
                         }
                     }
                 }

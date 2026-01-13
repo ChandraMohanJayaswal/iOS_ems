@@ -41,7 +41,7 @@ class ViewModelPersonalLeave: ObservableObject{
             
             let data = try await apiClient.request(leaveTypeEnum)
             let decoded = try JSONDecoder().decode(LeaveTypeAPIResponse.self, from: data)
-            for item in decoded.data.list{
+            for item in decoded.data?.leaveTypeList ?? []{
                 leaveTypeList.append(item)
             }
         }

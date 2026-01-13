@@ -22,7 +22,7 @@ struct ViewPersonalLeave: View {
                     Picker("Leave Type", selection: $viewModel.selectedLeaveType){
                         Text("None Selected").tag(0)
                         ForEach(viewModel.leaveTypeList, id:\.id){ item in
-                            Text("\(item.applyFor)").tag(item.id)
+                            Text("\(item.typeOfLeave ?? "NA")").tag(item.id)
                         }
                     }
                     DatePicker("Leave From Date", selection: $viewModel.leaveFromDate, displayedComponents: [.date])

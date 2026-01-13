@@ -28,12 +28,12 @@ class ViewModelPublicHolidays: ObservableObject{
         do {
             let data = try await apiClient.request(FiscalYearEndPoint.getFiscalYear)
             let decoded = try JSONDecoder().decode(FiscalYearAPIResponse.self, from: data)
-            for item in decoded.data.list{
+            for item in decoded.data?.fiscalYearList ?? []{
                 fiscalYearList.append(item)
             }
         }
         catch{
-            print(error.localizedDescription)
+            print("I am here also", error.localizedDescription)
         }
         self.uiState = .idle
     }
@@ -44,7 +44,7 @@ class ViewModelPublicHolidays: ObservableObject{
         else {
             self.searchedPublicHolidayList.removeAll()
             for item in self.allpublicHolidayList{
-                if item.fiscalYearRes.fiscalYear == selectedYear{
+                if item.fiscalYear?.fiscalYear == selectedYear{
                     searchedPublicHolidayList.append(item)
                 }
             }
@@ -57,8 +57,10 @@ class ViewModelPublicHolidays: ObservableObject{
         do{
             let data = try await apiClient.request(FiscalYearEndPoint.getPublicHoliday)
             let decoded = try JSONDecoder().decode(PublicHolidayAPIResponse.self, from: data)
-            for item in decoded.data.list{
-                self.allpublicHolidayList.append(item)
+            if let publicHolidayList =  decoded.data?.publicHolidayList{
+                for item in publicHolidayList {
+                    self.allpublicHolidayList.append(item)
+                }
             }
             
         }

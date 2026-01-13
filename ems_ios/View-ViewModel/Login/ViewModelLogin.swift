@@ -31,13 +31,15 @@ class ViewModelLogin: ObservableObject{
         do {
             let data = try await apiClient.request(loginEnum)
             let decoded = try JSONDecoder().decode(LoginResponse.self, from: data)
-            UserDefaults.standard.set(decoded.data.user.firstName, forKey:"firstName")
-            UserDefaults.standard.set(decoded.data.user.lastName, forKey:"lastName")
-            UserDefaults.standard.set(decoded.data.user.gender, forKey: "gender")
-            UserDefaults.standard.set(decoded.data.user.emailAddress, forKey: "emailAddress")
-            UserDefaults.standard.set(decoded.data.user.mobileNumber, forKey: "mobileNumber")
-            UserDefaults.standard.set(decoded.data.user.role.title, forKey: "title")
-            KeychainSwift().set(decoded.data.token, forKey:"user_token")
+            UserDefaults.standard.set(decoded.data?.user?.firstName, forKey:"firstName")
+            UserDefaults.standard.set(decoded.data?.user?.lastName, forKey:"lastName")
+            UserDefaults.standard.set(decoded.data?.user?.gender, forKey: "gender")
+            UserDefaults.standard.set(decoded.data?.user?.emailAddress, forKey: "emailAddress")
+            UserDefaults.standard.set(decoded.data?.user?.mobileNumber, forKey: "mobileNumber")
+            UserDefaults.standard.set(decoded.data?.user?.role?.title, forKey: "title")
+            if let token = decoded.data?.token{
+                KeychainSwift().set(token, forKey:"user_token")
+            }
             UserDefaults.standard.set(true, forKey: "isUserLoggedIn")
             self.isAuthenticated = true
 
