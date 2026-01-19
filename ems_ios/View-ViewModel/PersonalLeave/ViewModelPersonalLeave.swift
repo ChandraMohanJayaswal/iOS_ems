@@ -10,19 +10,9 @@ import Combine
 class ViewModelPersonalLeave: ObservableObject{
     @Published var selectedLineManager: Int
     @Published var uiState: UISTATE = .idle
-    @Published var selectedLeaveType: Int {
-        didSet{
-            print(selectedLeaveType)
-        }
-    }
-    
+    @Published var selectedLeaveType: Int
     @Published var leaveTypeList: [LeaveType]
     @Published var leaveFromDate: Date
-    {
-        didSet{
-            print(leaveFromDate.formatted(date: .numeric, time: .omitted))
-        }
-    }
     @Published var leaveToDate: Date
     @Published var description: String
     init(){

@@ -8,6 +8,7 @@
 import SwiftUI
 struct ViewPersonalLeave: View {
     @StateObject var viewModel = ViewModelPersonalLeave()
+    @State var isAlertShown = false
     var body: some View {
         NavigationStack{
             Form{
@@ -22,7 +23,7 @@ struct ViewPersonalLeave: View {
                     Picker("Leave Type", selection: $viewModel.selectedLeaveType){
                         Text("None Selected").tag(0)
                         ForEach(viewModel.leaveTypeList, id:\.id){ item in
-                            Text("\(item.typeOfLeave ?? "NA")").tag(item.id)
+                            Text("\(item.typeOfLeave)").tag(item.id)
                         }
                     }
                     DatePicker("Leave From Date", selection: $viewModel.leaveFromDate, displayedComponents: [.date])
@@ -32,11 +33,7 @@ struct ViewPersonalLeave: View {
                 }
                 Section{
                     Button{
-                        Task{
-                        await viewModel.postPersonalLeaveToServer()
-                        }
-                        //do something here
-                        print("Send data to server")
+                            isAlertShown = true
                     } label:{
                         HStack{
                             Spacer()
@@ -46,6 +43,19 @@ struct ViewPersonalLeave: View {
                         }
                     }
                 }
+            }
+            .alert("Send leave request?", isPresented: $isAlertShown) {
+                Button("Cancel"){
+                    isAlertShown.toggle()
+                }
+                .foregroundStyle(.red)
+                
+                Button("Submit"){
+                    Task{
+                        await viewModel.postPersonalLeaveToServer()
+                    }
+                }
+                .foregroundStyle(COLOR_BLUE)
             }
                 .navigationTitle("Personal Leaves")
                 .navigationBarTitleDisplayMode( .inline )

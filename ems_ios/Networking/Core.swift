@@ -51,7 +51,6 @@ final class DefaultAPIClient<EndpointType: APIEndPoint>{
             return data
         }
         catch {
-            print("I am here")
             print(error.localizedDescription)
         }
         throw APIError.invalidResponse

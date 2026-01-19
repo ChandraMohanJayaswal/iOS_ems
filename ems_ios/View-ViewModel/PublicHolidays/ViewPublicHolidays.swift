@@ -19,7 +19,7 @@ struct ViewPublicHolidays : View{
                         Text("All")
                             .tag("All")
                         ForEach(viewModel.fiscalYearList){ item in
-                            Text("\(item.fiscalYear ?? "NA")").tag(item.fiscalYear)
+                            Text("\(item.fiscalYear ?? "NA")").tag(item.fiscalYear ?? "NA")
                         }
                     }
                     .onChange(of:viewModel.selectedYear){

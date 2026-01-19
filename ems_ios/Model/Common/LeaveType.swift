@@ -8,9 +8,8 @@
 import Foundation
 
 struct LeaveType: Decodable{
-    let id:Int?
-    let typeOfLeave: String?
-    
+    let id:Int
+    let typeOfLeave: String
     enum CodingKeys: String, CodingKey{
         case id = "id"
         case typeOfLeave = "applyFor"
@@ -22,14 +21,14 @@ struct LeaveType: Decodable{
             self.id = try container.decode(Int.self, forKey: .id)
         } catch  {
             print("Failed to decode id: ", error.localizedDescription)
-            self.id = nil
+            self.id = 999
         }
         
         do {
             self.typeOfLeave = try container.decode(String.self, forKey: .typeOfLeave)
         } catch  {
             print("Failed to decode typeOfLeave: ", error.localizedDescription)
-            self.typeOfLeave = nil
+            self.typeOfLeave = "NA"
         }
     }
 }

@@ -8,7 +8,7 @@ import Foundation
 import KeychainSwift
 
 enum EndPointPersonalLeave: APIEndPoint {
-    
+    case getPersonalLeave
     case postPersonalLeave(lineManagerId: Int, leaveTypeId: Int, leaveFromDate: String, leaveToDate: String, description: String, leaveStatusId: Int, leaveStatusComment: String)
     
     var baseURL: URL{
@@ -19,11 +19,15 @@ enum EndPointPersonalLeave: APIEndPoint {
         switch self{
         case .postPersonalLeave:
            return "/api/personalLeave"
+        case .getPersonalLeave:
+            return "/api/personalLeave/my"
         }
     }
     
     var method: HTTPMethod{
         switch self{
+        case .getPersonalLeave:
+            return .get
         case .postPersonalLeave:
             return .post
         }
@@ -31,7 +35,7 @@ enum EndPointPersonalLeave: APIEndPoint {
     
     var headers: [String : String]?{
         switch self{
-        case .postPersonalLeave:
+        case .postPersonalLeave, .getPersonalLeave:
             return ["Authorization": "Bearer \(KeychainSwift().get("user_token")!)",
                     "Content-Type": "application/json"]
         }
@@ -52,6 +56,8 @@ enum EndPointPersonalLeave: APIEndPoint {
                 "leaveStatusId": leaveStatusId,
                 "statusComment": leaveStatusComment
             ]
+        case .getPersonalLeave:
+            return nil
         }
     }
 }

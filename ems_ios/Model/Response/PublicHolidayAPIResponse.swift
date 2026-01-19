@@ -85,4 +85,3 @@ struct PublicHolidaysAPIResponseDetails: Decodable, Identifiable{
         }
     }
 }
-
