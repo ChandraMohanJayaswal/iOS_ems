@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 protocol ViewModelLoginServiceProtocol: APILogin{}
 final class ViewModelLoginService: ViewModelLoginServiceProtocol{}
-class ViewModelLogin: ObservableObject{
+final class ViewModelLogin: ObservableObject{
     @Published var email:String
     @Published var isAlertShown:Bool
     @Published var password:String

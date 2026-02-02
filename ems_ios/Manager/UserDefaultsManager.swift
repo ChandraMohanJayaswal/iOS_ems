@@ -20,12 +20,12 @@ final class UserDefaultsManager{
         KeychainSwift().set(token, forKey:"user_token")
         UserDefaults.standard.set(true, forKey: "isUserLoggedIn")
     }
-        func signOut(coordinator: RouteCoordinator){
-            coordinator.selectedTab = TABINDEX.HOME.rawValue
-            KeychainSwift().clear()
-            coordinator.navigate(to: .login)
-            if let bundleID = Bundle.main.bundleIdentifier {
-                UserDefaults.standard.removePersistentDomain(forName: bundleID)
-            }
+    func signOut(coordinator: RouteCoordinator){
+        coordinator.selectedTab = TABINDEX.HOME.rawValue
+        KeychainSwift().clear()
+        coordinator.navigate(to: .login)
+        if let bundleID = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: bundleID)
+        }
     }
 }

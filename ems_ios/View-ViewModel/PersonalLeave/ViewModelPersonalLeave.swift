@@ -7,7 +7,9 @@
 
 import Foundation
 import Combine
-class ViewModelPersonalLeave: ObservableObject{
+protocol ViewModelPersonalLeaveServiceProtocol: APIPostPersonalLeave, APIGetLeaveType{}
+final class ViewModelPersonalLeaveService: ViewModelPersonalLeaveServiceProtocol{}
+final class ViewModelPersonalLeave: ObservableObject{
     @Published var selectedLineManager: Int
     @Published var uiState: UISTATE = .idle
     @Published var selectedLeaveType: Int
@@ -15,7 +17,9 @@ class ViewModelPersonalLeave: ObservableObject{
     @Published var leaveFromDate: Date
     @Published var leaveToDate: Date
     @Published var description: String
-    init(){
+    private let apiService: ViewModelPersonalLeaveServiceProtocol
+    init(apiService: ViewModelPersonalLeaveServiceProtocol = ViewModelPersonalLeaveService()){
+        self.apiService = apiService
         self.selectedLineManager = 0
         self.selectedLeaveType = 0
         self.leaveFromDate = Date()
@@ -24,31 +28,18 @@ class ViewModelPersonalLeave: ObservableObject{
         self.leaveTypeList = []
     }
     func fetchLeaveTypeFromServer()async{
-        leaveTypeList.removeAll()
-        let leaveTypeEnum = EndPointLeaveType.getLeaveTypes
-        let apiClient = DefaultAPIClient<EndPointLeaveType>()
-        do{
-            
-            let data = try await apiClient.request(leaveTypeEnum)
-            let decoded = try JSONDecoder().decode(LeaveTypeAPIResponse.self, from: data)
-            for item in decoded.data?.leaveTypeList ?? []{
-                leaveTypeList.append(item)
+        self.uiState = .loading
+        self.leaveTypeList.removeAll()
+        await apiService.getLeaveType { result in
+            for item in result{
+                self.leaveTypeList.append(item)
             }
         }
-        catch{
-            print(error.localizedDescription)
-        }
+        self.uiState = .idle
     }
     func postPersonalLeaveToServer() async{
         self.uiState = .loading
-        let personalLeaveEnum = EndPointPersonalLeave.postPersonalLeave(lineManagerId: 1, leaveTypeId: self.selectedLeaveType, leaveFromDate: formatDateForServer(self.leaveFromDate), leaveToDate: formatDateForServer(self.leaveToDate), description: self.description, leaveStatusId: 1, leaveStatusComment: "Some Comment")
-        let apiClient = DefaultAPIClient<EndPointPersonalLeave>()
-        do{
-            _ = try await apiClient.request(personalLeaveEnum)
-        }
-        catch{
-            print(error.localizedDescription)
-        }
+        await apiService.postPersonalLeave(selectedLeaveType: self.selectedLeaveType, leaveFromDate: formatDateForServer(self.leaveFromDate), leaveToDate: formatDateForServer(self.leaveToDate), description: self.description)
         self.uiState = .idle
     }
     func formatDateForServer(_ date: Date) -> String{
