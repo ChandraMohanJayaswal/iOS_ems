@@ -21,7 +21,7 @@ struct TestViewModelLogin{
     let viewModel: ViewModelLogin
     init(){
         self.apiService = MockViewModelLoginService()
-        self.viewModel = ViewModelLogin(apiSerivce: apiService)
+        self.viewModel = ViewModelLogin(apiService: apiService)
     }
     @Test func testLoginSuccess ()async{
         await viewModel.login()

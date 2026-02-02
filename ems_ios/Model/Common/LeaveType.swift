@@ -14,7 +14,10 @@ struct LeaveType: Decodable{
         case id = "id"
         case typeOfLeave = "applyFor"
     }
-    
+    init(id: Int, typeOfLeave: String){
+        self.id = id
+        self.typeOfLeave = typeOfLeave
+    }
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         do {
