@@ -33,9 +33,32 @@
 		9A57A8D72EFD0B4600E6FF0D /* ems_iosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ems_iosUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		9711511C2F30B82400C48073 /* Exceptions for "ems_ios" folder in "ems_iosTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ConfigDev.xcconfig,
+				ConfigProd.xcconfig,
+			);
+			target = 9A57A8CC2EFD0B4600E6FF0D /* ems_iosTests */;
+		};
+		9711511D2F30B82400C48073 /* Exceptions for "ems_ios" folder in "ems_iosUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ConfigDev.xcconfig,
+				ConfigProd.xcconfig,
+			);
+			target = 9A57A8D62EFD0B4600E6FF0D /* ems_iosUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		9A57A8C22EFD0B4500E6FF0D /* ems_ios */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				9711511C2F30B82400C48073 /* Exceptions for "ems_ios" folder in "ems_iosTests" target */,
+				9711511D2F30B82400C48073 /* Exceptions for "ems_ios" folder in "ems_iosUITests" target */,
+			);
 			path = ems_ios;
 			sourceTree = "<group>";
 		};
@@ -280,6 +303,8 @@
 /* Begin XCBuildConfiguration section */
 		9A57A8DF2EFD0B4600E6FF0D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 9A57A8C22EFD0B4500E6FF0D /* ems_ios */;
+			baseConfigurationReferenceRelativePath = ConfigDev.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -344,6 +369,8 @@
 		};
 		9A57A8E02EFD0B4600E6FF0D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 9A57A8C22EFD0B4500E6FF0D /* ems_ios */;
+			baseConfigurationReferenceRelativePath = ConfigProd.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -401,6 +428,8 @@
 		};
 		9A57A8E22EFD0B4600E6FF0D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 9A57A8C22EFD0B4500E6FF0D /* ems_ios */;
+			baseConfigurationReferenceRelativePath = ConfigDev.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -432,6 +461,8 @@
 		};
 		9A57A8E32EFD0B4600E6FF0D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 9A57A8C22EFD0B4500E6FF0D /* ems_ios */;
+			baseConfigurationReferenceRelativePath = ConfigProd.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
