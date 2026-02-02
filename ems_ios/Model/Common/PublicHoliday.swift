@@ -15,7 +15,11 @@ struct PublicHoliday: Codable, Identifiable{
         case fiscalYear = "fiscalYear"
         case showingYear = "showingYear"
     }
-    
+    init(id: Int?, fiscalyear: String?, showingYear: String?){
+        self.id = id
+        self.fiscalYear = fiscalyear
+        self.showingYear = showingYear
+    }
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         do {

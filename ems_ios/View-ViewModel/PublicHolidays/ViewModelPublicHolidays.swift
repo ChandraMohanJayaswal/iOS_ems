@@ -57,7 +57,7 @@ final class ViewModelPublicHolidays: ObservableObject{
         }
         self.uiState = .idle
     }
-    func truncateDescription(_ text: String) ->String{
+    func truncateDescription(_ text: String) -> String{
         return String(text.prefix(5) + "...")
     }
 }

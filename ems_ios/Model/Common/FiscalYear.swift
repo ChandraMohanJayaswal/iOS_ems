@@ -15,7 +15,10 @@ struct FiscalYear:Decodable, Identifiable{
         case id = "id"
         case fiscalYear = "fiscalYear"
     }
-    
+    init(id: Int?, fiscalYear: String?){
+        self.id = id
+        self.fiscalYear = fiscalYear
+    }
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         do {
@@ -33,3 +36,4 @@ struct FiscalYear:Decodable, Identifiable{
         }
     }
 }
+

@@ -17,8 +17,8 @@ final class ViewModelLogin: ObservableObject{
     @Published var isAuthenticated:Bool
     @Published var uiState : UISTATE = .idle
     private let apiService: ViewModelLoginServiceProtocol
-    init(apiSerivce: ViewModelLoginServiceProtocol = ViewModelLoginService()){
-        self.apiService = apiSerivce
+    init(apiService: ViewModelLoginServiceProtocol = ViewModelLoginService()){
+        self.apiService = apiService
         self.email = ""
         self.password = ""
         self.isAuthenticated = false

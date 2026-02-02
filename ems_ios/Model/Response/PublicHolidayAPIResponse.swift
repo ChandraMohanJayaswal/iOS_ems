@@ -51,6 +51,12 @@ struct PublicHolidaysAPIResponseDetails: Decodable, Identifiable{
         case date = "date"
         case description = "description"
     }
+    init(id: Int, fiscalYear: PublicHoliday?, date: String?, description: String?){
+        self.id = id
+        self.fiscalYear = fiscalYear
+        self.date = date
+        self.description = description
+    }
     init(from decoder: any Decoder) throws{
         let container = try decoder.container(keyedBy: CodingKeys.self)
         do{
