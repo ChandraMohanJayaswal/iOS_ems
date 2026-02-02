@@ -8,14 +8,17 @@
 import Foundation
 import Combine
 import KeychainSwift
-
-class ViewModelPublicHolidays: ObservableObject{
+protocol ViewModelPublicHolidaysServiceProtocol: APIGetFiscalYear, APIGetPublicHolidays{}
+final class ViewModelPublicHolidaysService: ViewModelPublicHolidaysServiceProtocol{}
+final class ViewModelPublicHolidays: ObservableObject{
     @Published var allpublicHolidayList : [PublicHolidaysAPIResponseDetails]
     @Published var searchedPublicHolidayList : [PublicHolidaysAPIResponseDetails]
     @Published var fiscalYearList: [FiscalYear]
     @Published var selectedYear: String
     @Published var uiState: UISTATE = .idle
-    init() {
+    private let apiService: ViewModelPublicHolidaysServiceProtocol
+    init(apiService: ViewModelPublicHolidaysServiceProtocol = ViewModelPublicHolidaysService()) {
+        self.apiService = apiService
         self.allpublicHolidayList = []
         self.searchedPublicHolidayList = []
         self.fiscalYearList = []
@@ -23,17 +26,11 @@ class ViewModelPublicHolidays: ObservableObject{
     }
     func fetchFiscalYearFromServer () async{
         self.uiState = .loading
-        fiscalYearList = []
-        let apiClient = DefaultAPIClient<EndPointFiscalYear>()
-        do {
-            let data = try await apiClient.request(EndPointFiscalYear.getFiscalYear)
-            let decoded = try JSONDecoder().decode(FiscalYearAPIResponse.self, from: data)
-            for item in decoded.data?.fiscalYearList ?? []{
-                fiscalYearList.append(item)
+        self.fiscalYearList = []
+        await apiService.getFiscalYear { (result) in
+            for item in result{
+                self.fiscalYearList.append(item)
             }
-        }
-        catch{
-            print("I am here also", error.localizedDescription)
         }
         self.uiState = .idle
     }
@@ -53,19 +50,10 @@ class ViewModelPublicHolidays: ObservableObject{
     func fetchPublicHolidaysFromServer() async{
         self.uiState = .loading
         self.allpublicHolidayList.removeAll()
-        let apiClient = DefaultAPIClient<EndPointFiscalYear>()
-        do{
-            let data = try await apiClient.request(EndPointFiscalYear.getPublicHoliday)
-            let decoded = try JSONDecoder().decode(PublicHolidayAPIResponse.self, from: data)
-            if let publicHolidayList =  decoded.data?.publicHolidayList{
-                for item in publicHolidayList {
-                    self.allpublicHolidayList.append(item)
-                }
+        await apiService.getPublicHolidays{ result in
+            for item in result{
+                self.allpublicHolidayList.append(item)
             }
-            
-        }
-        catch{
-            print(error.localizedDescription)
         }
         self.uiState = .idle
     }

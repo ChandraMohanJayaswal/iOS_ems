@@ -29,6 +29,3 @@ struct ViewTabBar:View{
         }
     }
 }
-#Preview{
-    ViewTabBar()
-}
