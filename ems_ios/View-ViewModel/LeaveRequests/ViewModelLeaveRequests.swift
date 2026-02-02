@@ -7,21 +7,21 @@
 
 import Foundation
 import Combine
+protocol ViewModelLeaveRequestsServiceProtocol: APIGetMyLeaveRequests{}
+
+final class ViewModelLeaveRequestsService: ViewModelLeaveRequestsServiceProtocol{}
+
 class ViewModelLeaveRequests: ObservableObject {
     @Published var leaveRequests:  [leaveRequestObject]
-    init()
+    private let apiService: ViewModelLeaveRequestsServiceProtocol
+    init(apiService: ViewModelLeaveRequestsServiceProtocol = ViewModelLeaveRequestsService() )
     {
+        self.apiService = apiService
         self.leaveRequests = []
     }
     func fetchMyLeaveRequestsFromServer() async{
-        let leaveRequestEnum = EndPointPersonalLeave.getPersonalLeave
-        let apiClient = DefaultAPIClient<EndPointPersonalLeave>()
-        do {
-            let data = try await apiClient.request(leaveRequestEnum)
-            let decoded = try JSONDecoder().decode(MyPersonalLeaveRequestsAPIResponse.self, from: data)
-            self.leaveRequests = decoded.data?.leaveRequestList ?? []
-        } catch  {
-            print("Server Error", error.localizedDescription)
+        await apiService.getMyLeaveRequests{ leaveRequests in
+            self.leaveRequests = leaveRequests
         }
     }
 }

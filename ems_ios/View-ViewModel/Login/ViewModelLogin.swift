@@ -6,16 +6,19 @@
 //
 
 import Foundation
-import Combine
 import SwiftUI
-import KeychainSwift
+import Combine
+protocol ViewModelLoginServiceProtocol: APILogin{}
+final class ViewModelLoginService: ViewModelLoginServiceProtocol{}
 class ViewModelLogin: ObservableObject{
     @Published var email:String
     @Published var isAlertShown:Bool
     @Published var password:String
     @Published var isAuthenticated:Bool
     @Published var uiState : UISTATE = .idle
-    init(){
+    private let apiService: ViewModelLoginServiceProtocol
+    init(apiSerivce: ViewModelLoginServiceProtocol = ViewModelLoginService()){
+        self.apiService = apiSerivce
         self.email = ""
         self.password = ""
         self.isAuthenticated = false
@@ -26,26 +29,13 @@ class ViewModelLogin: ObservableObject{
     }
     func login() async {
         self.uiState = .loading
-        let loginEnum = EndPointLogin.login(username: self.email, password: self.password)
-        let apiClient = DefaultAPIClient<EndPointLogin>()
         do {
-            let data = try await apiClient.request(loginEnum)
-            let decoded = try JSONDecoder().decode(LoginResponse.self, from: data)
-            UserDefaults.standard.set(decoded.data?.user?.firstName, forKey:"firstName")
-            UserDefaults.standard.set(decoded.data?.user?.lastName, forKey:"lastName")
-            UserDefaults.standard.set(decoded.data?.user?.gender, forKey: "gender")
-            UserDefaults.standard.set(decoded.data?.user?.emailAddress, forKey: "emailAddress")
-            UserDefaults.standard.set(decoded.data?.user?.mobileNumber, forKey: "mobileNumber")
-            UserDefaults.standard.set(decoded.data?.user?.role?.title, forKey: "title")
-            if let token = decoded.data?.token{
-                KeychainSwift().set(token, forKey:"user_token")
-            }
-            UserDefaults.standard.set(true, forKey: "isUserLoggedIn")
+            try await apiService.login(email: self.email, password: self.password)
             self.isAuthenticated = true
-
         }
         catch{
-            print(error.localizedDescription)
+            print("Authentication failed")
+            self.isAuthenticated = false
         }
         self.uiState = .idle
     }
