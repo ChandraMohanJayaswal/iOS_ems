@@ -11,7 +11,7 @@ import KeychainSwift
 enum EndPointLeaveType: APIEndPoint{
     case getLeaveTypes
     var baseURL: URL {
-      URL(string:"http://localhost:9090")!
+        URL(string:AppConfig.baseURL)!
     }
     var path: String{
         switch self{

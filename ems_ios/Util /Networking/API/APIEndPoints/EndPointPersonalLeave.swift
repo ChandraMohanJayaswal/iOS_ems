@@ -12,7 +12,7 @@ enum EndPointPersonalLeave: APIEndPoint {
     case postPersonalLeave(lineManagerId: Int, leaveTypeId: Int, leaveFromDate: String, leaveToDate: String, description: String, leaveStatusId: Int, leaveStatusComment: String)
     
     var baseURL: URL{
-        return URL(string: "http://localhost:9090")!
+        return URL(string: AppConfig.baseURL)!
     }
     
     var path: String{

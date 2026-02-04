@@ -11,7 +11,7 @@ enum EndPointFiscalYear: APIEndPoint{
     case getFiscalYear
     case getPublicHoliday
     var baseURL: URL{
-        return URL(string:"http://localhost:9090")!
+        return URL(string: AppConfig.baseURL)!
     }
     var path: String{
         switch self{
