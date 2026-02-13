@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9A2632EF2F3B1DA600381EDD /* SwiftLintFramework in Frameworks */ = {isa = PBXBuildFile; productRef = 9A2632EE2F3B1DA600381EDD /* SwiftLintFramework */; };
-		9A2632F12F3B1DA600381EDD /* swiftlint in Frameworks */ = {isa = PBXBuildFile; productRef = 9A2632F02F3B1DA600381EDD /* swiftlint */; };
 		9A419A842F02ACA100FBDFBC /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9A419A832F02ACA100FBDFBC /* KeychainSwift */; };
 /* End PBXBuildFile section */
 
@@ -81,8 +79,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A2632EF2F3B1DA600381EDD /* SwiftLintFramework in Frameworks */,
-				9A2632F12F3B1DA600381EDD /* swiftlint in Frameworks */,
 				9A419A842F02ACA100FBDFBC /* KeychainSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -145,8 +141,6 @@
 			name = ems_ios;
 			packageProductDependencies = (
 				9A419A832F02ACA100FBDFBC /* KeychainSwift */,
-				9A2632EE2F3B1DA600381EDD /* SwiftLintFramework */,
-				9A2632F02F3B1DA600381EDD /* swiftlint */,
 			);
 			productName = ems_ios;
 			productReference = 9A57A8C02EFD0B4500E6FF0D /* ems_ios.app */;
@@ -232,7 +226,6 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				9A419A3D2F02AC3300FBDFBC /* XCRemoteSwiftPackageReference "keychain-swift" */,
-				9A2632ED2F3B1DA600381EDD /* XCRemoteSwiftPackageReference "SwiftLint" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9A57A8C12EFD0B4500E6FF0D /* Products */;
@@ -624,14 +617,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9A2632ED2F3B1DA600381EDD /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/SwiftLint";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.63.2;
-			};
-		};
 		9A419A3D2F02AC3300FBDFBC /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/evgenyneu/keychain-swift";
@@ -643,16 +628,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9A2632EE2F3B1DA600381EDD /* SwiftLintFramework */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9A2632ED2F3B1DA600381EDD /* XCRemoteSwiftPackageReference "SwiftLint" */;
-			productName = SwiftLintFramework;
-		};
-		9A2632F02F3B1DA600381EDD /* swiftlint */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9A2632ED2F3B1DA600381EDD /* XCRemoteSwiftPackageReference "SwiftLint" */;
-			productName = swiftlint;
-		};
 		9A419A832F02ACA100FBDFBC /* KeychainSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9A419A3D2F02AC3300FBDFBC /* XCRemoteSwiftPackageReference "keychain-swift" */;
