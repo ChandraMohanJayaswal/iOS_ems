@@ -14,13 +14,7 @@ struct MyPersonalLeaveRequestsAPIResponse: Decodable{
     
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        do{
-            self.data = try container.decode(leaveRequestList.self, forKey: .data)
-        }
-        catch{
-            print("Failed to decode data: ", error.localizedDescription)
-            self.data = nil
-        }
+        data = container.decodeSafe(leaveRequestList.self, forKey: .data)
     }
 }
 struct leaveRequestList: Decodable{
@@ -30,12 +24,7 @@ struct leaveRequestList: Decodable{
     }
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        do {
-            self.leaveRequestList = try container.decode([leaveRequestObject].self, forKey: .leaveRequestList)
-        } catch  {
-            print("Failed to decode leaveRequestList: ", error.localizedDescription)
-            self.leaveRequestList = nil
-        }
+        leaveRequestList = container.decodeSafe([leaveRequestObject].self, forKey: .leaveRequestList)
     }
 }
 

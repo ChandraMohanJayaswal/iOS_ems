@@ -18,26 +18,8 @@ struct LoginResponse:Decodable{
     }
     init(from decoder: Decoder) throws{
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        do {
-            status = try container.decodeIfPresent(Bool.self, forKey: .status)
-        } catch{
-            print("Failed to decode status: \(error.localizedDescription)")
-            status = nil
-        }
-        do {
-            message = try container.decodeIfPresent(String.self, forKey: .message)
-        }
-        catch{
-            print("Failed to decode message: \(error.localizedDescription)")
-            message = nil
-        }
-        do {
-            data = try container.decodeIfPresent(LoginData.self, forKey: .data)
-        }
-        catch{
-            print("Failed to decode data \(error.localizedDescription)")
-            data = nil
-        }
+        status = container.decodeSafe(Bool.self, forKey: .status)
+        message = container.decodeSafe(String.self, forKey: .message)
+        data = container.decodeSafe(LoginData.self, forKey: .data)
     }
 }

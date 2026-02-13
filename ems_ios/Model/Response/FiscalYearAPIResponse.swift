@@ -12,12 +12,7 @@ struct FiscalYearAPIResponse:Decodable{
     }
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        do {
-            self.data = try container.decode(FiscalYearResponseData.self, forKey: .data)
-        } catch  {
-            print("Failed to decode data :", error.localizedDescription)
-            self.data = nil
-        }
+        data = container.decodeSafe(FiscalYearResponseData.self, forKey: .data)
     }
 }
 
@@ -28,11 +23,6 @@ struct FiscalYearResponseData:Decodable{
     }
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        do {
-            self.fiscalYearList = try container.decodeIfPresent([FiscalYear].self, forKey: .fiscalYearList)
-        } catch  {
-            print("Failed to decode fiscalYearList:" , error.localizedDescription)
-            self.fiscalYearList = nil
-        }
+        fiscalYearList = container.decodeSafe([FiscalYear].self, forKey: .fiscalYearList)
     }
 }

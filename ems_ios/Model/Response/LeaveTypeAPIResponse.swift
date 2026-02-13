@@ -12,12 +12,7 @@ struct LeaveTypeAPIResponse: Decodable{
     }
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        do {
-            self.data = try container.decode(LeaveTypeAPIResponseData.self, forKey: .data)
-        } catch  {
-            print("Failed to decode leave type data: ", error.localizedDescription)
-            self.data = nil
-        }
+        data = container.decodeSafe(LeaveTypeAPIResponseData.self, forKey: .data)
     }
 }
 
@@ -28,12 +23,7 @@ struct LeaveTypeAPIResponseData: Decodable{
     }
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        do {
-            self.leaveTypeList = try container.decode([LeaveType].self, forKey: .leaveTypeList)
-        } catch  {
-            print("Failed to decode leave type leaveTypeList: ", error.localizedDescription)
-            self.leaveTypeList = nil
-        }
+        leaveTypeList = container.decodeSafe([LeaveType].self, forKey: .leaveTypeList)
     }
 }
 

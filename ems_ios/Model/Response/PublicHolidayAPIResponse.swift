@@ -12,14 +12,7 @@ struct PublicHolidayAPIResponse: Decodable{
     }
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        do{
-            
-            self.data = try container.decode(PublicHolidaysAPIResponseList.self, forKey: .data)
-        }
-        catch{
-            print("Failed to decode data", error.localizedDescription)
-            self.data = nil
-        }
+        data = container.decodeSafe(PublicHolidaysAPIResponseList.self, forKey: .data)
     }
 }
 
@@ -30,13 +23,7 @@ struct PublicHolidaysAPIResponseList: Decodable{
     }
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        do{
-            self.publicHolidayList = try container.decode([PublicHolidaysAPIResponseDetails].self, forKey: .publicHolidayList)
-        }
-        catch{
-            print("Failed to decode list", error.localizedDescription)
-            self.publicHolidayList = nil
-        }
+        publicHolidayList = container.decodeSafe([PublicHolidaysAPIResponseDetails].self, forKey: .publicHolidayList)
     }
 }
 
@@ -59,35 +46,9 @@ struct PublicHolidaysAPIResponseDetails: Decodable, Identifiable{
     }
     init(from decoder: any Decoder) throws{
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        do{
-            self.id = try container.decodeIfPresent(Int.self, forKey: .id)
-        }
-        catch{
-            print("Failed to decode id: ", error.localizedDescription)
-            self.id = nil
-        }
-        
-        do{
-            self.fiscalYear = try container.decodeIfPresent(PublicHoliday.self, forKey: .fiscalYear)
-        }
-        catch{
-            print("Failed to decode fiscalYearRes: ", error.localizedDescription)
-            self.fiscalYear = nil
-        }
-        do{
-            self.date = try container.decodeIfPresent(String.self, forKey: .date)
-        }
-        catch{
-            print("Failed to decode date: ", error.localizedDescription)
-            self.date = nil
-        }
-        
-        do{
-            self.description = try container.decodeIfPresent(String.self, forKey: .description)
-        }
-        catch{
-            print("Failed to decode description: ", error.localizedDescription)
-            self.description = nil
-        }
+        id = container.decodeSafe(Int.self, forKey: .id)
+        fiscalYear = container.decodeSafe(PublicHoliday.self, forKey: .fiscalYear)
+        date = container.decodeSafe(String.self, forKey: .date)
+        description = container.decodeSafe(String.self, forKey: .description)
     }
 }
