@@ -22,28 +22,9 @@ struct PublicHoliday: Codable, Identifiable{
     }
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        do {
-            
-            self.id = try container.decodeIfPresent(Int.self, forKey: .id)
-        }
-        catch{
-            print("Failed to decode id: ", error.localizedDescription)
-            self.id = nil
-        }
-        do{
-            self.fiscalYear = try container.decodeIfPresent(String.self, forKey: .fiscalYear)
-        }
-        catch{
-            print("Failed to decode id: ", error.localizedDescription)
-            self.fiscalYear = nil
-        }
-        do{
-            self.showingYear = try container.decodeIfPresent(String.self, forKey: .showingYear)
-        }
-        catch{
-            print("Failed to decode showingYear: ", error.localizedDescription)
-            self.showingYear = nil
-        }
+        id = container.decodeSafe(Int.self, forKey: .id)
+        fiscalYear = container.decodeSafe(String.self, forKey: .fiscalYear)
+        showingYear = container.decodeSafe(String.self, forKey: .showingYear)
     }
     
 }

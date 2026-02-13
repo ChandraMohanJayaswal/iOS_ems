@@ -28,60 +28,12 @@ struct User: Decodable{
     
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        do {
-            self.firstName = try container.decode(String.self, forKey: .firstName)
-        }
-        catch{
-            print("Failed to decode firstName: ", error.localizedDescription)
-            self.firstName = nil
-        }
-        
-        do {
-            self.lastName = try container.decode(String.self, forKey: .lastName)
-        }
-        catch{
-            print("Failed to decode lastName: ", error.localizedDescription)
-            self.lastName = nil
-        }
-        
-        do {
-            self.fullName = try container.decode(String.self, forKey: .fullName)
-        }
-        catch{
-            print("Failed to decode fullName: ", error.localizedDescription)
-            self.fullName = nil
-        }
-        
-        do {
-            self.gender = try container.decode(String.self, forKey: .gender)
-        }
-        catch{
-            print("Failed to decode gender: ", error.localizedDescription)
-            self.gender = nil
-        }
-        
-        do {
-            self.mobileNumber = try container.decode(String.self, forKey: .mobileNumber)
-        }
-        catch{
-            print("Failed to decode mobileNumber: ", error.localizedDescription)
-            self.mobileNumber = nil
-        }
-        
-        do {
-            self.emailAddress = try container.decode(String.self, forKey: .emailAddress)
-        }
-        catch{
-            print("Failed to decode emailAddress: ", error.localizedDescription)
-            self.emailAddress = nil
-        }
-        
-        do{
-            self.role = try container.decode(Role.self, forKey: .role)
-        }
-        catch{
-            print("Failed to decode role: ", error.localizedDescription)
-            self.role = nil
-        }
+        firstName = container.decodeSafe(String.self, forKey: .firstName)
+        lastName = container.decodeSafe(String.self, forKey: .lastName)
+        fullName = container.decodeSafe(String.self, forKey: .fullName)
+        gender = container.decodeSafe(String.self, forKey: .gender)
+        mobileNumber = container.decodeSafe(String.self, forKey: .mobileNumber)
+        emailAddress = container.decodeSafe(String.self, forKey: .emailAddress)
+        role = container.decodeSafe(Role.self, forKey: .role)
     }
 }

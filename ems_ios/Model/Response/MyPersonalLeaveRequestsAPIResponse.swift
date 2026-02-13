@@ -11,7 +11,6 @@ struct MyPersonalLeaveRequestsAPIResponse: Decodable{
     enum CodingKeys: CodingKey {
         case data
     }
-    
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         data = container.decodeSafe(leaveRequestList.self, forKey: .data)

@@ -21,19 +21,8 @@ struct FiscalYear:Decodable, Identifiable{
     }
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        do {
-            self.id = try container.decodeIfPresent(Int.self, forKey: .id)
-        } catch  {
-            print("Failed to decode id: ", error.localizedDescription)
-            self.id = nil
-        }
-        do{
-            self.fiscalYear = try container.decodeIfPresent(String.self, forKey: .fiscalYear)
-        }
-        catch{
-            print("Failed to decode fiscalYear: ", error.localizedDescription)
-            self.fiscalYear = nil
-        }
+        id = container.decodeSafe(Int.self, forKey: .id)
+        fiscalYear = container.decodeSafe(String.self, forKey: .fiscalYear)
     }
 }
 

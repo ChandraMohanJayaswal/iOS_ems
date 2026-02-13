@@ -16,12 +16,6 @@ struct Role: Decodable{
     
     init(from decoder: any Decoder) throws{
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        do{
-            title = try container.decodeIfPresent(String.self, forKey: .title)
-        }
-        catch{
-            print("Failed to decode title: ", error.localizedDescription)
-            title = nil
-        }
+        title = container.decodeSafe(String.self, forKey: .title)
     }
 }
