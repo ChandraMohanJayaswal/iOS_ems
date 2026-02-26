@@ -8,34 +8,33 @@
 import XCTest
 
 final class ems_iosUITests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
+    var app: XCUIApplication!
+    override func setUp() {
+        super.setUp()
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
+        app = XCUIApplication()
         app.launch()
-
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
-
-    @MainActor
-    func testLaunchPerformance() throws {
-        // This measures how long it takes to launch your application.
-        measure(metrics: [XCTApplicationLaunchMetric()]) {
-            XCUIApplication().launch()
-        }
+    override func setUpWithError()throws {
+        continueAfterFailure = false
+    }
+    func testViewSplash() {
+        XCTAssertTrue(app.staticTexts["By Chronelabs Technologies"].exists)
+    }
+    func testLogin() {
+        XCTAssertTrue(app.staticTexts["EMS Login"].waitForExistence(timeout: 5))
+        let emailField = app.textFields["email"]
+        emailField.tap()
+        emailField.typeText("sa@yopmail.com")
+        app.buttons["toggleHidePassword"].tap()
+        let passwordField = app.textFields["passwordField"]
+        passwordField.tap()
+        passwordField.typeText("password")
+        app.buttons["loginButton"].tap()
+        XCTAssertTrue(app.staticTexts["Home"].waitForExistence(timeout: 5))
+    }
+    
+    func testHometab() {
+        app.launchArguments.append("skipSplash")
     }
 }

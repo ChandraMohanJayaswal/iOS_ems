@@ -8,7 +8,8 @@ import SwiftUI
 struct ViewSplash:View{
     @EnvironmentObject var coordinator: RouteCoordinator
     @State private var angle: CGFloat = 0
-    @State private var scaledValue: CGFloat=1
+    @StateObject var viewModel = ViewModelSplash()
+    @State private var scaledValue: CGFloat = 1
     var body: some View{
         Text("EMS")
             .font(.largeTitle)
@@ -31,8 +32,11 @@ struct ViewSplash:View{
                     .rotationEffect(.degrees(angle))
                     .animation(.easeInOut(duration:2).repeatForever(autoreverses: true), value:angle)
                     .onAppear{
-                        angle=360
-                        scaledValue=1.2
+                        angle = 360
+                        scaledValue = 1.2
+                        if viewModel.shouldSkipSplash {
+                            coordinator.navigate(to: .tabbar)
+                        }
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                             if UserDefaults.standard.bool(forKey:"isUserLoggedIn"){
                                 coordinator.navigate(to: .tabbar)
@@ -46,7 +50,7 @@ struct ViewSplash:View{
     }
 }
 #Preview{
-    ViewSplash()
+//    ViewSplash()
 }
     
 struct GearShape: Shape {

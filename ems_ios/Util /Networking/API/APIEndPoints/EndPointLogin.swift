@@ -6,7 +6,7 @@
 //
 import Foundation
 
-enum EndPointLogin: APIEndPoint{
+enum EndPointLogin: APIEndPoint {
     case login(username: String, password:String)
     var baseURL: URL {
         return URL(string: AppConfig.baseURL)!

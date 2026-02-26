@@ -37,6 +37,7 @@ struct ViewLogin: View {
                 .padding()
                 .autocorrectionDisabled(true)
                 .textInputAutocapitalization(.never)
+                .accessibilityIdentifier("email")
             ZStack(alignment:.trailing){
                 if showPassword{
                     TextField("Password", text: $viewModel.password)
@@ -47,6 +48,7 @@ struct ViewLogin: View {
                                 .stroke(passwordIsFocused ? COLOR_BLUE : COLOR_GRAY.opacity(0.5))
                         )
                         .focused($passwordIsFocused)
+                        .accessibilityIdentifier("passwordField")
                 }
                 else {
                     SecureField("Password", text: $viewModel.password)
@@ -57,6 +59,7 @@ struct ViewLogin: View {
                                 .stroke(passwordIsFocused ? COLOR_BLUE : COLOR_GRAY.opacity(0.5))
                         )
                         .focused($passwordIsFocused)
+                        .accessibilityIdentifier("hiddenPasswordField")
                 }
                 Button{
                     showPassword.toggle()
@@ -64,6 +67,7 @@ struct ViewLogin: View {
                     Image(systemName:showPassword ? "eye": "eye.slash")
                         .renderingMode(.original)
                 }
+                .accessibilityIdentifier("toggleHidePassword")
                 .padding()
             }
             .padding()
@@ -77,8 +81,6 @@ struct ViewLogin: View {
                         viewModel.isAlertShown = true
                     }
                 }
-                
-                
             } label:{
                 Text("Login")
                     .foregroundColor(.white)
@@ -88,6 +90,7 @@ struct ViewLogin: View {
                                 Color.blue.gradient : Color.gray.gradient)
                     .cornerRadius(12)
             }
+            .accessibilityIdentifier("loginButton")
             .alert(isPresented:$viewModel.isAlertShown) {
                 Alert(title: Text("Error"), message: Text("Invalid Credentials"), dismissButton: .default(Text("OK")))
             }

@@ -16,6 +16,7 @@ final class MockViewModelLoginService: ViewModelLoginServiceProtocol{
         }
     }
 }
+@MainActor
 struct TestViewModelLogin{
     let apiService: MockViewModelLoginService
     let viewModel: ViewModelLogin
