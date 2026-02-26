@@ -45,6 +45,7 @@ struct ViewSideMenu: View{
                     } label:{
                         SideMenuTabs(title:"Sign Out", icon:"door.right.hand.open")
                     }
+                    .accessibilityIdentifier("signOutButton")
                     Divider()
                         .background(.gray)
                     Spacer()
