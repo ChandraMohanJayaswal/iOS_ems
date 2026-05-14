@@ -14,6 +14,7 @@ final class ViewModelLogin: ObservableObject{
     @Published var email:String
     @Published var isAlertShown:Bool
     @Published var password:String
+    @Published var showPassword: Bool
     @Published var isAuthenticated:Bool
     @Published var uiState : UISTATE = .idle
     private let apiService: ViewModelLoginServiceProtocol
@@ -23,6 +24,7 @@ final class ViewModelLogin: ObservableObject{
         self.password = ""
         self.isAuthenticated = false
         self.isAlertShown = false
+        self.showPassword = false
     }
     var isFormValid: Bool{
         return !email.isEmpty && !password.isEmpty

@@ -1,13 +1,14 @@
 //
-//  ViewLogin.swift
-//  Falchaa
+//  TourGuide.swift
+//  ems_ios
 //
-//  Created by MacMini on 25/12/2025.
+//  Created by MacMini on 14/05/2026.
 //
 import SwiftUI
 
-struct ViewLogin: View {
-    @StateObject var viewModel =  ViewModelLogin()
+struct TourGuid: View {
+    @State var  showPassword: Bool = false
+    @State var text: String = ""
     var body: some View {
         VStack {
             ZStack {
@@ -62,15 +63,12 @@ struct ViewLogin: View {
                             .padding(.leading, 10)
                         
                         TextField(
-                            text: $viewModel.email,
+                            text: $text,
                             prompt: Text("Email Address").foregroundStyle(
                                 Color.white.opacity(0.5)
                             )
                         ) {
                         }
-                        .autocorrectionDisabled(true)
-                        .textInputAutocapitalization(.never)
-
                     }
                     .foregroundStyle(Color.white.opacity(0.5))
                     .padding([.leading, .trailing], 6)
@@ -92,33 +90,29 @@ struct ViewLogin: View {
                             .foregroundStyle(Color.white.opacity(0.5))
                             .padding(.leading, 10)
                         
-                        if viewModel.showPassword {
+                        if showPassword {
                             TextField(
-                                text: $viewModel.password,
+                                text: $text,
                                 prompt: Text("Password").foregroundStyle(
                                     Color.white.opacity(0.5)
                                 )
                             ) {
                             }
-                            .autocorrectionDisabled(true)
-                            .textInputAutocapitalization(.never)
                         }
                         else {
                             SecureField(
-                                text: $viewModel.password,
+                                text: $text,
                                 prompt: Text("Password").foregroundStyle(
                                     Color.white.opacity(0.5)
                                 )
                             ) {
                             }
-                            .autocorrectionDisabled(true)
-                            .textInputAutocapitalization(.never)
                         }
                         Spacer()
                         Button(action: {
-                            viewModel.showPassword.toggle()
+                            showPassword.toggle()
                         }, label: {
-                            if viewModel.showPassword {
+                            if showPassword {
                                 Image(systemName: "eye.slash.fill")
                             }
                             else {
