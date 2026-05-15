@@ -7,7 +7,8 @@
 import SwiftUI
 
 struct ViewLogin: View {
-    @StateObject var viewModel =  ViewModelLogin()
+    @EnvironmentObject var coordinator: RouteCoordinator
+    @StateObject var viewModel = ViewModelLogin()
     var body: some View {
         VStack {
             ZStack {
@@ -60,7 +61,7 @@ struct ViewLogin: View {
                         Image(systemName: "envelope")
                             .foregroundStyle(Color.white.opacity(0.5))
                             .padding(.leading, 10)
-                        
+
                         TextField(
                             text: $viewModel.email,
                             prompt: Text("Email Address").foregroundStyle(
@@ -74,16 +75,16 @@ struct ViewLogin: View {
                     }
                     .foregroundStyle(Color.white.opacity(0.5))
                     .padding([.leading, .trailing], 6)
-                    .padding([.top, .bottom],20)
+                    .padding([.top, .bottom], 20)
                     .overlay(
                         RoundedRectangle(
-                            cornerRadius:12
+                            cornerRadius: 12
                         )
-                        .stroke(glassWhite, lineWidth:3)
+                        .stroke(glassWhite, lineWidth: 3)
                     )
                     .background(glassWhite)
                     .clipShape(
-                        RoundedRectangle(cornerRadius:12)
+                        RoundedRectangle(cornerRadius: 12)
                     )
                     .padding([.leading, .trailing], 10)
                     .padding(.top, 20)
@@ -91,7 +92,7 @@ struct ViewLogin: View {
                         Image(systemName: "lock")
                             .foregroundStyle(Color.white.opacity(0.5))
                             .padding(.leading, 10)
-                        
+
                         if viewModel.showPassword {
                             TextField(
                                 text: $viewModel.password,
@@ -102,8 +103,7 @@ struct ViewLogin: View {
                             }
                             .autocorrectionDisabled(true)
                             .textInputAutocapitalization(.never)
-                        }
-                        else {
+                        } else {
                             SecureField(
                                 text: $viewModel.password,
                                 prompt: Text("Password").foregroundStyle(
@@ -115,57 +115,77 @@ struct ViewLogin: View {
                             .textInputAutocapitalization(.never)
                         }
                         Spacer()
-                        Button(action: {
-                            viewModel.showPassword.toggle()
-                        }, label: {
-                            if viewModel.showPassword {
-                                Image(systemName: "eye.slash.fill")
+                        Button(
+                            action: {
+                                viewModel.showPassword.toggle()
+                            },
+                            label: {
+                                if viewModel.showPassword {
+                                    Image(systemName: "eye.slash.fill")
+                                } else {
+                                    Image(systemName: "eye.fill")
+                                }
                             }
-                            else {
-                                Image(systemName: "eye.fill")
-                            }
-                        })
+                        )
                     }
                     .foregroundStyle(Color.white.opacity(0.5))
                     .padding([.leading, .trailing], 6)
-                    .padding([.top, .bottom],20)
+                    .padding([.top, .bottom], 20)
                     .overlay(
                         RoundedRectangle(
-                            cornerRadius:12
+                            cornerRadius: 12
                         )
-                        .stroke(glassWhite, lineWidth:3)
+                        .stroke(glassWhite, lineWidth: 3)
                     )
                     .background(glassWhite)
                     .clipShape(
-                        RoundedRectangle(cornerRadius:12)
+                        RoundedRectangle(cornerRadius: 12)
                     )
                     .padding([.leading, .trailing], 10)
                     .padding(.top, 10)
-                    Button(action:  {
-                    }, label: {
-                        Text("Sign In")
-                            .foregroundStyle(darkBlue)
-                            .font(.headline)
-                    })
+                    Button(
+                        action: {
+                            Task {
+                                await viewModel.login()
+                                if !viewModel.errorOccured {
+                                    coordinator.navigate(to: .tabbar)
+                                }
+                            }
+                        },
+                        label: {
+                            if viewModel.uiState == .loading {
+                                ProgressView()
+                            } else if viewModel.uiState == .idle {
+                                Text("Sign In")
+                                    .foregroundStyle(darkBlue)
+                                    .font(.headline)
+                            }
+                        }
+                    )
+                    .disabled(!viewModel.isFormValid)
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(pureWhite)
                     .clipShape(
-                        RoundedRectangle(cornerRadius:10)
+                        RoundedRectangle(cornerRadius: 10)
                     )
-                    .overlay (
-                        RoundedRectangle(cornerRadius:10)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
                             .stroke(.white, lineWidth: 1)
                     )
                     .padding([.leading, .trailing], 10.5)
                     .padding(.top, 10)
-                Text("Forgot Password?")
+                    Text("Forgot Password?")
                         .foregroundStyle(pureWhite)
                         .padding(.top, 10)
                 }
             }
             .ignoresSafeArea()
         }
+        .alert("Alert", isPresented: $viewModel.errorOccured) {
+            Button("Ok", role: .cancel) {}
+        } message: {
+            Text(viewModel.errorMessage)
+        }
     }
 }
-

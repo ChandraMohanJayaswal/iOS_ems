@@ -8,11 +8,6 @@
 import Foundation
 enum AppConfig {
     static let baseURL: String = {
-        guard let value = Bundle.main.object(
-            forInfoDictionaryKey: "BASE_URL"
-        ) as? String else {
-            fatalError("BASE_URL not found")
-        }
-        return "http://" + value
+        return "http://localhost:9090"
     }()
 }
