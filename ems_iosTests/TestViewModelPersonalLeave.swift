@@ -28,7 +28,7 @@ final class MockViewModelPersonalLeaveService: ViewModelPersonalLeaveServiceProt
         }
     }
 }
-
+@MainActor
 struct TestViewModelPersonalLeave {
     let apiService: MockViewModelPersonalLeaveService
     let viewModel: ViewModelPersonalLeave

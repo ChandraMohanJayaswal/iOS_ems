@@ -44,10 +44,12 @@ final class DefaultAPIClient<EndpointType: APIEndPoint>{
             request.httpBody = try? JSONSerialization.data(withJSONObject: body)
         }
         do {
+            print(request.url?.absoluteString)
             let (data, response) = try await URLSession.shared.data(for: request)
-            guard let httpResponse = response as? HTTPURLResponse, 200..<300 ~= httpResponse.statusCode else {
-                throw APIError.invalidResponse
-            }
+//            guard let httpResponse = response as? HTTPURLResponse, 200..<300 ~= httpResponse.statusCode else {
+//                throw APIError.invalidResponse
+//            }
+            print(data)
             return data
         }
         catch {

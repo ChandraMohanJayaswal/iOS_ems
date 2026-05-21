@@ -19,6 +19,7 @@ struct ToolbarSideMenu: ViewModifier {
                     } label: {
                         Image(systemName: "line.3.horizontal")
                     }
+                    .accessibilityIdentifier("sidemenuButton")
                 }
             }
     }
