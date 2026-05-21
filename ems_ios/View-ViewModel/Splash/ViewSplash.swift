@@ -42,7 +42,7 @@ struct ViewSplash:View{
                                 coordinator.navigate(to: .tabbar)
                             }
                             else {
-                                coordinator.navigate(to: .login)
+                                coordinator.navigate(to: .onBoarding)
                             }
                         }
                     }

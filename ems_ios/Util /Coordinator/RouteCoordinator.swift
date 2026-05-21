@@ -8,17 +8,18 @@
 import Foundation
 import SwiftUI
 import Combine
-enum AppScreen{
+enum AppScreen {
     case login
     case splash
     case tabbar
     case sideMenu
     case userProfile
+    case onBoarding
 }
 class RouteCoordinator: ObservableObject{
     @Published var selectedTab: Int = 0
     @Published var currentScreen: AppScreen = .splash
-    func navigate(to: AppScreen){
+    func navigate(to: AppScreen) {
         currentScreen = to
     }
 }
@@ -41,6 +42,9 @@ struct ViewRoot: View{
                 .environmentObject(coordinator)
         case .userProfile:
             ViewUserProfile()
+                .environmentObject(coordinator)
+        case .onBoarding:
+            ViewOnBoarding()
                 .environmentObject(coordinator)
         }
     }
