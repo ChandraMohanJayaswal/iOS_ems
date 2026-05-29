@@ -28,7 +28,7 @@ enum EndPointLeaveType: APIEndPoint{
     var headers: [String : String]?{
         switch self{
         case .getLeaveTypes:
-            return ["Authorization": "Bearer \(KeychainSwift().get("user_token")!)"]
+            return ["Authorization": "Bearer \(KeychainSwift().get("user_token") ?? " ")"]
 
         }
     }

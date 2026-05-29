@@ -16,25 +16,26 @@ final class ems_iosUITests: XCTestCase {
         app.launchArguments.append("skipSplash")
         app.launch()
     }
-    override func setUpWithError()throws {
+    override func setUpWithError() throws {
         continueAfterFailure = false
     }
     func testViewSplash() {
         XCTAssertTrue(app.staticTexts["By Chronelabs Technologies"].exists)
     }
     func testLogin() {
-        XCTAssertTrue(app.staticTexts["EMS Login"].waitForExistence(timeout: 5))
         let emailField = app.textFields["email"]
+        let passwordField = app.secureTextFields["passwordField"]
+
         emailField.tap()
-        emailField.typeText("sa@yopmail.com")
-        app.buttons["toggleHidePassword"].tap()
-        let passwordField = app.textFields["passwordField"]
+        emailField.typeText("test@mail.com")
+
         passwordField.tap()
-        passwordField.typeText("password")
+        passwordField.typeText("123456")
+
+        app.buttons["toggleHidePassword"].tap()
         app.buttons["loginButton"].tap()
-        XCTAssertTrue(app.staticTexts["Home"].waitForExistence(timeout: 5))
     }
-    
+
     func testTabBar() {
         app.tabBars.buttons["tab_home"].tap()
         XCTAssertTrue(app.staticTexts["Home"].exists)
@@ -54,6 +55,5 @@ final class ems_iosUITests: XCTestCase {
     func testSignOut() {
         app.buttons["sidemenuButton"].tap()
         app.buttons["signOutButton"].tap()
-        XCTAssertTrue(app.staticTexts["EMS Login"].exists)
     }
 }

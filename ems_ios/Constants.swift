@@ -16,13 +16,13 @@ let deepIndigo       = Color(red: 52/255, green: 56/255, blue: 221/255)
 let vividIndigo      = Color(red: 43/255, green: 47/255, blue: 209/255)
 let darkBlue         = Color(red: 38/255, green: 44/255, blue: 207/255)
 
-let pureWhite        = Color.white
-let glassWhiteLight  = Color.white.opacity(0.08)
-let glassWhite       = Color.white.opacity(0.12)
-let glassWhiteBold   = Color.white.opacity(0.20)
+let pureWhite = Color.white
+let glassWhiteLight = Color.white.opacity(0.08)
+let glassWhite = Color.white.opacity(0.12)
+let glassWhiteBold = Color.white.opacity(0.20)
 
-let softWhite        = Color(red: 232/255, green: 234/255, blue: 255/255)
-let paleLavender     = Color(red: 201/255, green: 204/255, blue: 248/255)
+let softWhite = Color(red: 232/255, green: 234/255, blue: 255/255)
+let paleLavender = Color(red: 201/255, green: 204/255, blue: 248/255)
 let mutedLavender    = Color(red: 142/255, green: 146/255, blue: 201/255)
 
 let borderBlue       = Color(red: 107/255, green: 112/255, blue: 232/255)

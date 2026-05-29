@@ -30,7 +30,7 @@ enum EndPointFiscalYear: APIEndPoint{
     var headers: [String: String]? {
         switch self{
         case .getFiscalYear, .getPublicHoliday:
-            return ["Authorization": "Bearer \(KeychainSwift().get("user_token")!)"]
+            return ["Authorization": "Bearer \(KeychainSwift().get("user_token") ?? "")"]
         }
     }
     var parameters: [String: Any]?{

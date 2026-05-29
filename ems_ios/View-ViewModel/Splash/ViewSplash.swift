@@ -38,13 +38,13 @@ struct ViewSplash:View{
                             coordinator.navigate(to: .tabbar)
                         }
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                            if UserDefaults.standard.bool(forKey:"isUserLoggedIn"){
+                            let isUITestLoggedIn = CommandLine.arguments.contains("skipSplash")
+
+                            if isUITestLoggedIn || UserDefaults.standard.bool(forKey: "isUserLoggedIn") {
                                 coordinator.navigate(to: .tabbar)
-                            }
-                            else {
-                                coordinator.navigate(to: .onBoarding)
-                            }
-                        }
+                            } else {
+                                coordinator.navigate(to: .login)
+                            }                        }
                     }
             }
     }

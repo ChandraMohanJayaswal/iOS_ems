@@ -153,6 +153,7 @@ struct OnBoardingPageView: View {
                 .font(.subheadline)
                 .fontWeight(.medium)
                 .foregroundStyle(.white)
+                .offset(x: 0, y: isAnimating ? 0 : 200)
                 .animation(.smooth, value: isAnimating)
         }
         .onAppear {

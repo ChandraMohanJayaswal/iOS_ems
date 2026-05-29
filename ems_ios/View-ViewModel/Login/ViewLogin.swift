@@ -69,6 +69,7 @@ struct ViewLogin: View {
                             )
                         ) {
                         }
+                        .accessibilityIdentifier("email")
                         .autocorrectionDisabled(true)
                         .textInputAutocapitalization(.never)
 
@@ -101,6 +102,7 @@ struct ViewLogin: View {
                                 )
                             ) {
                             }
+                            .accessibilityIdentifier("passwordField")
                             .autocorrectionDisabled(true)
                             .textInputAutocapitalization(.never)
                         } else {
@@ -111,6 +113,7 @@ struct ViewLogin: View {
                                 )
                             ) {
                             }
+                            .accessibilityIdentifier("passwordField")
                             .autocorrectionDisabled(true)
                             .textInputAutocapitalization(.never)
                         }
@@ -127,6 +130,7 @@ struct ViewLogin: View {
                                 }
                             }
                         )
+                        .accessibilityIdentifier("toggleHidePassword")
                     }
                     .foregroundStyle(Color.white.opacity(0.5))
                     .padding([.leading, .trailing], 6)
@@ -162,6 +166,7 @@ struct ViewLogin: View {
                             }
                         }
                     )
+                    .accessibilityIdentifier("loginButton")
                     .disabled(!viewModel.isFormValid)
                     .padding()
                     .frame(maxWidth: .infinity)
@@ -186,6 +191,7 @@ struct ViewLogin: View {
             Button("Ok", role: .cancel) {}
         } message: {
             Text(viewModel.errorMessage)
+                .accessibilityIdentifier("loginErrorMessage")
         }
     }
 }

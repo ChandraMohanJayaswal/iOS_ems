@@ -36,7 +36,7 @@ enum EndPointPersonalLeave: APIEndPoint {
     var headers: [String : String]?{
         switch self{
         case .postPersonalLeave, .getPersonalLeave:
-            return ["Authorization": "Bearer \(KeychainSwift().get("user_token")!)",
+            return ["Authorization": "Bearer \(KeychainSwift().get("user_token") ?? "")",
                     "Content-Type": "application/json"]
         }
     }

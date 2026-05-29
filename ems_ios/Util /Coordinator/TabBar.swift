@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftUI
-struct ViewTabBar:View{
+struct ViewTabBar:View {
     @EnvironmentObject var coordinator: RouteCoordinator
     var body: some View{
         TabView(selection:$coordinator.selectedTab){
