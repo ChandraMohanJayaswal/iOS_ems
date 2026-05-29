@@ -48,4 +48,7 @@ final class ViewModelLogin: ObservableObject {
             })
         self.uiState = .idle
     }
+    deinit {
+        print("View Model Login Deinitialized")
+    }
 }

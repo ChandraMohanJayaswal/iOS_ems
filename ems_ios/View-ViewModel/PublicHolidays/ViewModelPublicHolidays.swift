@@ -24,7 +24,7 @@ final class ViewModelPublicHolidays: ObservableObject{
         self.fiscalYearList = []
         self.selectedYear = "All"
     }
-    func fetchFiscalYearFromServer () async{
+    func fetchFiscalYearFromServer () async {
         self.uiState = .loading
         self.fiscalYearList = []
         await apiService.getFiscalYear { (result) in
@@ -34,7 +34,7 @@ final class ViewModelPublicHolidays: ObservableObject{
         }
         self.uiState = .idle
     }
-    func searchPublicHolidays(){
+    func searchPublicHolidays() {
         if selectedYear == "All"{
             searchedPublicHolidayList = allpublicHolidayList
         }
@@ -47,7 +47,7 @@ final class ViewModelPublicHolidays: ObservableObject{
             }
         }
     }
-    func fetchPublicHolidaysFromServer() async{
+    func fetchPublicHolidaysFromServer() async {
         self.uiState = .loading
         self.allpublicHolidayList.removeAll()
         await apiService.getPublicHolidays{ result in
@@ -57,7 +57,7 @@ final class ViewModelPublicHolidays: ObservableObject{
         }
         self.uiState = .idle
     }
-    func truncateDescription(_ text: String) -> String{
-        return String(text.prefix(5) + "...")
+    func truncateDescription(_ text: String) -> String {
+        return String(text.prefix(15) + "...")
     }
 }

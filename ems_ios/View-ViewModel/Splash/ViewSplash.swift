@@ -39,18 +39,18 @@ struct ViewSplash: View {
                     value: angle
                 )
                 .onAppear {
-                    angle = 360
-                    scaledValue = 1.2
-                    if viewModel.shouldSkipSplash {
+//                    angle = 360
+//                    scaledValue = 1.2
+//                    if viewModel.shouldSkipSplash {
+//                        coordinator.navigate(to: .tabbar)
+//                    }
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                         coordinator.navigate(to: .tabbar)
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                        if UserDefaults.standard.bool(forKey: "isLoggedIn") {
-                            coordinator.navigate(to: .tabbar)
-                        } else {
-                            coordinator.navigate(to: .login)
-                        }
-                    }
+//                        if UserDefaults.standard.bool(forKey: "isUserLoggedIn") {
+//                        } else {
+//                            coordinator.navigate(to: .login)
+//                        }
+//                    }
                 }
         }
     }

@@ -5,84 +5,95 @@
 //  Created by MacMini on 26/12/2025.
 //
 import SwiftUI
-struct ViewPublicHolidays : View{
+
+struct ViewPublicHolidays: View {
     @StateObject var viewModel = ViewModelPublicHolidays()
-    var body: some View{
-        NavigationStack{
-            VStack{
-                if viewModel.uiState == .loading{
+    var body: some View {
+        NavigationStack {
+            VStack {
+                if viewModel.uiState == .loading {
                     ProgressView()
-            }
-            else {
-                Form{
-                    Picker("Select Year", selection:$viewModel.selectedYear){
+                } else {
+                    Picker(
+                        "Select Year",
+                        selection: $viewModel.selectedYear
+                    ) {
                         Text("All")
                             .tag("All")
-                        ForEach(viewModel.fiscalYearList){ item in
-                            Text("\(item.fiscalYear ?? "NA")").tag(item.fiscalYear ?? "NA")
+                        ForEach(viewModel.fiscalYearList) { item in
+                            Text("\(item.showingYear ?? "NA")").tag(
+                                item.fiscalYear ?? "NA"
+                            )
                         }
                     }
-                    .onChange(of:viewModel.selectedYear){
+                    .onChange(of: viewModel.selectedYear) {
                         viewModel.searchPublicHolidays()
                     }
                     .pickerStyle(.menu)
-                    List{
-                        ForEach(viewModel.searchedPublicHolidayList ){ item in
-                            PublicHolidaysCard(date: item.date ?? "NA", fiscalYear:item.fiscalYear?.fiscalYear ?? "NA",  showingYear: item.fiscalYear?.showingYear ?? "NA", description: item.description ?? "NA", viewModel: viewModel)
+                    ScrollView {
+                        ForEach(viewModel.searchedPublicHolidayList) {
+                            item in
+                            PublicHolidaysCard(
+                                date: item.date ?? "NA",
+                                showingYear: item.fiscalYear?.showingYear
+                                    ?? "NA",
+                                description: item.description ?? "NA",
+                                viewModel: viewModel
+                            )
+                            Divider()
                         }
                     }
-                }
                 }
             }
             .modifier(ToolbarSideMenu())
             .navigationTitle("Public Holidays")
-            .navigationBarTitleDisplayMode( .inline)
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .onAppear{
-            Task{
-             await viewModel.fetchFiscalYearFromServer()
-            await viewModel.fetchPublicHolidaysFromServer()
-                 viewModel.searchPublicHolidays()
+        .onAppear {
+            Task {
+                await viewModel.fetchFiscalYearFromServer()
+                await viewModel.fetchPublicHolidaysFromServer()
+                viewModel.searchPublicHolidays()
             }
         }
         .refreshable {
-                        
-                        Task{
-                            await viewModel.fetchFiscalYearFromServer()
-                            await viewModel.fetchPublicHolidaysFromServer()
-                            viewModel.searchPublicHolidays()
-                        }
-                    }
+            Task {
+                await viewModel.fetchFiscalYearFromServer()
+                await viewModel.fetchPublicHolidaysFromServer()
+                viewModel.searchPublicHolidays()
+            }
+        }
     }
 }
-#Preview{
+#Preview {
     ViewPublicHolidays()
-//    PublicHolidaysCard()
+    //    PublicHolidaysCard()
 }
 
-struct PublicHolidaysCard: View{
+struct PublicHolidaysCard: View {
     var date: String
-    var fiscalYear: String
     var showingYear: String
     var description: String
     @ObservedObject var viewModel: ViewModelPublicHolidays
     @State var isPresented: Bool = false
-    var body: some View{
-        VStack(alignment:.leading){
-            HStack{
-                Text("Date: " + date)
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(
+                viewModel.truncateDescription(description)
+            )
+            HStack {
                 Spacer()
-                Text("Fiscal year:" + fiscalYear)
+                Text(date)
             }
-            Spacer()
-            Text("Description: " + viewModel.truncateDescription(description))
         }
-        .onTapGesture{
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .onTapGesture {
             isPresented.toggle()
         }
-        .sheet(isPresented: $isPresented){
-            NavigationStack{
-                VStack(alignment:.leading, spacing:20){
+        .sheet(isPresented: $isPresented) {
+            NavigationStack {
+                VStack(alignment: .leading, spacing: 20) {
                     Divider()
                     Text("Date: " + date)
                     Divider()
@@ -92,8 +103,8 @@ struct PublicHolidaysCard: View{
                     Divider()
                 }
                 .padding()
-                .toolbar{
-                    Button("Close"){
+                .toolbar {
+                    Button("Close") {
                         isPresented.toggle()
                     }
                     .foregroundStyle(.red)
@@ -101,6 +112,5 @@ struct PublicHolidaysCard: View{
                 Spacer()
             }
         }
-        .padding()
     }
 }
