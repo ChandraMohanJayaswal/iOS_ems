@@ -8,6 +8,8 @@
 import Foundation
 enum AppConfig {
     static let baseURL: String = {
-        return "http://localhost:9090"
+//        return "http://localhost:9090"
+        return "http://192.168.0.101:9090"
+
     }()
 }
