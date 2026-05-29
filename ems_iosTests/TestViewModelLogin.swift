@@ -24,9 +24,9 @@ struct TestViewModelLogin{
         self.apiService = MockViewModelLoginService()
         self.viewModel = ViewModelLogin(apiService: apiService)
     }
-    @Test func testLoginSuccess ()async{
+    @Test func testLoginSuccess() async{
         await viewModel.login()
-        #expect(viewModel.isAuthenticated)
+        #expect(viewModel.uiState == .idle)
     }
     @Test func testLoginFailure()async{
         apiService.shouldSucceed = false
