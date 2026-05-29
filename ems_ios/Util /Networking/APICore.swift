@@ -44,12 +44,21 @@ final class DefaultAPIClient<EndpointType: APIEndPoint>{
             request.httpBody = try? JSONSerialization.data(withJSONObject: body)
         }
         do {
-            print(request.url?.absoluteString)
-            let (data, response) = try await URLSession.shared.data(for: request)
-//            guard let httpResponse = response as? HTTPURLResponse, 200..<300 ~= httpResponse.statusCode else {
-//                throw APIError.invalidResponse
-//            }
-            print(data)
+            let (data, _) = try await URLSession.shared.data(for: request)
+            print("===== REQUEST =====")
+            print("URL:", request.url?.absoluteString ?? "nil")
+            print("Method:", request.httpMethod ?? "nil")
+            print("Headers:", request.allHTTPHeaderFields ?? [:])
+            do {
+                let jsonObject = try JSONSerialization.jsonObject(with: data)
+                let prettyData = try JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted)
+
+                if let prettyString = String(data: prettyData, encoding: .utf8) {
+                    print("Pretty JSON:\n", prettyString)
+                }
+            } catch {
+                print("Failed to parse JSON:", error)
+            }
             return data
         }
         catch {
@@ -58,5 +67,4 @@ final class DefaultAPIClient<EndpointType: APIEndPoint>{
         throw APIError.invalidResponse
     }
 }
-// Upto here is the generalized one
 
