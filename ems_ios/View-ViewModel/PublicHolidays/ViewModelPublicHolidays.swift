@@ -51,7 +51,7 @@ final class ViewModelPublicHolidays: ObservableObject{
         self.uiState = .loading
         self.allpublicHolidayList.removeAll()
         await apiService.getPublicHolidays{ result in
-            for item in result{
+            for item in result {
                 self.allpublicHolidayList.append(item)
             }
         }

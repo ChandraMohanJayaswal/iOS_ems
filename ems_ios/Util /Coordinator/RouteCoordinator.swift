@@ -26,7 +26,7 @@ class RouteCoordinator: ObservableObject{
 struct ViewRoot: View{
     @EnvironmentObject var coordinator: RouteCoordinator
     var body: some View{
-        switch coordinator.currentScreen{
+        switch coordinator.currentScreen {
         case .login:
             ViewLogin()
                 .environmentObject(coordinator)
