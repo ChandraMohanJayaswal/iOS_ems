@@ -51,4 +51,7 @@ struct PublicHolidaysAPIResponseDetails: Decodable, Identifiable{
         date = container.decodeSafe(String.self, forKey: .date)
         description = container.decodeSafe(String.self, forKey: .description)
     }
+    var dateString: Date? {
+        self.date?.stringToDate()
+    }
 }
