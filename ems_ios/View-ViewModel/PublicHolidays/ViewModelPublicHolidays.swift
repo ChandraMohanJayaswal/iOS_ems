@@ -71,6 +71,18 @@ final class ViewModelPublicHolidays: ObservableObject {
             $0.date ?? Date() < $1.date ?? Date()
         })
     }
+    func checkDatePassed(_ date: Date?) -> Bool {
+        guard let date = date else {
+            print("No date")
+            return false
+        }
+        if date < Date.now {
+            return true
+        }
+        else {
+            return false
+        }
+    }
     func truncateFiscalYear(_ string: String?) -> String {
         guard let string else {
             print("No string")
