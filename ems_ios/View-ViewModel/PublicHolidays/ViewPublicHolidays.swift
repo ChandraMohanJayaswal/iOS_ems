@@ -56,7 +56,7 @@ struct ViewPublicHolidays: View {
                     ForEach(viewModel.searchedPublicHolidayList) {
                         item in
                         PublicHolidaysCard(
-                            date: item.dateString,
+                            date: item.date,
                             showingYear: item.fiscalYear?.showingYear
                                 ?? "NA",
                             description: item.description ?? "NA",

@@ -30,28 +30,28 @@ struct PublicHolidaysAPIResponseList: Decodable{
 struct PublicHolidaysAPIResponseDetails: Decodable, Identifiable{
     let id: Int?
     let fiscalYear: PublicHoliday?
-    let date: String?
+    let dateString: String?
     let description: String?
     enum CodingKeys: String, CodingKey{
         case id = "id"
         case fiscalYear = "fiscalYearRes"
-        case date = "date"
+        case dateString = "date"
         case description = "description"
     }
     init(id: Int, fiscalYear: PublicHoliday?, date: String?, description: String?){
         self.id = id
         self.fiscalYear = fiscalYear
-        self.date = date
+        self.dateString = date
         self.description = description
     }
     init(from decoder: any Decoder) throws{
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = container.decodeSafe(Int.self, forKey: .id)
         fiscalYear = container.decodeSafe(PublicHoliday.self, forKey: .fiscalYear)
-        date = container.decodeSafe(String.self, forKey: .date)
+        dateString = container.decodeSafe(String.self, forKey: .dateString)
         description = container.decodeSafe(String.self, forKey: .description)
     }
-    var dateString: Date? {
-        self.date?.stringToDate()
+    var date: Date? {
+        self.dateString?.stringToDate()
     }
 }

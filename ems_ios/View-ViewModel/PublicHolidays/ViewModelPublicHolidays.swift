@@ -68,7 +68,7 @@ final class ViewModelPublicHolidays: ObservableObject {
     }
     func sortPublicHolidayList() {
         searchedPublicHolidayList.sort(by: {
-            $0.dateString ?? Date() < $1.dateString ?? Date()
+            $0.date ?? Date() < $1.date ?? Date()
         })
     }
     func truncateFiscalYear(_ string: String?) -> String {
