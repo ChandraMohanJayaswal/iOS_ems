@@ -36,18 +36,18 @@ struct ViewPublicHolidays: View {
                         )
                         Spacer()
                         Picker(
-                            "Select Year",
-                            selection: $viewModel.selectedYear
-                        ) {
-                            Text("All")
-                                .tag("All")
-                            ForEach(viewModel.fiscalYearList) { item in
-                                Text("\(item.showingYear ?? "NA")").tag(
-                                    item.fiscalYear ?? "NA"
-                                )
+                            "Year",
+                            selection: $viewModel.selectedYear,
+                            content: {
+                                Text("All")
+                                    .tag("All")
+                                ForEach(viewModel.fiscalYearList) { item in
+                                    Text(viewModel.truncateFiscalYear(item.showingYear))
+                                        .tag(item.fiscalYear ?? "NA")
+                                }
                             }
-                        }
-                        .pickerStyle(.automatic)
+                        )
+                        .pickerStyle(.menu)
                     }
                 }
                 .padding([.leading, .top, .trailing], 10)
@@ -56,7 +56,7 @@ struct ViewPublicHolidays: View {
                     ForEach(viewModel.searchedPublicHolidayList) {
                         item in
                         PublicHolidaysCard(
-                            date: item.date,
+                            date: item.dateString,
                             showingYear: item.fiscalYear?.showingYear
                                 ?? "NA",
                             description: item.description ?? "NA",
@@ -91,7 +91,7 @@ struct ViewPublicHolidays: View {
 }
 
 struct PublicHolidaysCard: View {
-    var date: String?
+    var date: Date?
     var showingYear: String
     var description: String
     @ObservedObject var viewModel: ViewModelPublicHolidays
@@ -106,9 +106,8 @@ struct PublicHolidaysCard: View {
                             description
                         )
                         Spacer()
-                        if let date = date, let dateString = date.stringToDate()
-                        {
-                            Text(dateString, style: .date)
+                        if let date = date {
+                            Text(date, style: .date)
                         }
                     }
                 }
@@ -121,8 +120,8 @@ struct PublicHolidaysCard: View {
         .sheet(isPresented: $isPresented) {
             NavigationStack {
                 VStack(alignment: .leading, spacing: 20) {
-                    if let date = date, let dateString = date.stringToDate() {
-                        Text(dateString, style: .date)
+                    if let date = date {
+                        Text(date, style: .date)
                     }
                     Divider()
                         .background(COLOR_GRAY)

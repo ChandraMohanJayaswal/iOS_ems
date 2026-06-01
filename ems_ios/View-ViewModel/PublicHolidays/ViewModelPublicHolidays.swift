@@ -46,6 +46,7 @@ final class ViewModelPublicHolidays: ObservableObject{
                 }
             }
         }
+        sortPublicHolidayList()
     }
     func fetchPublicHolidaysFromServer() async {
         self.uiState = .loading
@@ -56,20 +57,26 @@ final class ViewModelPublicHolidays: ObservableObject{
             }
         }
         self.uiState = .idle
+        self.sortPublicHolidayList()
     }
-    func truncateDescription(_ text: String) -> String {
-        return String(text.prefix(15) + "...")
+    func sortPublicHolidayList() {
+        searchedPublicHolidayList.sort(by: {$0.dateString ?? Date() < $1.dateString ?? Date()})
     }
-    func stringToDate(_ string: String?) -> Date? {
-        guard let dateString = string else {
-            print("No date string")
-            return nil
+    func truncateFiscalYear(_ string: String?) -> String {
+        guard let string else {
+            print("No string")
+            return ""
         }
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        if let date = formatter.date(from: dateString) {
-            return date
+        var truncatedString: String  = ""
+        var lookUpArray: [Int] = [10, 11, 15, 16]
+        for (index, character) in  string.enumerated() {
+            if lookUpArray.contains(index) {
+                truncatedString.append(character)
+            }
+            if index == 11 {
+                truncatedString.append("-")
+            }
         }
-        return nil
+        return truncatedString
     }
 }
