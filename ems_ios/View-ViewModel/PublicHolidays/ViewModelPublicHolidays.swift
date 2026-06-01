@@ -60,16 +60,4 @@ final class ViewModelPublicHolidays: ObservableObject{
     func truncateDescription(_ text: String) -> String {
         return String(text.prefix(15) + "...")
     }
-    func stringToDate(_ string: String?) -> Date? {
-        guard let dateString = string else {
-            print("No date string")
-            return nil
-        }
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        if let date = formatter.date(from: dateString) {
-            return date
-        }
-        return nil
-    }
 }
