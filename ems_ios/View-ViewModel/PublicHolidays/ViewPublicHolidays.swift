@@ -42,8 +42,12 @@ struct ViewPublicHolidays: View {
                                 Text("All")
                                     .tag("All")
                                 ForEach(viewModel.fiscalYearList) { item in
-                                    Text(viewModel.truncateFiscalYear(item.showingYear))
-                                        .tag(item.fiscalYear ?? "NA")
+                                    Text(
+                                        viewModel.truncateFiscalYear(
+                                            item.showingYear
+                                        )
+                                    )
+                                    .tag(item.fiscalYear ?? "NA")
                                 }
                             }
                         )
@@ -115,6 +119,8 @@ struct PublicHolidaysCard: View {
             Divider()
                 .background(COLOR_GRAY)
         }
+        .foregroundStyle(viewModel.checkDatePassed(self.date) ? .gray : .black)
+        .fontWeight(.medium)
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
         .sheet(isPresented: $isPresented) {
