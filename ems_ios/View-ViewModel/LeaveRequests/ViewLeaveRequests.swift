@@ -6,31 +6,73 @@
 //
 
 import SwiftUI
+
 struct ViewLeaveRequests: View {
+    @EnvironmentObject var coordinator: RouteCoordinator
     @StateObject var viewModel = ViewModelLeaveRequests()
     var body: some View {
-        NavigationStack{
-            List{
-                    ForEach(viewModel.leaveRequests){ item in
-                        LeaveRequestsListView(leaveType:item.leaveTypeRes.typeOfLeave, leaveRequestedDate: item.leaveRequestedDate, leaveRequestedTime: item.leaveRequestedTime, leaveFromDate: item.leaveFromDate, leaveToDate: item.leaveToDate, description: item.description, leaveStatus: item.leaveStatusRes.statusType, comment: item.statusComment)
-                    }
+        VStack {
+            ZStack {
+                Text("Leave Requests")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                HStack {
+                    Button(
+                        action: {
+                            withAnimation(.easeInOut) {
+                                coordinator.navigate(to: .sideMenu)
+                            }
+                        },
+                        label: {
+                            Image(systemName: "line.3.horizontal")
+                                .resizable()
+                                .frame(width: 25, height: 15)
+                                .foregroundStyle(COLOR_BLACK)
+                        }
+                    )
+                    Spacer()
+                }
             }
-                .navigationTitle("Leave Requests")
-                .navigationBarTitleDisplayMode( .inline )
-                .modifier(ToolbarSideMenu())
-        }.refreshable {
-            Task{
+            .padding([.leading, .top, .trailing], 10)
+            Spacer()
+            if viewModel.leaveRequests.isEmpty {
+                Image(systemName: "tray")
+                    .resizable()
+                    .frame(width: 100, height: 100)
+                    .foregroundStyle(.gray)
+                Text("No Leave Requests")
+                    .foregroundStyle(.gray)
+                Spacer()
+            } else {
+                List {
+                    ForEach(viewModel.leaveRequests) { item in
+                        LeaveRequestsListView(
+                            leaveType: item.leaveTypeRes.typeOfLeave,
+                            leaveRequestedDate: item.leaveRequestedDate,
+                            leaveRequestedTime: item.leaveRequestedTime,
+                            leaveFromDate: item.leaveFromDate,
+                            leaveToDate: item.leaveToDate,
+                            description: item.description,
+                            leaveStatus: item.leaveStatusRes.statusType,
+                            comment: item.statusComment
+                        )
+                    }
+                }
+            }
+        }
+        .refreshable {
+            Task {
                 await viewModel.fetchMyLeaveRequestsFromServer()
             }
         }
-        .onAppear{
-            Task{
+        .onAppear {
+            Task {
                 await viewModel.fetchMyLeaveRequestsFromServer()
             }
         }
     }
 }
-struct LeaveRequestsListView: View{
+struct LeaveRequestsListView: View {
     let leaveType: String
     let leaveRequestedDate: String
     let leaveRequestedTime: String
@@ -40,60 +82,60 @@ struct LeaveRequestsListView: View{
     let leaveStatus: String
     let comment: String
     @State var isSheetPresented: Bool = false
-    var body :some View{
-        VStack{
-            Text("Requested Date: \(leaveRequestedDate)" )
+    var body: some View {
+        VStack {
+            Text("Requested Date: \(leaveRequestedDate)")
             Text("Click to detail view...")
                 .foregroundStyle(.gray)
-        }.onTapGesture{
+        }.onTapGesture {
             isSheetPresented = true
         }
-        .sheet(isPresented: $isSheetPresented){
-            NavigationStack{
-                VStack(alignment:.leading){
-                    Form{
-                        HStack{
+        .sheet(isPresented: $isSheetPresented) {
+            NavigationStack {
+                VStack(alignment: .leading) {
+                    Form {
+                        HStack {
                             Text("Leave Type: ")
                             Spacer()
                             Text("\(leaveType)")
                         }
-                        HStack{
+                        HStack {
                             Text("Requested Date:")
                             Spacer()
                             Text("\(leaveRequestedDate)")
                         }
-                        HStack{
+                        HStack {
                             Text("Requested Time: ")
                             Spacer()
                             Text("\(leaveRequestedTime)")
                         }
-                        HStack{
+                        HStack {
                             Text("From Date: ")
                             Spacer()
                             Text("\(leaveFromDate)")
                         }
-                        HStack{
+                        HStack {
                             Text("To Date:")
                             Spacer()
                             Text("\(leaveToDate)")
                         }
-                        HStack{
+                        HStack {
                             Text("Description: ")
                             Spacer()
                             Text("\(description)")
                         }
-                        HStack{
+                        HStack {
                             Text("Leave Status: ")
                             Spacer()
                             Text("\(leaveStatus)")
                         }
-                        HStack{
+                        HStack {
                             Text("Comment: ")
                             Spacer()
                             Text("\(comment)")
                         }
-                    }.toolbar{
-                        Button("Close"){
+                    }.toolbar {
+                        Button("Close") {
                             isSheetPresented.toggle()
                         }
                         .foregroundStyle(.red)

@@ -44,6 +44,7 @@ struct ViewSideMenu: View{
                         viewModel.signOut(coordinator: coordinator)
                     } label:{
                         SideMenuTabs(title:"Sign Out", icon:"door.right.hand.open")
+                            .foregroundStyle(.red)
                     }
                     .accessibilityIdentifier("signOutButton")
                     Divider()

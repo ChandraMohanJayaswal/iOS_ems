@@ -14,42 +14,49 @@ struct ViewPublicHolidays: View {
             if viewModel.uiState == .loading {
                 ProgressView()
             } else {
-                HStack {
-                    Button(
-                        action: {
-                            withAnimation(.easeInOut) {
-                                coordinator.navigate(to: .sideMenu)
+                ZStack {
+                    VStack {
+                        Text("Public Holidays")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                    }
+                    HStack {
+                        Button(
+                            action: {
+                                withAnimation(.easeInOut) {
+                                    coordinator.navigate(to: .sideMenu)
+                                }
+                            },
+                            label: {
+                                Image(systemName: "line.3.horizontal")
+                                    .resizable()
+                                    .frame(width: 25, height: 15)
+                                    .foregroundStyle(COLOR_BLACK)
                             }
-                        },
-                        label: {
-                            Image(systemName: "line.3.horizontal")
-                                .padding(.trailing, 20)
-                                .foregroundStyle(COLOR_BLACK)
+                        )
+                        Spacer()
+                        Picker(
+                            "Select Year",
+                            selection: $viewModel.selectedYear
+                        ) {
+                            Text("All")
+                                .tag("All")
+                            ForEach(viewModel.fiscalYearList) { item in
+                                Text("\(item.showingYear ?? "NA")").tag(
+                                    item.fiscalYear ?? "NA"
+                                )
+                            }
                         }
-                    )
-                    Text("Public Holidays")
-                    Spacer()
-                    Text("Year:")
-                    Picker(
-                        "Select Year",
-                        selection: $viewModel.selectedYear
-                    ) {
-                        Text("All")
-                            .tag("All")
-                        ForEach(viewModel.fiscalYearList) { item in
-                            Text("\(item.showingYear ?? "NA")").tag(
-                                item.fiscalYear ?? "NA"
-                            )
-                        }
+                        .pickerStyle(.automatic)
                     }
                 }
                 .padding([.leading, .top, .trailing], 10)
-                .pickerStyle(.menu)
+                Spacer()
                 ScrollView {
                     ForEach(viewModel.searchedPublicHolidayList) {
                         item in
                         PublicHolidaysCard(
-                            date: item.date ?? "NA",
+                            date: item.date,
                             showingYear: item.fiscalYear?.showingYear
                                 ?? "NA",
                             description: item.description ?? "NA",
@@ -84,7 +91,7 @@ struct ViewPublicHolidays: View {
 }
 
 struct PublicHolidaysCard: View {
-    var date: String
+    var date: String?
     var showingYear: String
     var description: String
     @ObservedObject var viewModel: ViewModelPublicHolidays
@@ -99,7 +106,10 @@ struct PublicHolidaysCard: View {
                             description
                         )
                         Spacer()
-                        Text(date)
+                        if let date = date, let dateString = date.stringToDate()
+                        {
+                            Text(dateString, style: .date)
+                        }
                     }
                 }
             )
@@ -111,13 +121,15 @@ struct PublicHolidaysCard: View {
         .sheet(isPresented: $isPresented) {
             NavigationStack {
                 VStack(alignment: .leading, spacing: 20) {
-                    Text("Date: " + date)
+                    if let date = date, let dateString = date.stringToDate() {
+                        Text(dateString, style: .date)
+                    }
                     Divider()
                         .background(COLOR_GRAY)
-                    Text("Fiscal year: " + showingYear)
+                    Text(showingYear)
                     Divider()
                         .background(COLOR_GRAY)
-                    Text("Description: " + description)
+                    Text(description)
                     Divider()
                         .background(COLOR_GRAY)
                 }

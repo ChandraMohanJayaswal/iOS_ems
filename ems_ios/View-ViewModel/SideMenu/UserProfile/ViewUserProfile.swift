@@ -48,9 +48,9 @@ struct ViewUserProfile: View {
                 }
                 
             }
-            Button{
+            Button {
                     viewModel.isSheetShown.toggle()
-                }label:{
+                } label:{
                     Text("Edit Info")
                     Image(systemName: "pencil")
                         .frame(width:30, height:30)

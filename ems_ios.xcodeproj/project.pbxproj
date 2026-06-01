@@ -34,21 +34,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		9711511C2F30B82400C48073 /* Exceptions for "ems_ios" folder in "ems_iosTests" target */ = {
+		9A732CBF2FCD59C9007B9FFC /* Exceptions for "ems_ios" folder in "ems_ios" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				ConfigDev.xcconfig,
 				ConfigProd.xcconfig,
 			);
-			target = 9A57A8CC2EFD0B4600E6FF0D /* ems_iosTests */;
-		};
-		9711511D2F30B82400C48073 /* Exceptions for "ems_ios" folder in "ems_iosUITests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				ConfigDev.xcconfig,
-				ConfigProd.xcconfig,
-			);
-			target = 9A57A8D62EFD0B4600E6FF0D /* ems_iosUITests */;
+			target = 9A57A8BF2EFD0B4500E6FF0D /* ems_ios */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -56,8 +48,7 @@
 		9A57A8C22EFD0B4500E6FF0D /* ems_ios */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				9711511C2F30B82400C48073 /* Exceptions for "ems_ios" folder in "ems_iosTests" target */,
-				9711511D2F30B82400C48073 /* Exceptions for "ems_ios" folder in "ems_iosUITests" target */,
+				9A732CBF2FCD59C9007B9FFC /* Exceptions for "ems_ios" folder in "ems_ios" target */,
 			);
 			path = ems_ios;
 			sourceTree = "<group>";
@@ -200,7 +191,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2610;
-				LastUpgradeCheck = 2620;
+				LastUpgradeCheck = 2650;
 				TargetAttributes = {
 					9A57A8BF2EFD0B4500E6FF0D = {
 						CreatedOnToolsVersion = 26.1.1;
