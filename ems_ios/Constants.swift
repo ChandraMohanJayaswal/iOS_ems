@@ -20,6 +20,7 @@ let pureWhite = Color.white
 let glassWhiteLight = Color.white.opacity(0.08)
 let glassWhite = Color.white.opacity(0.12)
 let glassWhiteBold = Color.white.opacity(0.20)
+let ashWhite = Color(red: 0.95, green: 0.95, blue: 0.93)
 
 let softWhite = Color(red: 232/255, green: 234/255, blue: 255/255)
 let paleLavender = Color(red: 201/255, green: 204/255, blue: 248/255)

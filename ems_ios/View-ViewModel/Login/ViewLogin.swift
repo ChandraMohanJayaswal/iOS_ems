@@ -170,13 +170,13 @@ struct ViewLogin: View {
                     .disabled(!viewModel.isFormValid)
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .background(pureWhite)
+                    .background(viewModel.isFormValid ? pureWhite : .gray)
                     .clipShape(
                         RoundedRectangle(cornerRadius: 10)
                     )
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(.white, lineWidth: 1)
+                            .stroke(viewModel.isFormValid ? .white : .gray, lineWidth: 1)
                     )
                     .padding([.leading, .trailing], 10.5)
                     .padding(.top, 10)
