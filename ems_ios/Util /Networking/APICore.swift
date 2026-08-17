@@ -19,7 +19,7 @@ enum APIError: Error{
     case invalidData
 }
 
-protocol APIEndPoint{
+protocol APIEndPoint {
     var baseURL :  URL { get }
     var path: String { get }
     var method: HTTPMethod { get }
