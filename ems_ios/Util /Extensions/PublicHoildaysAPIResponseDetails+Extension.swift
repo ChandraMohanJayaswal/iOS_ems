@@ -9,7 +9,7 @@ extension PublicHolidaysAPIResponseDetails {
         return PublicHolidaysAPIResponseDetails(
             id: 1,
             fiscalYear: PublicHoliday.mock,
-            date: "2002",
+            date: 0.0,
             description: "Mock Description"
         )
     }

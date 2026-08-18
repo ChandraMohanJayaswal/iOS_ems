@@ -10,11 +10,13 @@ import SwiftUI
 struct ViewHome: View {
     @EnvironmentObject var coordinator: RouteCoordinator
     var body: some View {
-        ZStack {
-            Text("Home")
-                .font(.title2)
-                .fontWeight(.semibold)
-            HStack {
+        VStack {
+            Text("Home View")
+        }
+        .navigationTitle("Home")
+        .navigationBarTitleDisplayMode(.large)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
                 Button(
                     action: {
                         withAnimation(.easeInOut) {
@@ -28,11 +30,22 @@ struct ViewHome: View {
                             .foregroundStyle(colorBlack)
                     }
                 )
-                Spacer()
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(
+                    action: {
+                        withAnimation(.easeInOut) {
+//                            coordinator.navigate(to: .sideMenu)
+                        }
+                    },
+                    label: {
+                        Image(systemName: "bell")
+                            .resizable()
+                            .foregroundStyle(colorBlack)
+                    }
+                )
             }
         }
-        .padding([.leading, .top, .trailing], 10)
-        Spacer()
     }
 }
 #Preview {

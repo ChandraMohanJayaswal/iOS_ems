@@ -65,14 +65,16 @@ final class ViewModelPublicHolidays: ObservableObject {
     }
     func sortPublicHolidayList() {
         searchedPublicHolidayList.sort(by: {
-            $0.date ?? Date() < $1.date ?? Date()
+            $0.epochDate  ?? 0.00 < $1.epochDate ?? 0.00
         })
     }
-    func checkDatePassed(_ date: Date?) -> Bool {
-        guard let date = date else {
+    func checkDatePassed(_ epochDate: Double?) -> Bool {
+        guard let epochDate = epochDate else {
             print("No date")
             return false
         }
+        let epoch: TimeInterval  = TimeInterval(epochDate)
+        let date = Date(timeIntervalSince1970: epoch)
         if date < Date.now {
             return true
         } else {

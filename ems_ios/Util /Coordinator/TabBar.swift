@@ -13,7 +13,9 @@ struct ViewTabBar: View {
     var body: some View {
         TabView(selection: $coordinator.selectedTab) {
             Tab("", systemImage: "house", value: TABINDEX.HOME.rawValue) {
-                ViewHome()
+                NavigationStack {
+                    ViewHome()
+                }
             }
             .accessibilityIdentifier("tab_home")
 

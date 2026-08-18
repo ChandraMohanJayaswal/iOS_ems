@@ -57,7 +57,7 @@ struct ViewPublicHolidays: View {
                 ScrollView {
                     ForEach(viewModel.searchedPublicHolidayList) { item in
                         PublicHolidaysCard(
-                            date: item.date,
+                            date: item.epochDate,
                             showingYear: item.fiscalYear?.showingYear
                                 ?? "NA",
                             description: item.description ?? "NA",
@@ -92,7 +92,7 @@ struct ViewPublicHolidays: View {
 }
 
 struct PublicHolidaysCard: View {
-    var date: Date?
+    var date: Double?
     var showingYear: String
     var description: String
     @ObservedObject var viewModel: ViewModelPublicHolidays
@@ -108,7 +108,7 @@ struct PublicHolidaysCard: View {
                         )
                         Spacer()
                         if let date = date {
-                            Text(date, style: .date)
+                            Text(date.displayDate)
                         }
                     }
                 }
@@ -124,7 +124,7 @@ struct PublicHolidaysCard: View {
             NavigationStack {
                 VStack(alignment: .leading, spacing: 20) {
                     if let date = date {
-                        Text(date, style: .date)
+                        Text(date.displayDate)
                     }
                     Divider()
                         .background(colorGray)
