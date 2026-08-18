@@ -9,43 +9,57 @@ import KeychainSwift
 
 enum EndPointPersonalLeave: APIEndPoint {
     case getPersonalLeave
-    case postPersonalLeave(lineManagerId: Int, leaveTypeId: Int, leaveFromDate: String, leaveToDate: String, description: String, leaveStatusId: Int, leaveStatusComment: String)
-    
-    var baseURL: URL{
+    case postPersonalLeave(
+        lineManagerId: Int,
+        leaveTypeId: Int,
+        leaveFromDate: String,
+        leaveToDate: String,
+        description: String,
+        leaveStatusId: Int,
+        leaveStatusComment: String
+    )
+    var baseURL: URL {
         return URL(string: AppConfig.baseURL)!
     }
-    
-    var path: String{
-        switch self{
+    var path: String {
+        switch self {
         case .postPersonalLeave:
-           return "/api/personalLeave"
+            return "/api/personalLeave"
         case .getPersonalLeave:
             return "/api/personalLeave/my"
         }
     }
-    
-    var method: HTTPMethod{
-        switch self{
+    var method: HTTPMethod {
+        switch self {
         case .getPersonalLeave:
             return .get
         case .postPersonalLeave:
             return .post
         }
     }
-    
-    var headers: [String : String]?{
-        switch self{
+    var headers: [String: String]? {
+        switch self {
         case .postPersonalLeave, .getPersonalLeave:
-            return ["Authorization": "Bearer \(KeychainSwift().get("user_token") ?? "")",
-                    "Content-Type": "application/json"]
+            return [
+                "Authorization":
+                    "Bearer \(KeychainSwift().get("user_token") ?? "")",
+                "Content-Type": "application/json"
+            ]
         }
     }
-    
-    var parameters: [String : Any]?{
-        switch self{
-        case .postPersonalLeave(let lineManagerId, let leaveTypeId, let leaveFromDate, let leaveToDate, let description, let leaveStatusId, let leaveStatusComment):
+    var parameters: [String: Any]? {
+        switch self {
+        case .postPersonalLeave(
+            let lineManagerId,
+            let leaveTypeId,
+            let leaveFromDate,
+            let leaveToDate,
+            let description,
+            let leaveStatusId,
+            let leaveStatusComment
+        ):
             return [
-                "id" : 0,
+                "id": 0,
                 "lineManagerId": lineManagerId,
                 "leaveTypeId": leaveTypeId,
                 "leaveRequestedDate": "2020-03-23",

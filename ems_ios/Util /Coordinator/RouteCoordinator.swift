@@ -16,16 +16,16 @@ enum AppScreen {
     case userProfile
     case onBoarding
 }
-class RouteCoordinator: ObservableObject{
+class RouteCoordinator: ObservableObject {
     @Published var selectedTab: Int = 0
     @Published var currentScreen: AppScreen = .splash
-    func navigate(to: AppScreen) {
-        currentScreen = to
+    func navigate(to screen: AppScreen) {
+        currentScreen = screen
     }
 }
-struct ViewRoot: View{
+struct ViewRoot: View {
     @EnvironmentObject var coordinator: RouteCoordinator
-    var body: some View{
+    var body: some View {
         switch coordinator.currentScreen {
         case .login:
             ViewLogin()

@@ -6,17 +6,16 @@
 //
 import Foundation
 
-struct LoginResponse:Decodable{
+struct LoginResponse: Decodable {
     let status: Bool?
     let message: String?
     let data: LoginData?
-    
-    enum CodingKeys:String, CodingKey{
-        case status = "status"
-        case message = "message"
-        case data = "data"
+    enum CodingKeys: String, CodingKey {
+        case status
+        case message
+        case data
     }
-    init(from decoder: Decoder) throws{
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         status = container.decodeSafe(Bool.self, forKey: .status)
         message = container.decodeSafe(String.self, forKey: .message)

@@ -8,13 +8,13 @@
 import SwiftUI
 struct ToolbarSideMenu: ViewModifier {
     @EnvironmentObject var coordinator: RouteCoordinator
-    func body(content: Content)-> some View{
+    func body(content: Content) -> some View {
         content
-            .toolbar{
+            .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
-                        withAnimation(.easeInOut){
-                            coordinator.navigate(to:.sideMenu)
+                        withAnimation(.easeInOut) {
+                            coordinator.navigate(to: .sideMenu)
                         }
                     } label: {
                         Image(systemName: "line.3.horizontal")

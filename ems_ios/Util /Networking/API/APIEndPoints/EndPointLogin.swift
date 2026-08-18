@@ -7,7 +7,7 @@
 import Foundation
 
 enum EndPointLogin: APIEndPoint {
-    case login(username: String, password:String)
+    case login(username: String, password: String)
     var baseURL: URL {
         return URL(string: AppConfig.baseURL)!
     }
@@ -17,7 +17,7 @@ enum EndPointLogin: APIEndPoint {
             return "/auth/login"
         }
     }
-    var method: HTTPMethod{
+    var method: HTTPMethod {
         switch self {
         case .login:
             return .post
@@ -29,7 +29,6 @@ enum EndPointLogin: APIEndPoint {
             return ["Content-Type": "application/json"]
         }
     }
-     
     var parameters: [String: Any]? {
         switch self {
         case .login(let username, let password):

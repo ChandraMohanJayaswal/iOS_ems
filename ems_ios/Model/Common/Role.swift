@@ -7,14 +7,12 @@
 
 import Foundation
 
-struct Role: Decodable{
+struct Role: Decodable {
     let title: String?
-    
-    enum CodingKeys: String, CodingKey{
-        case title = "title"
+    enum CodingKeys: String, CodingKey {
+        case title
     }
-    
-    init(from decoder: any Decoder) throws{
+    init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         title = container.decodeSafe(String.self, forKey: .title)
     }

@@ -6,38 +6,38 @@
 //
 
 import Foundation
-struct MyPersonalLeaveRequestsAPIResponse: Decodable{
-    let data : leaveRequestList?
+struct MyPersonalLeaveRequestsAPIResponse: Decodable {
+    let data: LeaveRequestList?
     enum CodingKeys: CodingKey {
         case data
     }
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        data = container.decodeSafe(leaveRequestList.self, forKey: .data)
+        data = container.decodeSafe(LeaveRequestList.self, forKey: .data)
     }
 }
-struct leaveRequestList: Decodable{
-    let leaveRequestList: [leaveRequestObject]?
-    enum CodingKeys: String, CodingKey{
+struct LeaveRequestList: Decodable {
+    let leaveRequestList: [LeaveRequestObject]?
+    enum CodingKeys: String, CodingKey {
         case leaveRequestList = "list"
     }
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        leaveRequestList = container.decodeSafe([leaveRequestObject].self, forKey: .leaveRequestList)
+        leaveRequestList = container.decodeSafe([LeaveRequestObject].self, forKey: .leaveRequestList)
     }
 }
 
-struct leaveRequestObject: Decodable, Identifiable{
+struct LeaveRequestObject: Decodable, Identifiable {
     let id: Int
     let leaveRequestedDate: String
     let leaveRequestedTime: String
-    let leaveFromDate:String
-    let leaveToDate:String
+    let leaveFromDate: String
+    let leaveToDate: String
     let leaveTypeRes: LeaveType
-    let description:String
-    let leaveStatusRes: leaveStatusRes
+    let description: String
+    let leaveStatusRes: LeaveStatusRes
     let statusComment: String
 }
-struct leaveStatusRes: Decodable{
+struct LeaveStatusRes: Decodable {
     let statusType: String
 }

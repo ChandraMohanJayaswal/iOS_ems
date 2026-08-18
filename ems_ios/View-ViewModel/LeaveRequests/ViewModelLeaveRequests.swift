@@ -7,20 +7,19 @@
 
 import Foundation
 import Combine
-protocol ViewModelLeaveRequestsServiceProtocol: APIGetMyLeaveRequests{}
+protocol ViewModelLeaveRequestsServiceProtocol: APIGetMyLeaveRequests {}
 
-final class ViewModelLeaveRequestsService: ViewModelLeaveRequestsServiceProtocol{}
+final class ViewModelLeaveRequestsService: ViewModelLeaveRequestsServiceProtocol {}
 
 class ViewModelLeaveRequests: ObservableObject {
-    @Published var leaveRequests:  [leaveRequestObject]
+    @Published var leaveRequests: [LeaveRequestObject]
     private let apiService: ViewModelLeaveRequestsServiceProtocol
-    init(apiService: ViewModelLeaveRequestsServiceProtocol = ViewModelLeaveRequestsService() )
-    {
+    init(apiService: ViewModelLeaveRequestsServiceProtocol = ViewModelLeaveRequestsService() ) {
         self.apiService = apiService
         self.leaveRequests = []
     }
-    func fetchMyLeaveRequestsFromServer() async{
-        await apiService.getMyLeaveRequests{ leaveRequests in
+    func fetchMyLeaveRequestsFromServer() async {
+        await apiService.getMyLeaveRequests { leaveRequests in
             self.leaveRequests = leaveRequests
         }
     }

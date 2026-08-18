@@ -5,17 +5,16 @@
 //  Created by MacMini on 12/01/2026.
 //
 import Foundation
-struct PublicHoliday: Codable, Identifiable{
+struct PublicHoliday: Codable, Identifiable {
     let id: Int?
     let fiscalYear: String?
     let showingYear: String?
-    
-    enum CodingKeys: String, CodingKey{
-        case id = "id"
-        case fiscalYear = "fiscalYear"
-        case showingYear = "showingYear"
+    enum CodingKeys: String, CodingKey {
+        case id
+        case fiscalYear
+        case showingYear
     }
-    init(id: Int?, fiscalyear: String?, showingYear: String?){
+    init(id: Int?, fiscalyear: String?, showingYear: String?) {
         self.id = id
         self.fiscalYear = fiscalyear
         self.showingYear = showingYear
@@ -26,5 +25,4 @@ struct PublicHoliday: Codable, Identifiable{
         fiscalYear = container.decodeSafe(String.self, forKey: .fiscalYear)
         showingYear = container.decodeSafe(String.self, forKey: .showingYear)
     }
-    
 }

@@ -6,7 +6,7 @@
 //
 import Foundation
 
-enum HTTPMethod: String{
+enum HTTPMethod: String {
     case get = "GET"
     case post = "POST"
     case put = "PUT"
@@ -14,33 +14,33 @@ enum HTTPMethod: String{
     case delete = "DELETE"
 }
 
-enum APIError: Error{
+enum APIError: Error {
     case invalidResponse
     case invalidData
 }
 
 protocol APIEndPoint {
-    var baseURL :  URL { get }
+    var baseURL: URL { get }
     var path: String { get }
     var method: HTTPMethod { get }
     var headers: [String: String]? { get }
     var parameters: [String: Any]? { get }
 }
 
-protocol APIClient{
+protocol APIClient {
     associatedtype EndPointType: APIEndPoint
     func request(_ endpoint: EndPointType) async throws -> Data
 }
 
-final class DefaultAPIClient<EndpointType: APIEndPoint>{
-    func request(_ endpoint: EndpointType) async throws -> Data{
+final class DefaultAPIClient<EndpointType: APIEndPoint> {
+    func request(_ endpoint: EndpointType) async throws -> Data {
         let urlComponents = endpoint.baseURL.appending(path: endpoint.path)
         var request = URLRequest(url: urlComponents)
         request.httpMethod = endpoint.method.rawValue
-        for (key, value) in endpoint.headers ?? [:]{
+        for (key, value) in endpoint.headers ?? [:] {
             request.setValue(value, forHTTPHeaderField: key)
         }
-        if let body = endpoint.parameters{
+        if let body = endpoint.parameters {
             request.httpBody = try? JSONSerialization.data(withJSONObject: body)
         }
         do {
@@ -60,11 +60,9 @@ final class DefaultAPIClient<EndpointType: APIEndPoint>{
                 print("Failed to parse JSON:", error)
             }
             return data
-        }
-        catch {
+        } catch {
             print(error.localizedDescription)
         }
         throw APIError.invalidResponse
     }
 }
-

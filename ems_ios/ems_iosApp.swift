@@ -7,7 +7,7 @@
 
 import SwiftUI
 @main
-struct ems_iosApp: App {
+struct EmsApp: App {
     @StateObject var coordinator = RouteCoordinator()
     var body: some Scene {
         WindowGroup {

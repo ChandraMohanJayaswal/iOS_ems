@@ -31,7 +31,7 @@ struct ViewPublicHolidays: View {
                                 Image(systemName: "line.3.horizontal")
                                     .resizable()
                                     .frame(width: 25, height: 15)
-                                    .foregroundStyle(COLOR_BLACK)
+                                    .foregroundStyle(colorBlack)
                             }
                         )
                         Spacer()
@@ -40,12 +40,12 @@ struct ViewPublicHolidays: View {
                             selection: $viewModel.selectedYear,
                             content: {
                                 Text("All")
-                                    .tag("All")
+                                    .tag(0)
                                 ForEach(viewModel.fiscalYearList) { item in
                                     Text(
                                         item.showingYear ?? ""
                                         )
-                                    .tag(item.id)
+                                    .tag(item.id ?? 0)
                                 }
                             }
                         )
@@ -55,8 +55,7 @@ struct ViewPublicHolidays: View {
                 .padding([.leading, .top, .trailing], 10)
                 Spacer()
                 ScrollView {
-                    ForEach(viewModel.searchedPublicHolidayList) {
-                        item in
+                    ForEach(viewModel.searchedPublicHolidayList) { item in
                         PublicHolidaysCard(
                             date: item.date,
                             showingYear: item.fiscalYear?.showingYear
@@ -115,7 +114,7 @@ struct PublicHolidaysCard: View {
                 }
             )
             Divider()
-                .background(COLOR_GRAY)
+                .background(colorGray)
         }
         .foregroundStyle(viewModel.checkDatePassed(self.date) ? .gray : .black)
         .fontWeight(.medium)
@@ -128,13 +127,13 @@ struct PublicHolidaysCard: View {
                         Text(date, style: .date)
                     }
                     Divider()
-                        .background(COLOR_GRAY)
+                        .background(colorGray)
                     Text(showingYear)
                     Divider()
-                        .background(COLOR_GRAY)
+                        .background(colorGray)
                     Text(description)
                     Divider()
-                        .background(COLOR_GRAY)
+                        .background(colorGray)
                 }
                 .presentationDetents([.medium, .large])
                 .presentationBackground(.ultraThinMaterial)

@@ -125,6 +125,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9A09F8223034280A00F7C2DF /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				9A57A8C22EFD0B4500E6FF0D /* ems_ios */,
@@ -217,6 +218,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				9A419A3D2F02AC3300FBDFBC /* XCRemoteSwiftPackageReference "keychain-swift" */,
+				9A09F81E303427FA00F7C2DF /* XCRemoteSwiftPackageReference "SwiftLint" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9A57A8C12EFD0B4500E6FF0D /* Products */;
@@ -279,6 +281,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		9A09F8223034280A00F7C2DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 9A09F8213034280A00F7C2DF /* SwiftLintBuildToolPlugin */;
+		};
 		9A57A8CF2EFD0B4600E6FF0D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 9A57A8BF2EFD0B4500E6FF0D /* ems_ios */;
@@ -434,6 +440,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -469,6 +476,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -608,6 +616,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		9A09F81E303427FA00F7C2DF /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/SwiftLint";
+			requirement = {
+				kind = exactVersion;
+				version = 0.65.0;
+			};
+		};
 		9A419A3D2F02AC3300FBDFBC /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/evgenyneu/keychain-swift";
@@ -619,6 +635,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		9A09F8213034280A00F7C2DF /* SwiftLintBuildToolPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9A09F81E303427FA00F7C2DF /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
 		9A419A832F02ACA100FBDFBC /* KeychainSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9A419A3D2F02AC3300FBDFBC /* XCRemoteSwiftPackageReference "keychain-swift" */;

@@ -10,16 +10,14 @@ import Foundation
 import KeychainSwift
 
 protocol ViewModelPublicHolidaysServiceProtocol: APIGetFiscalYear,
-    APIGetPublicHolidays
-{}
+    APIGetPublicHolidays {}
 final class ViewModelPublicHolidaysService:
-    ViewModelPublicHolidaysServiceProtocol
-{}
+    ViewModelPublicHolidaysServiceProtocol {}
 final class ViewModelPublicHolidays: ObservableObject {
     @Published var allpublicHolidayList: [PublicHolidaysAPIResponseDetails]
     @Published var searchedPublicHolidayList: [PublicHolidaysAPIResponseDetails]
     @Published var fiscalYearList: [FiscalYear]
-    @Published var selectedYear: String
+    @Published var selectedYear: Int
     @Published var uiState: UISTATE = .idle
     private let apiService: ViewModelPublicHolidaysServiceProtocol
     init(
@@ -30,7 +28,7 @@ final class ViewModelPublicHolidays: ObservableObject {
         self.allpublicHolidayList = []
         self.searchedPublicHolidayList = []
         self.fiscalYearList = []
-        self.selectedYear = "All"
+        self.selectedYear = 0
     }
     func fetchFiscalYearFromServer() async {
         self.uiState = .loading
@@ -43,14 +41,13 @@ final class ViewModelPublicHolidays: ObservableObject {
         self.uiState = .idle
     }
     func searchPublicHolidays() {
-        if selectedYear == "All" {
+        if selectedYear == 0 {
             searchedPublicHolidayList = allpublicHolidayList
         } else {
             self.searchedPublicHolidayList.removeAll()
-            for item in self.allpublicHolidayList {
-                if item.fiscalYear?.fiscalYear == selectedYear {
-                    searchedPublicHolidayList.append(item)
-                }
+            for item in self.allpublicHolidayList
+            where item.fiscalYear?.id == selectedYear {
+                searchedPublicHolidayList.append(item)
             }
         }
         sortPublicHolidayList()
@@ -78,8 +75,7 @@ final class ViewModelPublicHolidays: ObservableObject {
         }
         if date < Date.now {
             return true
-        }
-        else {
+        } else {
             return false
         }
     }

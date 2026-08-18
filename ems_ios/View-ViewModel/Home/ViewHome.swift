@@ -25,7 +25,7 @@ struct ViewHome: View {
                         Image(systemName: "line.3.horizontal")
                             .resizable()
                             .frame(width: 25, height: 15)
-                            .foregroundStyle(COLOR_BLACK)
+                            .foregroundStyle(colorBlack)
                     }
                 )
                 Spacer()

@@ -7,25 +7,23 @@
 
 import Foundation
 
-struct User: Decodable{
-    let firstName:String?
-    let lastName:String?
+struct User: Decodable {
+    let firstName: String?
+    let lastName: String?
     let fullName: String?
     let gender: String?
-    let mobileNumber:String?
-    let emailAddress:String?
+    let mobileNumber: String?
+    let emailAddress: String?
     let role: Role?
-    
-    enum CodingKeys: String, CodingKey{
-        case firstName = "firstName"
-        case lastName = "lastName"
-        case fullName = "fullName"
-        case gender = "gender"
-        case mobileNumber = "mobileNumber"
-        case emailAddress = "emailAddress"
-        case role = "role"
+    enum CodingKeys: String, CodingKey {
+        case firstName
+        case lastName
+        case fullName
+        case gender
+        case mobileNumber
+        case emailAddress
+        case role
     }
-    
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         firstName = container.decodeSafe(String.self, forKey: .firstName)

@@ -5,20 +5,19 @@
 //  Created by MacMini on 02/02/2026.
 //
 import Foundation
-protocol APIGetPublicHolidays{
-    func getPublicHolidays(completion: @escaping([PublicHolidaysAPIResponseDetails])-> Void) async
+protocol APIGetPublicHolidays {
+    func getPublicHolidays(completion: @escaping ([PublicHolidaysAPIResponseDetails]) -> Void) async
 }
-extension APIGetPublicHolidays{
-    func getPublicHolidays(completion:@escaping([PublicHolidaysAPIResponseDetails])->Void) async{
+extension APIGetPublicHolidays {
+    func getPublicHolidays(completion: @escaping ([PublicHolidaysAPIResponseDetails]) -> Void) async {
         let apiClient = DefaultAPIClient<EndPointFiscalYear>()
-        do{
+        do {
             let data = try await apiClient.request(EndPointFiscalYear.getPublicHoliday)
             let decoded = try JSONDecoder().decode(PublicHolidayAPIResponse.self, from: data)
-            if let publicHolidayList =  decoded.data?.publicHolidayList{
+            if let publicHolidayList =  decoded.data?.publicHolidayList {
                 completion(publicHolidayList)
             }
-        }
-        catch{
+        } catch {
             print("Error in fetching public holiday")
         }
     }

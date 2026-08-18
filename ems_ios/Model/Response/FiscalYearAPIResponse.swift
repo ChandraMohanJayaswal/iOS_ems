@@ -5,10 +5,10 @@
 //  Created by MacMini on 08/01/2026.
 //
 import Foundation
-struct FiscalYearAPIResponse:Decodable{
+struct FiscalYearAPIResponse: Decodable {
     let data: FiscalYearResponseData?
-    enum CodingKeys: String, CodingKey{
-        case data = "data"
+    enum CodingKeys: String, CodingKey {
+        case data
     }
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -16,9 +16,9 @@ struct FiscalYearAPIResponse:Decodable{
     }
 }
 
-struct FiscalYearResponseData:Decodable{
+struct FiscalYearResponseData: Decodable {
     let fiscalYearList: [FiscalYear]?
-    enum CodingKeys: String, CodingKey{
+    enum CodingKeys: String, CodingKey {
         case fiscalYearList = "list"
     }
     init(from decoder: any Decoder) throws {

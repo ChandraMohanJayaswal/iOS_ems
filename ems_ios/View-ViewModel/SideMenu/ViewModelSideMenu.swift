@@ -6,9 +6,9 @@
 //
 import Foundation
 import Combine
-class ViewModelSideMenu : ObservableObject{
+class ViewModelSideMenu: ObservableObject {
     @Published var showBackground: Bool = false
-    func signOut(coordinator: RouteCoordinator){
+    func signOut(coordinator: RouteCoordinator) {
         UserDefaultsManager.shared.signOut(coordinator: coordinator)
     }
 }

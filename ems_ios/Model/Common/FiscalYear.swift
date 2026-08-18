@@ -7,17 +7,16 @@
 
 import Foundation
 
-struct FiscalYear:Decodable, Identifiable{
+struct FiscalYear: Decodable, Identifiable {
     let id: Int?
-    let fiscalYear:String?
+    let fiscalYear: String?
     let showingYear: String?
-    
-    enum CodingKeys: String, CodingKey{
-        case id = "id"
-        case fiscalYear = "fiscalYear"
-        case showingYear = "showingYear"
+    enum CodingKeys: String, CodingKey {
+        case id
+        case fiscalYear
+        case showingYear
     }
-    init(id: Int?, fiscalYear: String?, showingYear: String?){
+    init(id: Int?, fiscalYear: String?, showingYear: String?) {
         self.id = id
         self.fiscalYear = fiscalYear
         self.showingYear = showingYear
@@ -29,4 +28,3 @@ struct FiscalYear:Decodable, Identifiable{
         showingYear = container.decodeSafe(String.self, forKey: .showingYear)
     }
 }
-

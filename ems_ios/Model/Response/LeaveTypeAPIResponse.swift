@@ -5,10 +5,10 @@
 //  Created by MacMini on 09/01/2026.
 //
 import Foundation
-struct LeaveTypeAPIResponse: Decodable{
+struct LeaveTypeAPIResponse: Decodable {
     let data: LeaveTypeAPIResponseData?
-    enum CodingKeys: String, CodingKey{
-        case data = "data"
+    enum CodingKeys: String, CodingKey {
+        case data
     }
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -16,9 +16,9 @@ struct LeaveTypeAPIResponse: Decodable{
     }
 }
 
-struct LeaveTypeAPIResponseData: Decodable{
+struct LeaveTypeAPIResponseData: Decodable {
     let leaveTypeList: [LeaveType]?
-    enum CodingKeys: String, CodingKey{
+    enum CodingKeys: String, CodingKey {
         case leaveTypeList  = "list"
     }
     init(from decoder: any Decoder) throws {
@@ -26,4 +26,3 @@ struct LeaveTypeAPIResponseData: Decodable{
         leaveTypeList = container.decodeSafe([LeaveType].self, forKey: .leaveTypeList)
     }
 }
-

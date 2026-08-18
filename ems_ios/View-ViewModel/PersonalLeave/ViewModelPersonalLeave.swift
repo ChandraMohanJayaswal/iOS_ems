@@ -9,10 +9,8 @@ import Combine
 import Foundation
 
 protocol ViewModelPersonalLeaveServiceProtocol: APIPostPersonalLeave,
-    APIGetLeaveType
-{}
-final class ViewModelPersonalLeaveService: ViewModelPersonalLeaveServiceProtocol
-{}
+    APIGetLeaveType {}
+final class ViewModelPersonalLeaveService: ViewModelPersonalLeaveServiceProtocol {}
 final class ViewModelPersonalLeave: ObservableObject {
     @Published var selectedLineManager: Int
     @Published var uiState: UISTATE = .idle
