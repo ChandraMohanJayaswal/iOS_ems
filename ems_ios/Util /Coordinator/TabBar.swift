@@ -45,5 +45,6 @@ struct ViewTabBar: View {
             .accessibilityIdentifier("tab_personal_leave")
         }
         .tint(darkBlue)
+        .tabBarMinimizeBehavior(.onScrollDown)
     }
 }

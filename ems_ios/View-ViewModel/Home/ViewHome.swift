@@ -33,8 +33,6 @@ struct ViewHome: View {
         }
         .padding([.leading, .top, .trailing], 10)
         Spacer()
-        Text("Home")
-        Spacer()
     }
 }
 #Preview {
