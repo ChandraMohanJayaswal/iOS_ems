@@ -38,3 +38,7 @@ extension APIPostPersonalLeave {
         }
     }
 }
+
+protocol APIGetWeekend {
+    func getWeekend() async
+}
