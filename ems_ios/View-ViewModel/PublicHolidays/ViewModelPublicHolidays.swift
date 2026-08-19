@@ -8,16 +8,19 @@
 import Combine
 import Foundation
 import KeychainSwift
+import SwiftUI
 
 protocol ViewModelPublicHolidaysServiceProtocol: APIGetFiscalYear,
     APIGetPublicHolidays {}
 final class ViewModelPublicHolidaysService:
     ViewModelPublicHolidaysServiceProtocol {}
+struct PublicHolidayList {
+    let date: Date
+    let description: String
+}
 final class ViewModelPublicHolidays: ObservableObject {
-    @Published var allpublicHolidayList: [PublicHolidaysAPIResponseDetails]
-    @Published var searchedPublicHolidayList: [PublicHolidaysAPIResponseDetails]
+    @Published var publicHolidayList: [PublicHolidayList] = []
     @Published var fiscalYearList: [FiscalYear]
-    @Published var selectedYear: Int
     @Published var uiState: UISTATE = .idle
     private let apiService: ViewModelPublicHolidaysServiceProtocol
     init(
@@ -25,10 +28,7 @@ final class ViewModelPublicHolidays: ObservableObject {
             ViewModelPublicHolidaysService()
     ) {
         self.apiService = apiService
-        self.allpublicHolidayList = []
-        self.searchedPublicHolidayList = []
         self.fiscalYearList = []
-        self.selectedYear = 0
     }
     func fetchFiscalYearFromServer() async {
         self.uiState = .loading
@@ -40,62 +40,55 @@ final class ViewModelPublicHolidays: ObservableObject {
         }
         self.uiState = .idle
     }
-    func searchPublicHolidays() {
-        if selectedYear == 0 {
-            searchedPublicHolidayList = allpublicHolidayList
-        } else {
-            self.searchedPublicHolidayList.removeAll()
-            for item in self.allpublicHolidayList
-            where item.fiscalYear?.id == selectedYear {
-                searchedPublicHolidayList.append(item)
-            }
-        }
-        sortPublicHolidayList()
-    }
     func fetchPublicHolidaysFromServer() async {
+        var list: [PublicHolidaysAPIResponseDetails] = []
         self.uiState = .loading
-        self.allpublicHolidayList.removeAll()
         await apiService.getPublicHolidays { result in
             for item in result {
-                self.allpublicHolidayList.append(item)
+                list.append(item)
+            }
+            self.uiState = .idle
+        }
+        for holiday in list {
+            let date = holiday.epochDate?.date
+            let description = holiday.description
+            if let date = date, let description = description {
+                publicHolidayList.append(
+                    PublicHolidayList(date: date, description: description)
+                )
             }
         }
-        self.uiState = .idle
-        self.sortPublicHolidayList()
     }
-    func sortPublicHolidayList() {
-        searchedPublicHolidayList.sort(by: {
-            $0.epochDate  ?? 0.00 < $1.epochDate ?? 0.00
-        })
-    }
-    func checkDatePassed(_ epochDate: Double?) -> Bool {
-        guard let epochDate = epochDate else {
-            print("No date")
-            return false
+    func checkDateColor(_ date: Date) -> Color {
+        for holiday in publicHolidayList {
+            let isHoliday = Calendar.current.isDate(
+                date,
+                inSameDayAs: holiday.date
+            )
+            if isHoliday {
+                if date < Date.now {
+                    return Color(red: 200 / 255, green: 125 / 255, blue: 125 / 255)
+                } else {
+                    return .red
+                }
+            }
         }
-        let epoch: TimeInterval  = TimeInterval(epochDate)
-        let date = Date(timeIntervalSince1970: epoch)
         if date < Date.now {
-            return true
+            return .gray
         } else {
-            return false
+            return .primary
         }
     }
-    func truncateFiscalYear(_ string: String?) -> String {
-        guard let string else {
-            print("No string")
-            return ""
-        }
-        var truncatedString: String = ""
-        let lookUpArray: [Int] = [10, 11, 15, 16]
-        for (index, character) in string.enumerated() {
-            if lookUpArray.contains(index) {
-                truncatedString.append(character)
-            }
-            if index == 11 {
-                truncatedString.append("-")
+    func isDateHoliday(_ date: Date) -> String? {
+        for holiday in publicHolidayList {
+            let isHoliday = Calendar.current.isDate(
+                date,
+                inSameDayAs: holiday.date
+            )
+            if isHoliday {
+                return holiday.description
             }
         }
-        return truncatedString
+        return nil
     }
 }

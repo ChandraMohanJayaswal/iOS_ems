@@ -51,7 +51,6 @@ struct PublicHolidaysAPIResponseDetails: Decodable, Identifiable {
         let epochString = container.decodeSafe(String.self, forKey: .epochDate)
         if let epochString = epochString {
             epochDate = Double(epochString)
-            print(epochDate)
         } else {
             epochDate = nil
         }

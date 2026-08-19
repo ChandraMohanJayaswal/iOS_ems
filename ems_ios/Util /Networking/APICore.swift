@@ -34,35 +34,71 @@ protocol APIClient {
 
 final class DefaultAPIClient<EndpointType: APIEndPoint> {
     func request(_ endpoint: EndpointType) async throws -> Data {
-        let urlComponents = endpoint.baseURL.appending(path: endpoint.path)
-        var request = URLRequest(url: urlComponents)
+        var url = endpoint.baseURL.appending(path: endpoint.path)
+        if endpoint.method == .get,
+            let parameters = endpoint.parameters
+        {
+
+            var components = URLComponents(
+                url: url,
+                resolvingAgainstBaseURL: false
+            )
+            components?.queryItems = parameters.map { key, value in
+                URLQueryItem(
+                    name: key,
+                    value: String(describing: value)
+                )
+            }
+            if let queryURL = components?.url {
+                url = queryURL
+            }
+        }
+        var request = URLRequest(url: url)
         request.httpMethod = endpoint.method.rawValue
+
         for (key, value) in endpoint.headers ?? [:] {
             request.setValue(value, forHTTPHeaderField: key)
         }
-        if let body = endpoint.parameters {
-            request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+
+        // Non-GET parameters → request body
+        if endpoint.method != .get,
+            let parameters = endpoint.parameters
+        {
+            request.httpBody = try JSONSerialization.data(
+                withJSONObject: parameters
+            )
         }
+
+        print("===== REQUEST =====")
+        print("URL:", request.url?.absoluteString ?? "nil")
+        print("Method:", request.httpMethod ?? "nil")
+        print("Headers:", request.allHTTPHeaderFields ?? [:])
+
         do {
             let (data, _) = try await URLSession.shared.data(for: request)
-            print("===== REQUEST =====")
-            print("URL:", request.url?.absoluteString ?? "nil")
-            print("Method:", request.httpMethod ?? "nil")
-            print("Headers:", request.allHTTPHeaderFields ?? [:])
+
             do {
                 let jsonObject = try JSONSerialization.jsonObject(with: data)
-                let prettyData = try JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted)
+                let prettyData = try JSONSerialization.data(
+                    withJSONObject: jsonObject,
+                    options: .prettyPrinted
+                )
 
-                if let prettyString = String(data: prettyData, encoding: .utf8) {
+                if let prettyString = String(
+                    data: prettyData,
+                    encoding: .utf8
+                ) {
                     print("Pretty JSON:\n", prettyString)
                 }
             } catch {
                 print("Failed to parse JSON:", error)
             }
+
             return data
+
         } catch {
             print(error.localizedDescription)
+            throw APIError.invalidResponse
         }
-        throw APIError.invalidResponse
     }
 }

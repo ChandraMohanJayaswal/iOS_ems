@@ -14,7 +14,11 @@ extension Double {
         formatter.locale = .current
         formatter.timeZone = .current
         formatter.dateFormat = "MMM/dd/yyyy"
-        print(formatter.string(from: date))
         return formatter.string(from: date)
+    }
+    var date: Date {
+        let epoch: TimeInterval  = TimeInterval(self)
+        let date = Date(timeIntervalSince1970: epoch / 1000)
+        return date
     }
 }

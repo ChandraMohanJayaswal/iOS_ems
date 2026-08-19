@@ -11,145 +11,43 @@ struct ViewPublicHolidays: View {
     @StateObject var viewModel = ViewModelPublicHolidays()
     var body: some View {
         VStack {
-            if viewModel.uiState == .loading {
-                ProgressView()
-            } else {
-                ZStack {
-                    VStack {
-                        Text("Public Holidays")
-                            .font(.title2)
-                            .fontWeight(.semibold)
-                    }
-                    HStack {
-                        Button(
-                            action: {
-                                withAnimation(.easeInOut) {
-                                    coordinator.navigate(to: .sideMenu)
-                                }
-                            },
-                            label: {
-                                Image(systemName: "line.3.horizontal")
-                                    .resizable()
-                                    .frame(width: 25, height: 15)
-                                    .foregroundStyle(colorBlack)
-                            }
-                        )
-                        Spacer()
-                        Picker(
-                            "Year",
-                            selection: $viewModel.selectedYear,
-                            content: {
-                                Text("All")
-                                    .tag(0)
-                                ForEach(viewModel.fiscalYearList) { item in
-                                    Text(
-                                        item.showingYear ?? ""
-                                        )
-                                    .tag(item.id ?? 0)
-                                }
-                            }
-                        )
-                        .pickerStyle(.menu)
-                    }
-                }
-                .padding([.leading, .top, .trailing], 10)
-                Spacer()
-                ScrollView {
-                    ForEach(viewModel.searchedPublicHolidayList) { item in
-                        PublicHolidaysCard(
-                            date: item.epochDate,
-                            showingYear: item.fiscalYear?.showingYear
-                                ?? "NA",
-                            description: item.description ?? "NA",
-                            viewModel: viewModel
-                        )
-                    }
-                }
-            }
+            ViewCalendar(viewModel: viewModel)
+            Spacer()
         }
-        .onChange(of: viewModel.selectedYear) {
-            viewModel.searchPublicHolidays()
+        .task {
+            await viewModel.fetchPublicHolidaysFromServer()
         }
-        .onAppear {
-            Task {
-                await viewModel.fetchFiscalYearFromServer()
-                await viewModel.fetchPublicHolidaysFromServer()
-                viewModel.searchPublicHolidays()
-            }
-        }
-        .refreshable {
-            Task {
-                await viewModel.fetchFiscalYearFromServer()
-                await viewModel.fetchPublicHolidaysFromServer()
-                viewModel.searchPublicHolidays()
-            }
-        }
-    }
-}
-#Preview {
-    ViewPublicHolidays()
-    //    PublicHolidaysCard()
-}
-
-struct PublicHolidaysCard: View {
-    var date: Double?
-    var showingYear: String
-    var description: String
-    @ObservedObject var viewModel: ViewModelPublicHolidays
-    @State var isPresented: Bool = false
-    var body: some View {
-        VStack(alignment: .leading) {
-            Button(
-                action: { isPresented = true },
-                label: {
-                    HStack {
-                        Text(
-                            description
-                        )
-                        Spacer()
-                        if let date = date {
-                            Text(date.displayDate)
+        .navigationTitle("Calendar")
+        .navigationBarTitleDisplayMode(.large)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button(
+                    action: {
+                        withAnimation(.easeInOut) {
+                            coordinator.navigate(to: .sideMenu)
                         }
+                    },
+                    label: {
+                        Image(systemName: "line.3.horizontal")
+                            .resizable()
+                            .frame(width: 25, height: 15)
+                            .foregroundStyle(colorBlack)
                     }
-                }
-            )
-            Divider()
-                .background(colorGray)
-        }
-        .foregroundStyle(viewModel.checkDatePassed(self.date) ? .gray : .black)
-        .fontWeight(.medium)
-        .padding()
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .sheet(isPresented: $isPresented) {
-            NavigationStack {
-                VStack(alignment: .leading, spacing: 20) {
-                    if let date = date {
-                        Text(date.displayDate)
-                    }
-                    Divider()
-                        .background(colorGray)
-                    Text(showingYear)
-                    Divider()
-                        .background(colorGray)
-                    Text(description)
-                    Divider()
-                        .background(colorGray)
-                }
-                .presentationDetents([.medium, .large])
-                .presentationBackground(.ultraThinMaterial)
-                .presentationCornerRadius(10)
-                .padding()
-                .toolbar {
-                    Button(
-                        action: {
-                            isPresented.toggle()
-                        },
-                        label: {
-                            Image(systemName: "xmark")
+                )
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(
+                    action: {
+                        withAnimation(.easeInOut) {
+//                            coordinator.navigate(to: .sideMenu)
                         }
-                    )
-                }
-                Spacer()
+                    },
+                    label: {
+                        Image(systemName: "bell")
+                            .resizable()
+                            .foregroundStyle(colorBlack)
+                    }
+                )
             }
         }
     }

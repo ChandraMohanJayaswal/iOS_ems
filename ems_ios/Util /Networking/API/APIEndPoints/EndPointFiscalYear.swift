@@ -35,8 +35,10 @@ enum EndPointFiscalYear: APIEndPoint {
     }
     var parameters: [String: Any]? {
         switch self {
-        case .getFiscalYear, .getPublicHoliday:
+        case .getFiscalYear:
             return nil
+        case .getPublicHoliday:
+            return ["all": true]
         }
     }
 }
