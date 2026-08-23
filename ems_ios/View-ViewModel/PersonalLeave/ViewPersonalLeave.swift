@@ -2,101 +2,47 @@
 //  ViewPersonalLeave.swift
 //  ems_ios
 //
-//  Created by MacMini on 26/12/2025.
+//  Created by MacMini on 23/08/2026.
 //
 
 import SwiftUI
 
 struct ViewPersonalLeave: View {
-    @StateObject var viewModel = ViewModelPersonalLeave()
-    @State var isAlertShown = false
-    var body: some View {
-        HeaderView(viewModel: viewModel)
-        Spacer()
-        Form {
-            Section {
-                Picker(
-                    "Line Manager",
-                    selection: $viewModel.selectedLineManager
-                ) {
-                    ForEach(0..<3) { value in
-                        Text("Something")
-                            .tag(value)
-                    }
-                }
-
-                Picker("Leave Type", selection: $viewModel.selectedLeaveType) {
-                    Text("None Selected").tag(0)
-                    ForEach(viewModel.leaveTypeList, id: \.id) { item in
-                        Text("\(item.typeOfLeave)").tag(item.id)
-                    }
-                }
-                DatePicker(
-                    "Leave From Date",
-                    selection: $viewModel.leaveFromDate,
-                    displayedComponents: [.date]
-                )
-                DatePicker(
-                    "Leave To Date",
-                    selection: $viewModel.leaveToDate,
-                    displayedComponents: [.date]
-                )
-                TextField(
-                    "Description",
-                    text: $viewModel.description,
-                    axis: .vertical
-                )
-                .autocorrectionDisabled(true)
-            }
-            Section {
-                Button {
-                    isAlertShown = true
-                } label: {
-                    HStack {
-                        Spacer()
-                        Text("Submit")
-                        Image(systemName: "paperplane")
-                        Spacer()
-                    }
-                }
-            }
-        }
-        .alert("Send leave request?", isPresented: $isAlertShown) {
-            Button("Cancel") {
-                isAlertShown.toggle()
-            }
-            .foregroundStyle(.red)
-
-            Button("Submit") {
-                Task {
-                    await viewModel.postPersonalLeaveToServer()
-                }
-            }
-            .foregroundStyle(colorBlue)
-        }
-        .onAppear {
-            Task {
-                await viewModel.fetchLeaveTypeFromServer()
-            }
-        }
-    }
-}
-
-#Preview {
-    ViewPersonalLeave()
-}
-
-struct HeaderView: View {
     @EnvironmentObject var coordinator: RouteCoordinator
-    @ObservedObject var viewModel: ViewModelPersonalLeave
+    @StateObject var viewModel: ViewModelPersonalLeave = .init()
     var body: some View {
-        ZStack {
-            VStack {
-                Text("Personal Leave")
-                    .font(.title2)
-                    .fontWeight(.semibold)
+        VStack {
+            if viewModel.leaveRequests.isEmpty {
+                Image(systemName: "tray")
+                    .resizable()
+                    .frame(width: 100, height: 100)
+                    .foregroundStyle(.gray)
+                Text("No Leave Requests")
+                    .foregroundStyle(.gray)
+                Spacer()
+            } else {
+                List {
+                    ForEach(viewModel.leaveRequests) { item in
+                        LeaveRequestItem(
+                            leaveType: item.leaveTypeRes?.typeOfLeave,
+                            createdDateTime: item.createdEpoch,
+                            leaveFromDate: item.leaveFromDate,
+                            leaveToDate: item.leaveToDate,
+                            description: item.description,
+                            leaveStatus: item.leaveStatusRes?.statusType?.rawValue,
+                            comment: item.statusComment
+                        )
+                    }
+                }
             }
-            HStack {
+        }
+        .task {
+            await viewModel.getLeaveRequests()
+        }
+        .navigationTitle("Personal Leaves")
+        .navigationBarTitleDisplayMode(.large)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
                 Button(
                     action: {
                         withAnimation(.easeInOut) {
@@ -110,9 +56,21 @@ struct HeaderView: View {
                             .foregroundStyle(colorBlack)
                     }
                 )
-                Spacer()
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(
+                    action: {
+                        withAnimation(.easeInOut) {
+                            //                            coordinator.navigate(to: .sideMenu)
+                        }
+                    },
+                    label: {
+                        Image(systemName: "bell")
+                            .resizable()
+                            .foregroundStyle(colorBlack)
+                    }
+                )
             }
         }
-        .padding([.leading, .top, .trailing], 10)
     }
 }

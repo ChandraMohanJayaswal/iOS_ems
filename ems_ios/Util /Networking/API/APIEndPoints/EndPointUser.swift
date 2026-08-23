@@ -1,44 +1,48 @@
+import Foundation
 //
-//  EndPointWeekend.swift
+//  EndPointUser.swift
 //  ems_ios
 //
-//  Created by MacMini on 19/08/2026.
+//  Created by MacMini on 23/08/2026.
 //
-
-import Foundation
 import KeychainSwift
 
-enum EndPointWeekend: APIEndPoint {
-    case getWeekend
+enum EndPointUser: APIEndPoint {
+    case getLineManager
     var baseURL: URL {
-        return  URL(string: AppConfig.baseURL)!
+        return URL(string: AppConfig.baseURL)!
     }
+
     var path: String {
         switch self {
-        case .getWeekend:
-            return "/api/weekend"
+        case .getLineManager:
+            return "/api/user/line-managers"
         }
     }
+
     var method: HTTPMethod {
         switch self {
-        case .getWeekend:
+        case .getLineManager:
             return .get
         }
     }
+
     var headers: [String: String]? {
         switch self {
-        case .getWeekend:
+        case .getLineManager:
             return [
                 "Authorization":
                     "Bearer \(KeychainSwift().get("user_token") ?? "")",
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             ]
+
         }
     }
+
     var parameters: [String: Any]? {
         switch self {
-        case .getWeekend:
-            return ["all": true]
+        case .getLineManager:
+            return nil
         }
     }
 }

@@ -31,26 +31,26 @@ final class MockViewModelPersonalLeaveService: ViewModelPersonalLeaveServiceProt
 @MainActor
 struct TestViewModelPersonalLeave {
     let apiService: MockViewModelPersonalLeaveService
-    let viewModel: ViewModelPersonalLeave
+    let viewModel: ViewModelRequestLeave
     init(){
         apiService = MockViewModelPersonalLeaveService()
-        viewModel = ViewModelPersonalLeave(apiService: apiService)
+        viewModel = ViewModelRequestLeave(apiService: apiService)
     }
     @Test func testFetchLeaveTypeFromServerSuccess() async{
-        await viewModel.fetchLeaveTypeFromServer()
-        #expect(!viewModel.leaveTypeList.isEmpty)
+        await viewModel.getLeaveTypes()
+        #expect(!viewModel.leaveTypes.isEmpty)
     }
     @Test func testFetchLeaveTypeFromServerFailure() async{
         apiService.shouldSucceed = false
-        await viewModel.fetchLeaveTypeFromServer()
-        #expect(viewModel.leaveTypeList.isEmpty)
+        await viewModel.getLeaveTypes()
+        #expect(viewModel.leaveTypes.isEmpty)
     }
     @Test func testPostPersonalLeaveToServerSuccess() async{
         viewModel.selectedLeaveType = 0
         viewModel.leaveFromDate = Date.now
         viewModel.leaveToDate = Date.now
         viewModel.description = "Mock description"
-        await viewModel.postPersonalLeaveToServer()
+        await viewModel.postPersonalLeave()
         #expect(apiService.sendDataSuccessful)
     }
     @Test func testPostPersonalLeaveToServerFailure() async{
@@ -59,7 +59,7 @@ struct TestViewModelPersonalLeave {
         viewModel.leaveToDate = Date.now
         viewModel.description = "Mock description"
         apiService.shouldSucceed = false
-        await viewModel.postPersonalLeaveToServer()
+        await viewModel.postPersonalLeave()
         #expect(!apiService.sendDataSuccessful)
     }
 }

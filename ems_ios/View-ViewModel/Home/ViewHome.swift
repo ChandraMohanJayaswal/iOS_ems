@@ -13,39 +13,7 @@ struct ViewHome: View {
         VStack {
             Text("Home View")
         }
-        .navigationTitle("Home")
-        .navigationBarTitleDisplayMode(.large)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button(
-                    action: {
-                        withAnimation(.easeInOut) {
-                            coordinator.navigate(to: .sideMenu)
-                        }
-                    },
-                    label: {
-                        Image(systemName: "line.3.horizontal")
-                            .resizable()
-                            .frame(width: 25, height: 15)
-                            .foregroundStyle(colorBlack)
-                    }
-                )
-            }
-            ToolbarItem(placement: .topBarTrailing) {
-                Button(
-                    action: {
-                        withAnimation(.easeInOut) {
-//                            coordinator.navigate(to: .sideMenu)
-                        }
-                    },
-                    label: {
-                        Image(systemName: "bell")
-                            .resizable()
-                            .foregroundStyle(colorBlack)
-                    }
-                )
-            }
-        }
+        .header(title: "Home")
     }
 }
 #Preview {

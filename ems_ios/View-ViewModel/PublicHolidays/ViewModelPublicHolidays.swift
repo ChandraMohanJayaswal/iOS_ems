@@ -11,17 +11,29 @@ import KeychainSwift
 import SwiftUI
 
 protocol ViewModelPublicHolidaysServiceProtocol: APIGetFiscalYear,
-    APIGetPublicHolidays {}
+    APIGetPublicHolidays, APIGetWeekends, APIGetMyLeaveRequests {}
 final class ViewModelPublicHolidaysService:
     ViewModelPublicHolidaysServiceProtocol {}
-struct PublicHolidayList {
+struct Holiday {
+    let identfiable: UUID = UUID()
     let date: Date
     let description: String
 }
 final class ViewModelPublicHolidays: ObservableObject {
-    @Published var publicHolidayList: [PublicHolidayList] = []
+    @Published var holidayList: [Holiday] = []
     @Published var fiscalYearList: [FiscalYear]
     @Published var uiState: UISTATE = .idle
+    @Published var leaveRequests: [LeaveRequest] = []
+    @Published var selectedFilter: LeaveStatusType = .all
+    var filteredLeaveRequests: [LeaveRequest] {
+        if self.selectedFilter == .all {
+            return leaveRequests
+        } else {
+            return leaveRequests.filter {
+                $0.leaveStatusRes?.statusType == self.selectedFilter
+            }
+        }
+    }
     private let apiService: ViewModelPublicHolidaysServiceProtocol
     init(
         apiService: ViewModelPublicHolidaysServiceProtocol =
@@ -53,21 +65,42 @@ final class ViewModelPublicHolidays: ObservableObject {
             let date = holiday.epochDate?.date
             let description = holiday.description
             if let date = date, let description = description {
-                publicHolidayList.append(
-                    PublicHolidayList(date: date, description: description)
+                holidayList.append(
+                    Holiday(date: date, description: description)
+                )
+            }
+        }
+    }
+    func fetchWeekends() async {
+        var list: [Weekend] = []
+        await apiService.getWeekends { result in
+            for item in result {
+                list.append(item)
+            }
+        }
+        for item in list {
+            let date = item.epochDate?.date
+            let description = "Weekend"
+            if let date = date {
+                holidayList.append(
+                    Holiday(date: date, description: description)
                 )
             }
         }
     }
     func checkDateColor(_ date: Date) -> Color {
-        for holiday in publicHolidayList {
+        for holiday in holidayList {
             let isHoliday = Calendar.current.isDate(
                 date,
                 inSameDayAs: holiday.date
             )
             if isHoliday {
                 if date < Date.now {
-                    return Color(red: 200 / 255, green: 125 / 255, blue: 125 / 255)
+                    return Color(
+                        red: 200 / 255,
+                        green: 125 / 255,
+                        blue: 125 / 255
+                    )
                 } else {
                     return .red
                 }
@@ -79,16 +112,28 @@ final class ViewModelPublicHolidays: ObservableObject {
             return .primary
         }
     }
-    func isDateHoliday(_ date: Date) -> String? {
-        for holiday in publicHolidayList {
+    func isDateHoliday(_ date: Date) -> [String] {
+        var descriptions: [String] = []
+        for holiday in holidayList {
             let isHoliday = Calendar.current.isDate(
                 date,
                 inSameDayAs: holiday.date
             )
             if isHoliday {
-                return holiday.description
+                descriptions.append(holiday.description)
             }
         }
-        return nil
+        return descriptions
+    }
+    func getLeaveRequests() async {
+        await apiService.getMyLeaveRequests { leaveRequests in
+            self.leaveRequests = leaveRequests
+        }
+    }
+    func fetchHolidaysList() async {
+        holidayList = []
+        await fetchPublicHolidaysFromServer()
+        await fetchWeekends()
+        await getLeaveRequests()
     }
 }

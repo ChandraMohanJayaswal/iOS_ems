@@ -8,27 +8,31 @@ import Foundation
 
 protocol APIPostPersonalLeave {
     func postPersonalLeave(
-        selectedLeaveType: Int,
+        lineManagerIds: [Int],
+        leaveTypeId: Int,
         leaveFromDate: String,
         leaveToDate: String,
-        description: String
+        leaveCount: Double?,
+        description: String,
     ) async
 }
 extension APIPostPersonalLeave {
     func postPersonalLeave(
-        selectedLeaveType: Int,
+        lineManagerIds: [Int],
+        leaveTypeId: Int,
         leaveFromDate: String,
         leaveToDate: String,
-        description: String
+        leaveCount: Double?,
+        description: String,
     ) async {
+        print("Line manager ids:=>", lineManagerIds)
         let personalLeaveEnum = EndPointPersonalLeave.postPersonalLeave(
-            lineManagerId: 1,
-            leaveTypeId: selectedLeaveType,
+            lineManagerId: lineManagerIds,
+            leaveTypeId: leaveTypeId,
             leaveFromDate: leaveFromDate,
             leaveToDate: leaveToDate,
+            leaveCount: leaveCount,
             description: description,
-            leaveStatusId: 1,
-            leaveStatusComment: "Some Comment"
         )
         let apiClient = DefaultAPIClient<EndPointPersonalLeave>()
         do {
@@ -37,8 +41,4 @@ extension APIPostPersonalLeave {
             print(error.localizedDescription)
         }
     }
-}
-
-protocol APIGetWeekend {
-    func getWeekend() async
 }

@@ -93,7 +93,12 @@ final class DefaultAPIClient<EndpointType: APIEndPoint> {
             } catch {
                 print("Failed to parse JSON:", error)
             }
-
+            if let body = request.httpBody,
+               let jsonString = String(data: body, encoding: .utf8)
+            {
+                print("Body:")
+                print(jsonString)
+            }
             return data
 
         } catch {

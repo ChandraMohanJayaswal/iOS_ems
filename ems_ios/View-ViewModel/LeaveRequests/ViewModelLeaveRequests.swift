@@ -12,7 +12,7 @@ protocol ViewModelLeaveRequestsServiceProtocol: APIGetMyLeaveRequests {}
 final class ViewModelLeaveRequestsService: ViewModelLeaveRequestsServiceProtocol {}
 
 class ViewModelLeaveRequests: ObservableObject {
-    @Published var leaveRequests: [LeaveRequestObject]
+    @Published var leaveRequests: [LeaveRequest]
     private let apiService: ViewModelLeaveRequestsServiceProtocol
     init(apiService: ViewModelLeaveRequestsServiceProtocol = ViewModelLeaveRequestsService() ) {
         self.apiService = apiService

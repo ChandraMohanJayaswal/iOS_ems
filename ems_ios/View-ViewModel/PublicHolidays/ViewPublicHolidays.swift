@@ -9,46 +9,14 @@ import SwiftUI
 struct ViewPublicHolidays: View {
     @EnvironmentObject var coordinator: RouteCoordinator
     @StateObject var viewModel = ViewModelPublicHolidays()
+    @State var isSheetPresented: Bool = false
     var body: some View {
-        VStack {
-            ViewCalendar(viewModel: viewModel)
-            Spacer()
-        }
-        .task {
-            await viewModel.fetchPublicHolidaysFromServer()
-        }
-        .navigationTitle("Calendar")
-        .navigationBarTitleDisplayMode(.large)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button(
-                    action: {
-                        withAnimation(.easeInOut) {
-                            coordinator.navigate(to: .sideMenu)
-                        }
-                    },
-                    label: {
-                        Image(systemName: "line.3.horizontal")
-                            .resizable()
-                            .frame(width: 25, height: 15)
-                            .foregroundStyle(colorBlack)
-                    }
-                )
+        ViewCalendar(isSheetPresented: $isSheetPresented, viewModel: viewModel)
+            .header(title: "Calendar")
+            .sheet(isPresented: $isSheetPresented) {
+                NavigationStack {
+                    ViewRequestLeave()
+                }
             }
-            ToolbarItem(placement: .topBarTrailing) {
-                Button(
-                    action: {
-                        withAnimation(.easeInOut) {
-//                            coordinator.navigate(to: .sideMenu)
-                        }
-                    },
-                    label: {
-                        Image(systemName: "bell")
-                            .resizable()
-                            .foregroundStyle(colorBlack)
-                    }
-                )
-            }
-        }
     }
 }

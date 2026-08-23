@@ -15,6 +15,7 @@ enum AppScreen {
     case sideMenu
     case userProfile
     case onBoarding
+    case requestLeave
 }
 class RouteCoordinator: ObservableObject {
     @Published var selectedTab: Int = 0
@@ -41,11 +42,18 @@ struct ViewRoot: View {
                 .transition(.move(edge: .leading))
                 .environmentObject(coordinator)
         case .userProfile:
-            ViewUserProfile()
-                .environmentObject(coordinator)
+            NavigationStack {
+                ViewUserProfile()
+                    .environmentObject(coordinator)
+            }
         case .onBoarding:
             ViewOnBoarding()
                 .environmentObject(coordinator)
+        case .requestLeave:
+            NavigationStack {
+                ViewRequestLeave()
+                    .environmentObject(coordinator)
+            }
         }
     }
 }

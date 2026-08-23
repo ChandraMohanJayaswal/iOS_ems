@@ -30,26 +30,26 @@ struct ViewTabBar: View {
             }
             .accessibilityIdentifier("tab_public_holidays")
 
-//            Tab(
-//                "",
-//                systemImage: "pencil",
-//                value: TABINDEX.LEAVEREQUESTS.rawValue
-//            ) {
-//                NavigationStack {
-//                    ViewLeaveRequests()
-//                }
-//            }
-//            .accessibilityIdentifier("tab_leave_requests")
             Tab(
-                "Personal Leave",
-                systemImage: "pencil",
-                value: TABINDEX.PERSONALLEAVES.rawValue
+                "Leave Requests",
+                systemImage: "envelope",
+                value: TABINDEX.LEAVEREQUESTS.rawValue
             ) {
                 NavigationStack {
-                    ViewPersonalLeave()
+                    ViewLeaveRequests()
                 }
             }
-            .accessibilityIdentifier("tab_personal_leave")
+            .accessibilityIdentifier("tab_leave_requests")
+//            Tab(
+//                "Personal Leave",
+//                systemImage: "pencil",
+//                value: TABINDEX.PERSONALLEAVES.rawValue
+//            ) {
+//                NavigationStack {
+//                    ViewPersonalLeave()
+//                }
+//            }
+//            .accessibilityIdentifier("tab_personal_leave")
         }
         .tint(darkBlue)
         .tabBarMinimizeBehavior(.onScrollDown)

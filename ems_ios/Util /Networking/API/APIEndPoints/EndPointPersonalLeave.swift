@@ -10,13 +10,12 @@ import KeychainSwift
 enum EndPointPersonalLeave: APIEndPoint {
     case getPersonalLeave
     case postPersonalLeave(
-        lineManagerId: Int,
+        lineManagerId: [Int],
         leaveTypeId: Int,
         leaveFromDate: String,
         leaveToDate: String,
+        leaveCount: Double?,
         description: String,
-        leaveStatusId: Int,
-        leaveStatusComment: String
     )
     var baseURL: URL {
         return URL(string: AppConfig.baseURL)!
@@ -54,21 +53,17 @@ enum EndPointPersonalLeave: APIEndPoint {
             let leaveTypeId,
             let leaveFromDate,
             let leaveToDate,
+            let leaveCount,
             let description,
-            let leaveStatusId,
-            let leaveStatusComment
         ):
             return [
                 "id": 0,
-                "lineManagerId": lineManagerId,
+                "lineManagerIds": lineManagerId,
                 "leaveTypeId": leaveTypeId,
-                "leaveRequestedDate": "2020-03-23",
-                "leaveRequestedTime": "08:30",
                 "leaveFromDate": leaveFromDate,
                 "leaveToDate": leaveToDate,
                 "description": description,
-                "leaveStatusId": leaveStatusId,
-                "statusComment": leaveStatusComment
+                "leaveCount": leaveCount
             ]
         case .getPersonalLeave:
             return nil
