@@ -14,7 +14,7 @@ extension APIGetLineManagers {
         do {
             let data = try await apiClient.request(EndPointUser.getLineManager)
             let decoded = try JSONDecoder().decode(LineManagerResponse.self, from: data)
-            completion(decoded.lineManagerData?.lineManagerList ?? [])
+            completion(decoded.lineManagerList ?? [])
         } catch {
             print("Server Error", error.localizedDescription)
         }

@@ -6,16 +6,6 @@
 //
 
 struct LineManagerResponse: Codable {
-    let lineManagerData: LineManagerData?
-    enum CodingKeys: String, CodingKey {
-        case lineManagerData = "data"
-    }
-    init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        lineManagerData = container.decodeSafe(LineManagerData.self, forKey: .lineManagerData)
-    }
-}
-struct LineManagerData: Codable {
     let lineManagerList: [LineManager]?
     enum CodingKeys: String, CodingKey {
         case lineManagerList = "list"

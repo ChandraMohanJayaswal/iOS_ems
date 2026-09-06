@@ -22,7 +22,7 @@ extension DefaultAPIClient {
     }
 
     private func buildURL(for endpoint: EndpointType) -> URL {
-        var url = endpoint.baseURL.appending(path: endpoint.path)
+        let url = endpoint.baseURL.appending(path: endpoint.path)
 
         guard endpoint.method == .get,
               let parameters = endpoint.parameters,
@@ -121,10 +121,8 @@ extension DefaultAPIClient {
         }
 
         print("""
-        
         ===== RESPONSE =====
         \(prettyString)
         """)
     }
 }
-

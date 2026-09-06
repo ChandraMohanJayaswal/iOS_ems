@@ -14,6 +14,8 @@ protocol APIPostPersonalLeave {
         leaveToDate: String,
         leaveCount: Double?,
         description: String,
+        success: @escaping () -> Void,
+        failure: @escaping (Error) -> Void
     ) async
 }
 extension APIPostPersonalLeave {
@@ -24,8 +26,9 @@ extension APIPostPersonalLeave {
         leaveToDate: String,
         leaveCount: Double?,
         description: String,
+        success: @escaping () -> Void,
+        failure: @escaping (Error) -> Void
     ) async {
-        print("Line manager ids:=>", lineManagerIds)
         let personalLeaveEnum = EndPointPersonalLeave.postPersonalLeave(
             lineManagerId: lineManagerIds,
             leaveTypeId: leaveTypeId,
@@ -37,7 +40,9 @@ extension APIPostPersonalLeave {
         let apiClient = DefaultAPIClient<EndPointPersonalLeave>()
         do {
             _ = try await apiClient.request(personalLeaveEnum)
+            success()
         } catch {
+            failure(error)
             print(error.localizedDescription)
         }
     }

@@ -28,7 +28,6 @@ struct ViewCalendar: View {
     )
     var body: some View {
         ScrollView {
-
             // MARK: - Month / Year Picker
             HStack(spacing: 4) {
                 Picker("Month", selection: $selectedMonth) {
@@ -79,7 +78,6 @@ struct ViewCalendar: View {
             // MARK: - Calendar
 
             VStack(spacing: 8) {
-
                 HStack(spacing: 0) {
                     ForEach(daysOfWeek.indices, id: \.self) { index in
                         Text(daysOfWeek[index])
@@ -92,7 +90,6 @@ struct ViewCalendar: View {
 
                 Divider()
                     .padding(.horizontal, 12)
-
                 LazyVGrid(
                     columns: columns,
                     spacing: 8
@@ -153,19 +150,19 @@ struct ViewCalendar: View {
                             }
                             .frame(
                                 maxWidth: .infinity,
-                                minHeight: 34
+                                maxHeight: 34
                             )
                         }
                         .buttonStyle(.plain)
                     }
                 }
                 .padding(.horizontal, 8)
+                Divider()
+                    .padding(.horizontal, 12)
+                    .padding(.top, 4)
             }
-            .padding(.vertical, 8)
+//            .padding(.top, 8)
 
-            Divider()
-                .padding(.horizontal, 12)
-                .padding(.top, 4)
             // MARK: - Selected Date Information
             VStack(alignment: .leading, spacing: 12) {
                 if Calendar.current.isDate(
@@ -206,7 +203,7 @@ struct ViewCalendar: View {
                 }
             }
             .padding(.horizontal, 16)
-            .padding(.vertical, 14)
+            .padding(.bottom, 14)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(
                 Color.primary.opacity(0.035)
@@ -236,25 +233,16 @@ struct ViewCalendar: View {
                     "Leave Status",
                     selection: $viewModel.selectedFilter
                 ) {
-                    Text("All")
-                        .tag(LeaveStatusType.all)
-
-                    Text("Pending")
-                        .tag(LeaveStatusType.pending)
-
-                    Text("Approved")
-                        .tag(LeaveStatusType.approved)
-
-                    Text("Rejected")
-                        .tag(LeaveStatusType.rejected)
+                    ForEach(LeaveStatusType.allCases, id: \.self) { type in
+                        Text(type.rawValue)
+                            .tag(type)
+                    }
                 }
                 .pickerStyle(.segmented)
             }
             .padding(.horizontal, 16)
-            .padding(.top, 16)
             .padding(.bottom, 8)
             // MARK: - Leave Requests
-            ScrollView {
                 LazyVStack(
                     alignment: .leading,
                     spacing: 0
@@ -279,7 +267,6 @@ struct ViewCalendar: View {
                             .padding(.horizontal, 16)
                     }
                 }
-            }
         }
         .header(title: "Calendar")
         .sheet(isPresented: $isSheetPresented) {

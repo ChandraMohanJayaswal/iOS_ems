@@ -6,37 +6,18 @@
 //
 
 struct WeekendResponse: Codable {
-    let weekendData: WeekendData?
-    enum CodingKeys: String, CodingKey {
-        case weekendData = "data"
-    }
-    init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.weekendData = container.decodeSafe(
-            WeekendData.self,
-            forKey: .weekendData
-        )
-    }
-}
-
-struct WeekendData: Codable {
-    let weekendList: WeekendList?
+    let weekendList: [Weekend]?
     enum CodingKeys: String, CodingKey {
         case weekendList = "list"
     }
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.weekendList = container.decodeSafe(
-            WeekendList.self,
+            [Weekend].self,
             forKey: .weekendList
         )
     }
 }
-
-struct WeekendList: Codable {
-    let data: [Weekend]?
-}
-
 struct Weekend: Codable {
     let id: Int?
     let epochDate: Double?

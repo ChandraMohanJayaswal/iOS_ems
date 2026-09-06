@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 struct PersonalLeaveResponse: Decodable {
     let leaveRequestList: [PersonalLeave]?
     enum CodingKeys: String, CodingKey {
@@ -59,10 +60,9 @@ struct LeaveStatusRes: Decodable {
     }
 }
 
-enum LeaveStatusType: String, Codable {
+enum LeaveStatusType: String, Codable, CaseIterable {
     case all = "ALL"
     case pending = "PENDING"
     case approved = "APPROVED"
     case rejected = "REJECTED"
-    case cancelled = "CANCELLED"
 }

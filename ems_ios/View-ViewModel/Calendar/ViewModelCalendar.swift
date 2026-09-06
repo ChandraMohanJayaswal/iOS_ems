@@ -49,8 +49,8 @@ final class ViewModelPublicHolidays: ObservableObject {
             for item in result {
                 self.fiscalYearList.append(item)
             }
+            self.uiState = .idle
         }
-        self.uiState = .idle
     }
     func fetchPublicHolidaysFromServer() async {
         var list: [PublicHoliday] = []

@@ -96,6 +96,7 @@ struct ViewRequestLeave: View {
             }
             .foregroundStyle(colorBlue)
         }
+        .toast(isPresented: $viewModel.showToast, message: "Leave request submitted", icon: "checkmark")
         .onChange(of: isPartial) {
             if isPartial == false {
                 viewModel.leaveCount = nil

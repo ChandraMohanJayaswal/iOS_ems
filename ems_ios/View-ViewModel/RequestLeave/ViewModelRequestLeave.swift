@@ -9,7 +9,7 @@ import Combine
 import Foundation
 
 protocol ViewModelPersonalLeaveServiceProtocol: APIPostPersonalLeave,
-    APIGetLeaveType, APIGetLineManagers {}
+    APIGetLeaveTypes, APIGetLineManagers {}
 final class ViewModelRequestLeaveService: ViewModelPersonalLeaveServiceProtocol {}
 final class ViewModelRequestLeave: ObservableObject {
     @Published var selectedLineManagers: Set<Int> = []
@@ -21,6 +21,7 @@ final class ViewModelRequestLeave: ObservableObject {
     @Published var description: String
     @Published var lineManagers: [LineManager] = []
     @Published var leaveCount: Double?
+    @Published var showToast: Bool = false
     var isFormValid: Bool {
         selectedLeaveType != 0 && !selectedLineManagers.isEmpty
             && leaveFromDate <= leaveToDate
@@ -43,9 +44,12 @@ final class ViewModelRequestLeave: ObservableObject {
         await apiService.getLeaveType { result in
             for item in result {
                 self.leaveTypes.append(item)
+                self.uiState = .idle
             }
+        } failure: { error in
+            dump(error)
+            self.uiState = .idle
         }
-        self.uiState = .idle
     }
     func postPersonalLeave() async {
         self.uiState = .loading
@@ -56,7 +60,13 @@ final class ViewModelRequestLeave: ObservableObject {
             leaveFromDate: formatDateForServer(self.leaveFromDate),
             leaveToDate: formatDateForServer(self.leaveToDate),
             leaveCount: self.leaveCount,
-            description: self.description
+            description: self.description,
+            success: { [weak self] in
+                self?.showToast = true
+            },
+            failure: { error in
+                dump(error)
+            }
         )
         self.uiState = .idle
     }
