@@ -11,7 +11,7 @@ import KeychainSwift
 import SwiftUI
 
 protocol ViewModelPublicHolidaysServiceProtocol: APIGetFiscalYear,
-    APIGetPublicHolidays, APIGetWeekends, APIGetMyLeaveRequests {}
+    APIGetPublicHolidays, APIGetWeekends, APIGetPersonalLeaves {}
 final class ViewModelPublicHolidaysService:
     ViewModelPublicHolidaysServiceProtocol {}
 struct Holiday {
@@ -23,9 +23,9 @@ final class ViewModelPublicHolidays: ObservableObject {
     @Published var holidayList: [Holiday] = []
     @Published var fiscalYearList: [FiscalYear]
     @Published var uiState: UISTATE = .idle
-    @Published var leaveRequests: [LeaveRequest] = []
+    @Published var leaveRequests: [PersonalLeave] = []
     @Published var selectedFilter: LeaveStatusType = .all
-    var filteredLeaveRequests: [LeaveRequest] {
+    var filteredLeaveRequests: [PersonalLeave] {
         if self.selectedFilter == .all {
             return leaveRequests
         } else {
@@ -53,14 +53,19 @@ final class ViewModelPublicHolidays: ObservableObject {
         self.uiState = .idle
     }
     func fetchPublicHolidaysFromServer() async {
-        var list: [PublicHolidaysAPIResponseDetails] = []
+        var list: [PublicHoliday] = []
         self.uiState = .loading
-        await apiService.getPublicHolidays { result in
-            for item in result {
-                list.append(item)
+        await apiService.getPublicHolidays(
+            success: { result in
+                for item in result {
+                    list.append(item)
+                }
+                self.uiState = .idle
+            },
+            failure: { error in
+                print(error.localizedDescription)
             }
-            self.uiState = .idle
-        }
+        )
         for holiday in list {
             let date = holiday.epochDate?.date
             let description = holiday.description
@@ -126,8 +131,10 @@ final class ViewModelPublicHolidays: ObservableObject {
         return descriptions
     }
     func getLeaveRequests() async {
-        await apiService.getMyLeaveRequests { leaveRequests in
+        await apiService.getPersonalLeaves { leaveRequests in
             self.leaveRequests = leaveRequests
+        } failure: { error in
+            print(error.localizedDescription)
         }
     }
     func fetchHolidaysList() async {

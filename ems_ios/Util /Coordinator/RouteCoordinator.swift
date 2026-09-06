@@ -51,8 +51,8 @@ struct ViewRoot: View {
                 .environmentObject(coordinator)
         case .requestLeave:
             NavigationStack {
-                ViewRequestLeave()
-                    .environmentObject(coordinator)
+//                ViewRequestLeave()
+//                    .environmentObject(coordinator)
             }
         }
     }

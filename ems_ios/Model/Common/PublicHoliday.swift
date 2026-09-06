@@ -2,27 +2,30 @@
 //  PublicHoliday.swift
 //  ems_ios
 //
-//  Created by MacMini on 12/01/2026.
+//  Created by MacMini on 06/09/2026.
 //
+
+
 import Foundation
-struct PublicHoliday: Codable, Identifiable {
+
+struct PublicHoliday: Decodable, Identifiable {
     let id: Int?
-    let fiscalYear: String?
-    let showingYear: String?
+    let epochDate: Double?
+    let description: String?
     enum CodingKeys: String, CodingKey {
-        case id
-        case fiscalYear
-        case showingYear
+        case id = "id"
+        case epochDate = "date"
+        case description
     }
-    init(id: Int?, fiscalyear: String?, showingYear: String?) {
+    init(id: Int, date: Double?, description: String?) {
         self.id = id
-        self.fiscalYear = fiscalyear
-        self.showingYear = showingYear
+        self.epochDate = date
+        self.description = description
     }
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = container.decodeSafe(Int.self, forKey: .id)
-        fiscalYear = container.decodeSafe(String.self, forKey: .fiscalYear)
-        showingYear = container.decodeSafe(String.self, forKey: .showingYear)
+        epochDate = container.decodeSafe(Double.self, forKey: .epochDate)
+        description = container.decodeSafe(String.self, forKey: .description)
     }
 }

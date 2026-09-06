@@ -8,6 +8,7 @@
 import Foundation
 
 struct User: Decodable {
+    let id: Int?
     let firstName: String?
     let lastName: String?
     let fullName: String?
@@ -16,6 +17,7 @@ struct User: Decodable {
     let emailAddress: String?
     let role: Role?
     enum CodingKeys: String, CodingKey {
+        case id
         case firstName
         case lastName
         case fullName
@@ -33,5 +35,6 @@ struct User: Decodable {
         mobileNumber = container.decodeSafe(String.self, forKey: .mobileNumber)
         emailAddress = container.decodeSafe(String.self, forKey: .emailAddress)
         role = container.decodeSafe(Role.self, forKey: .role)
+        id = container.decodeSafe(Int.self, forKey: .id)
     }
 }

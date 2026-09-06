@@ -16,7 +16,7 @@ struct ViewSplash: View {
             .font(.largeTitle)
             .foregroundStyle(.blue)
             .fontWeight(.heavy)
-        Text("By Chronelabs Technologies")
+        Text("By Chronelab Technologies")
             .foregroundStyle(.gray)
         ZStack(alignment: .topTrailing) {
             Image(systemName: "person.2")

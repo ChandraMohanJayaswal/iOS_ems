@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LoginData: Decodable {
+struct Login: Decodable {
     let token: String?
     let user: User?
     enum CodingKeys: String, CodingKey {

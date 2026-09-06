@@ -11,6 +11,7 @@ final class UserDefaultsManager {
     static let shared = UserDefaultsManager()
     private init() {}
     func login(
+        id: Int,
         firstName: String,
         lastName: String,
         gender: String,
@@ -19,6 +20,7 @@ final class UserDefaultsManager {
         title: String,
         token: String
     ) {
+        UserDefaults.standard.set(id, forKey: "userId")
         UserDefaults.standard.set(firstName, forKey: "firstName")
         UserDefaults.standard.set(lastName, forKey: "lastName")
         UserDefaults.standard.set(gender, forKey: "gender")

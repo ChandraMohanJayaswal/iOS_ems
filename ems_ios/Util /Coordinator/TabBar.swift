@@ -18,38 +18,16 @@ struct ViewTabBar: View {
                 }
             }
             .accessibilityIdentifier("tab_home")
-
             Tab(
                 "Calendar",
                 systemImage: "calendar",
                 value: TABINDEX.PUBLICHOLIDAYS.rawValue
             ) {
                 NavigationStack {
-                    ViewPublicHolidays()
+                    ViewCalendar()
                 }
             }
             .accessibilityIdentifier("tab_public_holidays")
-
-            Tab(
-                "Leave Requests",
-                systemImage: "envelope",
-                value: TABINDEX.LEAVEREQUESTS.rawValue
-            ) {
-                NavigationStack {
-                    ViewLeaveRequests()
-                }
-            }
-            .accessibilityIdentifier("tab_leave_requests")
-//            Tab(
-//                "Personal Leave",
-//                systemImage: "pencil",
-//                value: TABINDEX.PERSONALLEAVES.rawValue
-//            ) {
-//                NavigationStack {
-//                    ViewPersonalLeave()
-//                }
-//            }
-//            .accessibilityIdentifier("tab_personal_leave")
         }
         .tint(darkBlue)
         .tabBarMinimizeBehavior(.onScrollDown)

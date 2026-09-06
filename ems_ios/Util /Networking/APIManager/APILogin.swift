@@ -28,26 +28,24 @@ extension APILogin {
 
             let data = try await apiClient.request(loginEnum)
             let decoded = try JSONDecoder().decode(
-                LoginResponse.self,
+                Login.self,
                 from: data
             )
-            if let token = decoded.data?.token {
+            if let token = decoded.token {
                 UserDefaultsManager.shared.login(
-                    firstName: decoded.data?.user?.firstName ?? "",
-                    lastName: decoded.data?.user?.lastName ?? "",
-                    gender: decoded.data?.user?.gender ?? "",
-                    emailAddress: decoded.data?.user?.emailAddress ?? "",
-                    mobileNumber: decoded.data?.user?.mobileNumber ?? "",
-                    title: decoded.data?.user?.role?.title ?? "",
+                    id: decoded.user?.id ?? 0,
+                    firstName: decoded.user?.firstName ?? "",
+                    lastName: decoded.user?.lastName ?? "",
+                    gender: decoded.user?.gender ?? "",
+                    emailAddress: decoded.user?.emailAddress ?? "",
+                    mobileNumber: decoded.user?.mobileNumber ?? "",
+                    title: decoded.user?.role?.title ?? "",
                     token: token
                 )
             }
-            if decoded.status ?? false {
-                success()
-            } else {
-                failure(decoded.message ?? "Error")
-            }
+            success()
         } catch {
+            print("Failure in login")
             failure(error.localizedDescription)
         }
     }

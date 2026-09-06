@@ -6,28 +6,18 @@
 //
 
 import Foundation
-struct LeaveRequestResponse: Decodable {
-    let data: LeaveRequestList?
-    enum CodingKeys: CodingKey {
-        case data
-    }
-    init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        data = container.decodeSafe(LeaveRequestList.self, forKey: .data)
-    }
-}
-struct LeaveRequestList: Decodable {
-    let leaveRequestList: [LeaveRequest]?
+struct PersonalLeaveResponse: Decodable {
+    let leaveRequestList: [PersonalLeave]?
     enum CodingKeys: String, CodingKey {
         case leaveRequestList = "list"
     }
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        leaveRequestList = container.decodeSafe([LeaveRequest].self, forKey: .leaveRequestList)
+        leaveRequestList = container.decodeSafe([PersonalLeave].self, forKey: .leaveRequestList)
     }
 }
 
-struct LeaveRequest: Decodable, Identifiable {
+struct PersonalLeave: Decodable, Identifiable {
     let id: Int
     let leaveFromDate: Double?
     let createdEpoch: Double?
