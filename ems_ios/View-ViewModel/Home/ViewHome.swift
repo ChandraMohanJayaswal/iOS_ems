@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Charts
 
 struct ViewHome: View {
     @EnvironmentObject var coordinator: RouteCoordinator
@@ -26,8 +27,6 @@ struct ViewHome: View {
             VStack(alignment: .leading, spacing: 24) {
                 header
                 attendanceCard
-                leaveSection
-                statisticsSection
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 16)
@@ -51,17 +50,11 @@ struct ViewHome: View {
 extension ViewHome {
     fileprivate var header: some View {
         VStack(alignment: .leading, spacing: 6) {
-
-            Text(viewModel.metrics?.currentMonth ?? "")
-                .font(.subheadline.weight(.semibold))
-                .foregroundStyle(.secondary)
-
             HStack(alignment: .center) {
-                Text("👋")
-                Text(UserDefaults.standard.string(forKey: "firstName") ?? "NA")
-                    .font(.largeTitle.bold())
+                Text("Hi, \(UserDefaults.standard.string(forKey: "firstName") ?? "NA")")
+                    .font(.system(size: 22, weight: .bold))
                 Spacer()
-                Text(viewModel.metrics?.fiscalYear ?? "")
+                Text("\(viewModel.metrics?.fiscalYear ?? "") \(viewModel.metrics?.currentMonth ?? "")")
                     .font(.caption.weight(.semibold))
                     .padding(.horizontal, 10)
                     .padding(.vertical, 6)
@@ -77,49 +70,22 @@ extension ViewHome {
 
 extension ViewHome {
     fileprivate var attendanceCard: some View {
+
         VStack(spacing: 20) {
-
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Attendance")
-                        .font(.headline)
-
-                    Text("Fiscal year \(viewModel.metrics?.fiscalYear ?? "-")")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-
-                Spacer()
-
-                Image(systemName: "calendar.badge.checkmark")
-                    .font(.title3)
-                    .foregroundStyle(.green)
-                    .padding(10)
-                    .background(
-                        Circle()
-                            .fill(.green.opacity(0.12))
-                    )
+            Chart(viewModel.data, id: \.0) { item in
+                BarMark(
+                    x: .value("Type", item.0),
+                    y: .value("Days", item.1)
+                )
+                .foregroundStyle(by: .value("Type", item.0))
             }
-
-            Gauge(value: attendanceProgress) {
-                EmptyView()
-            } currentValueLabel: {
-                VStack(spacing: 2) {
-                    Text("\(viewModel.metrics?.totalWorkedDays ?? 0)")
-                        .font(
-                            .system(size: 38, weight: .bold, design: .rounded)
-                        )
-
-                    Text("days worked")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-            }
-            .gaugeStyle(.accessoryCircularCapacity)
-            .tint(.green)
-            .scaleEffect(1.35)
-            .frame(height: 150)
-
+            .chartForegroundStyleScale([
+                "Total": .blue,
+                "Worked": .green,
+                "Leave": .orange
+            ])
+            .frame(height: 250)
+            Spacer()
             HStack(spacing: 0) {
 
                 attendanceStat(
@@ -144,6 +110,23 @@ extension ViewHome {
                     value: "\(viewModel.metrics?.totalLeave ?? 0)",
                     title: "Leave",
                     color: .orange
+                )
+            }
+            HStack(spacing: 0) {
+
+                attendanceStat(
+                    value: "\(viewModel.metrics?.balanceCasualLeave ?? 0)",
+                    title: "Casual leave",
+                    color: .red
+                )
+
+                Divider()
+                    .frame(height: 35)
+
+                attendanceStat(
+                    value: "\(viewModel.metrics?.balanceSickLeave ?? 0)",
+                    title: "Sick leave",
+                    color: .yellow
                 )
             }
         }
