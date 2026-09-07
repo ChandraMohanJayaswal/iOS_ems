@@ -80,8 +80,8 @@ extension ViewHome {
                 .foregroundStyle(by: .value("Type", item.0))
             }
             .chartForegroundStyleScale([
-                "Worked": .green,
                 "Working": .blue,
+                "Worked": .green,
                 "Leave": .orange
             ])
             .frame(height: 250)
@@ -89,18 +89,18 @@ extension ViewHome {
             HStack(spacing: 0) {
 
                 attendanceStat(
-                    value: "\(viewModel.metrics?.totalWorkedDays ?? 0)",
-                    title: "Worked",
-                    color: .green
+                    value: "\(viewModel.metrics?.totalWorkingDays ?? 0)",
+                    title: "Working",
+                    color: .blue
                 )
 
                 Divider()
                     .frame(height: 35)
 
                 attendanceStat(
-                    value: "\(viewModel.metrics?.totalWorkingDays ?? 0)",
-                    title: "Working",
-                    color: .blue
+                    value: "\(viewModel.metrics?.totalWorkedDays ?? 0)",
+                    title: "Worked",
+                    color: .green
                 )
 
                 Divider()
