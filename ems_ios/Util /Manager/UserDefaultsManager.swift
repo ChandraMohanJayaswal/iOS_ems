@@ -7,8 +7,8 @@ import Foundation
 //
 import KeychainSwift
 
-final class EMSManager {
-    static let shared = EMSManager()
+final class UserDefaultsManager {
+    static let shared = UserDefaultsManager()
     private let userDefaults: UserDefaults
     private let keychain: KeychainSwift
     private init(userDefaults: UserDefaults = .standard, keychain: KeychainSwift = KeychainSwift()) {

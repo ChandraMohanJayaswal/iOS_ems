@@ -45,7 +45,7 @@ struct ViewSplash: View {
 //                        coordinator.navigate(to: .tabbar)
 //                    }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                        if EMSManager.shared.isLoggedIn {
+                        if UserDefaultsManager.shared.isLoggedIn {
                             coordinator.navigate(to: .tabbar)
                         } else {
                             coordinator.navigate(to: .login)

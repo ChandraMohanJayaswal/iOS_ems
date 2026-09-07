@@ -9,7 +9,7 @@ import Combine
 class ViewModelSideMenu: ObservableObject {
     @Published var showBackground: Bool = false
     func signOut(coordinator: RouteCoordinator) {
-        EMSManager.shared.signOut()
+        UserDefaultsManager.shared.signOut()
         coordinator.selectedTab = TABINDEX.HOME.rawValue
         coordinator.navigate(to: .login)
     }

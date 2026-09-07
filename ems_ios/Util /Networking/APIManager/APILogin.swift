@@ -33,7 +33,7 @@ extension APILogin {
             )
             if let token = decoded.token, let user = decoded.user {
                 
-                EMSManager.shared.login(user: user,token: token)
+                UserDefaultsManager.shared.login(user: user,token: token)
             }
             success()
         } catch {
