@@ -41,7 +41,7 @@ enum EndPointPersonalLeave: APIEndPoint {
         case .postPersonalLeave, .getPersonalLeave:
             return [
                 "Authorization":
-                    "Bearer \(KeychainSwift().get("user_token") ?? "")",
+                    "Bearer \(UserDefaultsManager.shared.token ?? "")",
                 "Content-Type": "application/json"
             ]
         }
