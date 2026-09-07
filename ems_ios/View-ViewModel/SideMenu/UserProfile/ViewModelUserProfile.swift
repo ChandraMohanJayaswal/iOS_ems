@@ -31,4 +31,8 @@ class ViewModelUserProfile: ObservableObject {
         self.mobileNumber = EMSManager.shared.currentUser?.mobileNumber ?? "NA"
         self.emailAddress = EMSManager.shared.currentUser?.emailAddress ?? "NA"
     }
+
+    deinit {
+        print("ViewModelUserProfile deinitialized")
+    }
 }

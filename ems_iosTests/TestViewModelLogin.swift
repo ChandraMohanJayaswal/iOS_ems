@@ -8,6 +8,10 @@ import Testing
 @testable import ems_ios
 final class MockViewModelLoginService: ViewModelLoginServiceProtocol{
     var shouldSucceed = true
+
+    deinit {
+        print("MockViewModelLoginService deinitialized")
+    }
     func login(email: String, password: String) async throws{
         if shouldSucceed{
         }

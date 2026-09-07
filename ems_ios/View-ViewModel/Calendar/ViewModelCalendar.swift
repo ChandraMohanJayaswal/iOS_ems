@@ -13,7 +13,11 @@ import SwiftUI
 protocol ViewModelPublicHolidaysServiceProtocol: APIGetFiscalYear,
     APIGetPublicHolidays, APIGetWeekends, APIGetPersonalLeaves {}
 final class ViewModelPublicHolidaysService:
-    ViewModelPublicHolidaysServiceProtocol {}
+    ViewModelPublicHolidaysServiceProtocol {
+    deinit {
+        print("ViewModelPublicHolidaysService deinitialized")
+    }
+}
 struct Holiday {
     let identfiable: UUID = UUID()
     let date: Date
@@ -146,5 +150,9 @@ final class ViewModelPublicHolidays: ObservableObject {
         await fetchPublicHolidaysFromServer()
         await fetchWeekends()
         await getPersonalLeaves()
+    }
+
+    deinit {
+        print("ViewModelPublicHolidays deinitialized")
     }
 }

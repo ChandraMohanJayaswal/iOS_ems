@@ -13,4 +13,8 @@ class ViewModelSideMenu: ObservableObject {
         coordinator.selectedTab = TABINDEX.HOME.rawValue
         coordinator.navigate(to: .login)
     }
+
+    deinit {
+        print("ViewModelSideMenu deinitialized")
+    }
 }

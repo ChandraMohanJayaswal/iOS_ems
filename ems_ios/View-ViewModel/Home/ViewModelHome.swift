@@ -8,7 +8,11 @@ import Combine
 import Foundation
 
 protocol ViewModelHomeServiceProtocol: APIMetrics {}
-final class ViewModelHomeService: ViewModelHomeServiceProtocol {}
+final class ViewModelHomeService: ViewModelHomeServiceProtocol {
+    deinit {
+        print("ViewModelHomeService deinitialized")
+    }
+}
 
 class ViewModelHome: ObservableObject {
     let apiService: ViewModelHomeServiceProtocol
@@ -34,5 +38,9 @@ class ViewModelHome: ObservableObject {
                 print(error.localizedDescription)
             }
         )
+    }
+
+    deinit {
+        print("ViewModelHome deinitialized")
     }
 }

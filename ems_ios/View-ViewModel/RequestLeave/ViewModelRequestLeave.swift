@@ -10,7 +10,11 @@ import Foundation
 
 protocol ViewModelPersonalLeaveServiceProtocol: APIPostPersonalLeave,
     APIGetLeaveTypes, APIGetLineManagers {}
-final class ViewModelRequestLeaveService: ViewModelPersonalLeaveServiceProtocol {}
+final class ViewModelRequestLeaveService: ViewModelPersonalLeaveServiceProtocol {
+    deinit {
+        print("ViewModelRequestLeaveService deinitialized")
+    }
+}
 final class ViewModelRequestLeave: ObservableObject {
     @Published var selectedLineManagers: Set<Int> = []
     @Published var uiState: UISTATE = .idle
@@ -81,5 +85,9 @@ final class ViewModelRequestLeave: ObservableObject {
         var dateString = formatter.string(from: date)
         dateString = dateString.replacingOccurrences(of: "/", with: "-")
         return dateString
+    }
+
+    deinit {
+        print("ViewModelRequestLeave deinitialized")
     }
 }

@@ -81,7 +81,7 @@ struct ViewUserProfile: View {
                 }
             }
                 .navigationTitle("Profile Details")
-                .navigationBarTitleDisplayMode(.large)
+                .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button {

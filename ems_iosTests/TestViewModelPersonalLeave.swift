@@ -10,6 +10,10 @@ import Testing
 final class MockViewModelPersonalLeaveService: ViewModelPersonalLeaveServiceProtocol{
     var shouldSucceed: Bool = true
     var sendDataSuccessful: Bool = true
+
+    deinit {
+        print("MockViewModelPersonalLeaveService deinitialized")
+    }
     func getLeaveType(completion: @escaping ([LeaveType])-> Void) async{
         if shouldSucceed{
             completion([LeaveType.mock])
