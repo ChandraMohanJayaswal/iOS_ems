@@ -102,12 +102,17 @@ struct LeaveRequestItem: View {
                             Text(comment ?? "N/A")
                         }
                     }.toolbar {
-                        Button("Close") {
+                        Button {
                             isSheetPresented.toggle()
+                        } label: {
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundStyle(.red)
                         }
-                        .foregroundStyle(.red)
+                        .accessibilityLabel("Close")
                     }
                 }
+                .navigationTitle("Leave Details")
+                .navigationBarTitleDisplayMode(.inline)
             }
         }
     }
