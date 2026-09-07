@@ -11,4 +11,8 @@ class ViewModelSplash: ObservableObject {
 //    var shouldSkipSplash: Bool {
 //        ProcessInfo.processInfo.arguments.contains("skipSplash")
 //    }
+
+    deinit {
+        print("ViewModelSplash deinitialized")
+    }
 }

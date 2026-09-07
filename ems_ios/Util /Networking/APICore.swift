@@ -43,4 +43,8 @@ final class DefaultAPIClient<EndpointType: APIEndPoint> {
             throw APIError.invalidResponse
         }
     }
+
+    deinit {
+        print("DefaultAPIClient deinitialized")
+    }
 }

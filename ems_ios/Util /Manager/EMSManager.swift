@@ -49,4 +49,8 @@ final class EMSManager {
             UserDefaults.standard.removePersistentDomain(forName: bundleID)
         }
     }
+
+    deinit {
+        print("EMSManager deinitialized")
+    }
 }

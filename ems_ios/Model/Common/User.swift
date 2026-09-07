@@ -16,7 +16,6 @@ struct User: Codable { // Codable = Decodable + Encodable
     let mobileNumber: String?
     let emailAddress: String?
     let role: Role?
-    
     enum CodingKeys: String, CodingKey {
         case id
         case firstName
@@ -27,7 +26,6 @@ struct User: Codable { // Codable = Decodable + Encodable
         case emailAddress
         case role
     }
-    
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         firstName = container.decodeSafe(String.self, forKey: .firstName)
@@ -40,7 +38,6 @@ struct User: Codable { // Codable = Decodable + Encodable
         id = container.decodeSafe(Int.self, forKey: .id)
     }
     
-    // Add custom encoding method
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(id, forKey: .id)

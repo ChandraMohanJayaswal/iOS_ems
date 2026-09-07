@@ -8,6 +8,10 @@ import Testing
 @testable import ems_ios
 final class MockViewModelPublicHolidaysService: ViewModelPublicHolidaysServiceProtocol{
     var shouldSucceed  = true
+
+    deinit {
+        print("MockViewModelPublicHolidaysService deinitialized")
+    }
     func getFiscalYear(completion: @escaping ([FiscalYear]) -> Void) async {
         if shouldSucceed{
             completion([FiscalYear.mock])

@@ -9,6 +9,11 @@ import XCTest
 
 final class ems_iosUITests: XCTestCase {
     var app: XCUIApplication!
+
+    deinit {
+        print("ems_iosUITests deinitialized")
+    }
+
     override func setUp() {
         super.setUp()
         continueAfterFailure = false

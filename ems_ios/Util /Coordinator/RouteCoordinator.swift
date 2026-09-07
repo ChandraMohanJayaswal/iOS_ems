@@ -23,6 +23,10 @@ class RouteCoordinator: ObservableObject {
     func navigate(to screen: AppScreen) {
         currentScreen = screen
     }
+
+    deinit {
+        print("RouteCoordinator deinitialized")
+    }
 }
 struct ViewRoot: View {
     @EnvironmentObject var coordinator: RouteCoordinator

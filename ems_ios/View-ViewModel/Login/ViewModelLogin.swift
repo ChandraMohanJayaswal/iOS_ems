@@ -10,7 +10,11 @@ import Foundation
 import SwiftUI
 
 protocol ViewModelLoginServiceProtocol: APILogin {}
-final class ViewModelLoginService: ViewModelLoginServiceProtocol {}
+final class ViewModelLoginService: ViewModelLoginServiceProtocol {
+    deinit {
+        print("ViewModelLoginService deinitialized")
+    }
+}
 final class ViewModelLogin: ObservableObject {
     @Published var email: String
     @Published var isAlertShown: Bool
