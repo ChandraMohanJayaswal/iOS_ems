@@ -19,6 +19,9 @@ final class UserDefaultsManager {
         guard let data = userDefaults.data(forKey: "loggedUser") else { return nil }
         return try? JSONDecoder().decode(User.self, from: data)
     }
+    var token: String? {
+        keychain.get("user_token")
+    }
     var isLoggedIn: Bool {
         userDefaults.bool(forKey: "isUserLoggedIn")
     }
@@ -30,7 +33,7 @@ final class UserDefaultsManager {
             let data = try JSONEncoder().encode(user)
             userDefaults.set(data, forKey: "loggedUser")
             userDefaults.set(true, forKey: "isUserLoggedIn")
-            KeychainSwift().set(token, forKey: "user_token")
+            keychain.set(token, forKey: "user_token")
         } catch {
             print("Failed to encode user: \(error)")
         }

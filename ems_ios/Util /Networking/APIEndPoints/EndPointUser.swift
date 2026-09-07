@@ -32,7 +32,7 @@ enum EndPointUser: APIEndPoint {
         case .getLineManager:
             return [
                 "Authorization":
-                    "Bearer \(KeychainSwift().get("user_token") ?? "")",
+                    "Bearer \(UserDefaultsManager.shared.token ?? "")",
                 "Content-Type": "application/json"
             ]
         }
