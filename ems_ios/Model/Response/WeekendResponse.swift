@@ -6,16 +6,26 @@
 //
 
 struct WeekendResponse: Codable {
-    let weekendList: [Weekend]?
+    let weekendList: WeekendData?
     enum CodingKeys: String, CodingKey {
         case weekendList = "list"
     }
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.weekendList = container.decodeSafe(
-            [Weekend].self,
+            WeekendData.self,
             forKey: .weekendList
         )
+    }
+}
+struct WeekendData: Codable {
+    let weekendData: [Weekend]?
+    enum CodingKeys: String, CodingKey {
+        case weekendData = "data"
+    }
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.weekendData = container.decodeSafe([Weekend].self, forKey: .weekendData)
     }
 }
 struct Weekend: Codable {

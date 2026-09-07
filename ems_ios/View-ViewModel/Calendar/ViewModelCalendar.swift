@@ -87,6 +87,7 @@ final class ViewModelPublicHolidays: ObservableObject {
             let date = item.epochDate?.date
             let description = "Weekend"
             if let date = date {
+                print("Appending holiday....")
                 holidayList.append(
                     Holiday(date: date, description: description)
                 )
@@ -94,28 +95,31 @@ final class ViewModelPublicHolidays: ObservableObject {
         }
     }
     func checkDateColor(_ date: Date) -> Color {
+        let isBeforeCurrentMonth = date < Calendar.current.dateInterval(
+            of: .month,
+            for: .now
+        )!.start
         for holiday in holidayList {
             let isHoliday = Calendar.current.isDate(
                 date,
                 inSameDayAs: holiday.date
             )
             if isHoliday {
-                if date < Date.now {
-                    return Color(
-                        red: 200 / 255,
-                        green: 125 / 255,
-                        blue: 125 / 255
-                    )
+                if holiday.description.contains("Weekend") {
+                    return lightGray
                 } else {
-                    return .red
+                    if date < Date.now {
+                        return darkRed
+                    } else {
+                        return .red
+                    }
                 }
             }
         }
-        if date < Date.now {
-            return .gray
-        } else {
-            return .primary
+        if isBeforeCurrentMonth {
+            return warmGray
         }
+        return .primary
     }
     func isDateHoliday(_ date: Date) -> [String] {
         var descriptions: [String] = []
@@ -130,7 +134,7 @@ final class ViewModelPublicHolidays: ObservableObject {
         }
         return descriptions
     }
-    func getLeaveRequests() async {
+    func getPersonalLeaves() async {
         await apiService.getPersonalLeaves { leaveRequests in
             self.leaveRequests = leaveRequests
         } failure: { error in
@@ -141,6 +145,6 @@ final class ViewModelPublicHolidays: ObservableObject {
         holidayList = []
         await fetchPublicHolidaysFromServer()
         await fetchWeekends()
-        await getLeaveRequests()
+        await getPersonalLeaves()
     }
 }

@@ -26,8 +26,8 @@ final class ViewModelLogin: ObservableObject {
     }
     init(apiService: ViewModelLoginServiceProtocol = ViewModelLoginService()) {
         self.apiService = apiService
-        self.email = ""
-        self.password = ""
+        self.email = "sa@yopmail.com"
+        self.password = "password"
         self.isAuthenticated = false
         self.isAlertShown = false
         self.showPassword = false

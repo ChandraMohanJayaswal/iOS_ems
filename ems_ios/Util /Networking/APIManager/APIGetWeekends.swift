@@ -17,7 +17,7 @@ extension APIGetWeekends {
                 WeekendResponse.self,
                 from: data
             )
-            if let weekendList = decoded.weekendData?.weekendList?.data {
+            if let weekendList = decoded.weekendList?.weekendData {
                 completion(weekendList)
             }
         } catch {

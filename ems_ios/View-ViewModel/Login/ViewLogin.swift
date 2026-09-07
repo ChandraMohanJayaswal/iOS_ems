@@ -12,15 +12,15 @@ struct ViewLogin: View {
     var body: some View {
         VStack {
             ZStack {
-                LinearGradient(
-                    gradient: Gradient(colors: [primaryBlue, darkBlue]),
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
+//                LinearGradient(
+//                    gradient: Gradient(colors: [primaryBlue, darkBlue]),
+//                    startPoint: .top,
+//                    endPoint: .bottom
+//                )
                 Circle()
                     .foregroundStyle(
                         LinearGradient(
-                            colors: [glassWhiteBold, Color.white.opacity(0)],
+                            colors: [paleLavender, Color.white.opacity(0)],
                             startPoint: .top,
                             endPoint: .bottom
                         )
@@ -30,7 +30,7 @@ struct ViewLogin: View {
                 Circle()
                     .foregroundStyle(
                         LinearGradient(
-                            colors: [Color.white.opacity(0), glassWhiteBold],
+                            colors: [Color.white.opacity(0), paleLavender],
                             startPoint: .top,
                             endPoint: .bottom
                         )
@@ -50,22 +50,21 @@ struct ViewLogin: View {
                             RoundedRectangle(cornerRadius: 20)
                         )
                     Text("Welcome Back")
-                        .foregroundStyle(pureWhite)
                         .fontWeight(.medium)
                         .font(.system(size: 25))
                         .padding(.bottom, 5)
                     Text("Sign in to continue to your account")
                         .font(Font.system(size: 14))
-                        .foregroundStyle(pureWhite)
                     HStack {
                         Image(systemName: "envelope")
-                            .foregroundStyle(Color.white.opacity(0.5))
+                            .foregroundStyle(Color.black.opacity(0.5))
                             .padding(.leading, 10)
 
                         TextField(
                             text: $viewModel.email,
-                            prompt: Text("Email Address").foregroundStyle(
-                                Color.white.opacity(0.5)
+                            prompt: Text("Email Address")
+                                .foregroundStyle(
+                                Color.black.opacity(0.5)
                             )
                         ) {
                         }
@@ -74,16 +73,16 @@ struct ViewLogin: View {
                         .textInputAutocapitalization(.never)
 
                     }
-                    .foregroundStyle(Color.white.opacity(0.5))
+                    .foregroundStyle(Color.black.opacity(0.5))
                     .padding([.leading, .trailing], 6)
                     .padding([.top, .bottom], 20)
                     .overlay(
                         RoundedRectangle(
                             cornerRadius: 12
                         )
-                        .stroke(glassWhite, lineWidth: 3)
+                        .stroke(ashWhite, lineWidth: 3)
                     )
-                    .background(glassWhite)
+                    .background(paleLavender)
                     .clipShape(
                         RoundedRectangle(cornerRadius: 12)
                     )
@@ -91,14 +90,14 @@ struct ViewLogin: View {
                     .padding(.top, 20)
                     HStack {
                         Image(systemName: "lock")
-                            .foregroundStyle(Color.white.opacity(0.5))
+                            .foregroundStyle(Color.black.opacity(0.5))
                             .padding(.leading, 10)
 
                         if viewModel.showPassword {
                             TextField(
                                 text: $viewModel.password,
                                 prompt: Text("Password").foregroundStyle(
-                                    Color.white.opacity(0.5)
+                                    Color.black.opacity(0.5)
                                 )
                             ) {
                             }
@@ -109,7 +108,7 @@ struct ViewLogin: View {
                             SecureField(
                                 text: $viewModel.password,
                                 prompt: Text("Password").foregroundStyle(
-                                    Color.white.opacity(0.5)
+                                    Color.black.opacity(0.5)
                                 )
                             ) {
                             }
@@ -132,16 +131,16 @@ struct ViewLogin: View {
                         )
                         .accessibilityIdentifier("toggleHidePassword")
                     }
-                    .foregroundStyle(Color.white.opacity(0.5))
+                    .foregroundStyle(Color.black.opacity(0.5))
                     .padding([.leading, .trailing], 6)
                     .padding([.top, .bottom], 20)
                     .overlay(
                         RoundedRectangle(
                             cornerRadius: 12
                         )
-                        .stroke(glassWhite, lineWidth: 3)
+                        .stroke(ashWhite, lineWidth: 3)
                     )
-                    .background(glassWhite)
+                    .background(paleLavender)
                     .clipShape(
                         RoundedRectangle(cornerRadius: 12)
                     )
@@ -159,9 +158,10 @@ struct ViewLogin: View {
                         label: {
                             if viewModel.uiState == .loading {
                                 ProgressView()
+                                    .tint(Color.white)
                             } else if viewModel.uiState == .idle {
                                 Text("Sign In")
-                                    .foregroundStyle(darkBlue)
+                                    .foregroundStyle(.white)
                                     .font(.headline)
                             }
                         }
@@ -170,18 +170,18 @@ struct ViewLogin: View {
                     .disabled(!viewModel.isFormValid)
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .background(viewModel.isFormValid ? pureWhite : .gray)
+                    .background(viewModel.isFormValid ? darkBlue : .gray)
                     .clipShape(
                         RoundedRectangle(cornerRadius: 10)
                     )
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(viewModel.isFormValid ? .white : .gray, lineWidth: 1)
+                            .stroke(viewModel.isFormValid ? .black : .gray, lineWidth: 0)
                     )
                     .padding([.leading, .trailing], 10.5)
                     .padding(.top, 10)
                     Text("Forgot Password?")
-                        .foregroundStyle(pureWhite)
+                        .foregroundStyle(.black)
                         .padding(.top, 10)
                 }
             }

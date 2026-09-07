@@ -18,8 +18,9 @@ struct ToastModifier: ViewModifier {
                     HStack {
                         Image(systemName: icon)
                             .foregroundStyle(.green)
+                            .padding(.leading, 10)
                         Text(message)
-                            .padding(.horizontal, 16)
+                            .padding(.trailing, 16)
                             .padding(.vertical, 12)
                     }
                     .background(Color.white)

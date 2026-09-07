@@ -32,6 +32,9 @@ struct ViewHome: View {
             .padding(.horizontal, 20)
             .padding(.vertical, 16)
         }
+        .refreshable {
+            await viewModel.getMetrics()
+        }
         .task {
             await viewModel.getMetrics()
         }

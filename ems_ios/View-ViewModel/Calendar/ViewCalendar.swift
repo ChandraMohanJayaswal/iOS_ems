@@ -284,6 +284,11 @@ struct ViewCalendar: View {
         .onChange(of: selectedYear) {
             updateSelectedDate()
         }
+        .refreshable {
+            Task {
+                await viewModel.fetchHolidaysList()
+            }
+        }
     }
 
     func updateSelectedDate() {

@@ -7,6 +7,9 @@ let colorBlue = Color(red: 0/255, green: 113/255, blue: 188/255)
 let colorGray = Color(red: 0.302, green: 0.302, blue: 0.302)
 let colorBlack = Color.black
 let colorGreen = Color(red: 0, green: 128/255, blue: 2/255)
+let warmGray =  Color(red: 104 / 255, green: 96 / 255, blue: 96 / 255)
+let lightGray =  Color(red: 183 / 255, green: 185 / 255, blue: 195 / 255)
+let darkRed = Color(red: 169 / 255, green: 37 / 255, blue: 37 / 255)
 
 let primaryBlue = Color(red: 74/255, green: 78/255, blue: 242/255)
 let royalBlue = Color(red: 62/255, green: 65/255, blue: 232/255)
