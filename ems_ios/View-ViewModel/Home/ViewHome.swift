@@ -51,7 +51,7 @@ extension ViewHome {
     fileprivate var header: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .center) {
-                Text("Hi, \(UserDefaults.standard.string(forKey: "firstName") ?? "NA")")
+                Text("Hi, \(EMSManager.shared.currentUser?.firstName ?? "NA")")
                     .font(.system(size: 22, weight: .bold))
                 Spacer()
                 Text("\(viewModel.metrics?.fiscalYear ?? "") \(viewModel.metrics?.currentMonth ?? "")")

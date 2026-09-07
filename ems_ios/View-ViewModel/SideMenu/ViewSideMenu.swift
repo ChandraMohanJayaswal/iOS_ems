@@ -81,12 +81,12 @@ struct SideMenuUserProfile: View {
                 .clipShape(RoundedRectangle(cornerRadius: 10))
             VStack(alignment: .leading) {
                 Text(
-                    "\(UserDefaults.standard.string(forKey: "firstName") ?? "NA") \(UserDefaults.standard.string(forKey: "lastName") ?? "NA")"
+                    "\(EMSManager.shared.currentUser?.firstName ?? "NA") \(EMSManager.shared.currentUser?.lastName ?? "NA")"
                 )
                 .font(.title2)
                 .foregroundStyle(Color.black)
                 Text(
-                    "\(UserDefaults.standard.string(forKey: "emailAddress") ?? "NA")"
+                    "\(EMSManager.shared.currentUser?.emailAddress ?? "NA")"
                 )
                 .foregroundStyle(Color.gray)
                 .font(.caption)

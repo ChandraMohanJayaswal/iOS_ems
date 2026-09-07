@@ -33,7 +33,7 @@ enum EndPointHome: APIEndPoint {
     var parameters: [String: Any]? {
         switch self {
         case .getMetrics:
-            return ["userId": UserDefaults.standard.integer(forKey: "userId")]
+            return ["userId": EMSManager.shared.currentUser?.id ?? 0]
         }
     }
 }
