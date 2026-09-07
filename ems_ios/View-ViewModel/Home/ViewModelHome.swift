@@ -20,8 +20,8 @@ class ViewModelHome: ObservableObject {
     var data: [(String, Int)] {
         guard let metrics else { return [] }
         return [
-            ("Total", metrics.totalWorkingDays ?? 30),
             ("Worked", metrics.totalWorkedDays ?? 10),
+            ("Working", metrics.totalWorkingDays ?? 30),
             ("Leave", metrics.totalLeave ?? 20)
         ]
     }

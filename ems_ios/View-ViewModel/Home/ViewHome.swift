@@ -80,8 +80,8 @@ extension ViewHome {
                 .foregroundStyle(by: .value("Type", item.0))
             }
             .chartForegroundStyleScale([
-                "Total": .blue,
                 "Worked": .green,
+                "Working": .blue,
                 "Leave": .orange
             ])
             .frame(height: 250)
