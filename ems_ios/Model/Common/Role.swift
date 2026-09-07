@@ -16,7 +16,6 @@ struct Role: Codable { // Codable = Decodable + Encodable
         let container = try decoder.container(keyedBy: CodingKeys.self)
         title = container.decodeSafe(String.self, forKey: .title)
     }
-    
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(title, forKey: .title)
