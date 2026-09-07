@@ -43,7 +43,7 @@ final class UserDefaultsManager {
         keychain.clear()
         userDefaults.set(false, forKey: "isUserLoggedIn")
         userDefaults.removeObject(forKey: "loggedUser")
-        if let bundleID = Bundle.main.bundleIdentifier {
+        if let bundleID = Bundle.main.bundleIdentifier { //Clear all user Defaults
             UserDefaults.standard.removePersistentDomain(forName: bundleID)
         }
     }
