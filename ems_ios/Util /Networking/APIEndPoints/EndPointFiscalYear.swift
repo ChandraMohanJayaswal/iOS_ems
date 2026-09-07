@@ -30,7 +30,7 @@ enum EndPointFiscalYear: APIEndPoint {
     var headers: [String: String]? {
         switch self {
         case .getFiscalYear, .getPublicHoliday:
-            return ["Authorization": "Bearer \(UserDefaultsManager.shared.token ?? "")"]
+            return ["Authorization": "Bearer \(EMSManager.shared.token ?? "")"]
         }
     }
     var parameters: [String: Any]? {

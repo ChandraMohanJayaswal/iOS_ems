@@ -1,23 +1,25 @@
 import Foundation
 //
-//  UserDefaultsManager.swift
+//  EMSManager.swift
 //  ems_ios
 //
 //  Created by MacMini on 30/01/2026.
 //
 import KeychainSwift
 
-final class UserDefaultsManager {
-    static let shared = UserDefaultsManager()
+final class EMSManager {
+    static let shared = EMSManager()
     private let userDefaults: UserDefaults
     private let keychain: KeychainSwift
+    private let encoder = JSONEncoder()
+    private let decoder = JSONDecoder()
     private init(userDefaults: UserDefaults = .standard, keychain: KeychainSwift = KeychainSwift()) {
         self.userDefaults = userDefaults
         self.keychain = keychain
     }
     var currentUser: User? {
         guard let data = userDefaults.data(forKey: "loggedUser") else { return nil }
-        return try? JSONDecoder().decode(User.self, from: data)
+        return try? decoder.decode(User.self, from: data)
     }
     var token: String? {
         keychain.get("user_token")
@@ -30,7 +32,7 @@ final class UserDefaultsManager {
         token: String
     ) {
         do {
-            let data = try JSONEncoder().encode(user)
+            let data = try encoder.encode(user)
             userDefaults.set(data, forKey: "loggedUser")
             userDefaults.set(true, forKey: "isUserLoggedIn")
             keychain.set(token, forKey: "user_token")

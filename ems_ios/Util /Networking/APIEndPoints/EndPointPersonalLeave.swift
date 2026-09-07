@@ -41,7 +41,7 @@ enum EndPointPersonalLeave: APIEndPoint {
         case .postPersonalLeave, .getPersonalLeave:
             return [
                 "Authorization":
-                    "Bearer \(UserDefaultsManager.shared.token ?? "")",
+                    "Bearer \(EMSManager.shared.token ?? "")",
                 "Content-Type": "application/json"
             ]
         }

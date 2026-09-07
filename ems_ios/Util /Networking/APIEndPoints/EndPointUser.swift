@@ -32,7 +32,7 @@ enum EndPointUser: APIEndPoint {
         case .getLineManager:
             return [
                 "Authorization":
-                    "Bearer \(UserDefaultsManager.shared.token ?? "")",
+                    "Bearer \(EMSManager.shared.token ?? "")",
                 "Content-Type": "application/json"
             ]
         }

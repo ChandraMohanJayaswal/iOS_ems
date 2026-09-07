@@ -26,7 +26,7 @@ enum EndPointHome: APIEndPoint {
     var headers: [String: String]? {
         switch self {
         case .getMetrics:
-            return ["Authorization": "Bearer \(UserDefaultsManager.shared.token ?? " ")"]
+            return ["Authorization": "Bearer \(EMSManager.shared.token ?? " ")"]
 
         }
     }
