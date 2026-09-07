@@ -242,7 +242,7 @@ struct ViewCalendar: View {
             // MARK: - Leave Requests
                 LazyVStack(
                     alignment: .leading,
-                    spacing: 0
+                    spacing: 8
                 ) {
                     ForEach(
                         viewModel.filteredLeaveRequests
@@ -257,11 +257,7 @@ struct ViewCalendar: View {
                                 .rawValue,
                             comment: item.statusComment
                         )
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 10)
-
-                        Divider()
-                            .padding(.horizontal, 16)
+                        .padding(.horizontal, 12)
                     }
                 }
         }

@@ -17,17 +17,32 @@ struct LeaveRequestItem: View {
     let comment: String?
     @State var isSheetPresented: Bool = false
     var body: some View {
-        VStack(alignment: .leading) {
-            if let createdDateTime = createdDateTime {
-                Text(
-                    createdDateTime.date.formatted(
-                        .dateTime.day().month().year()
-                    )
+        HStack(spacing: 12) {
+            Image(systemName: "calendar.badge.clock")
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundStyle(Color.accentColor)
+                .frame(width: 36, height: 36)
+                .background(
+                    Circle().fill(Color.accentColor.opacity(0.12))
                 )
+
+            VStack(alignment: .leading, spacing: 3) {
+                Text(leaveType ?? "Leave")
+                    .font(.headline)
+
+                Text(dateRangeText)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
-            Text("Click for detail view...")
-                .foregroundStyle(.gray)
-        }.onTapGesture {
+
+            Spacer()
+
+            statusBadge
+        }
+        .padding(12)
+        .background(.background)
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .onTapGesture {
             isSheetPresented = true
         }
         .sheet(isPresented: $isSheetPresented) {
@@ -94,6 +109,35 @@ struct LeaveRequestItem: View {
                     }
                 }
             }
+        }
+    }
+
+    private var dateRangeText: String {
+        guard let from = leaveFromDate?.date, let to = leaveToDate?.date else {
+            return createdDateTime?.date.formatted(.dateTime.day().month().year()) ?? "N/A"
+        }
+        return "\(from.formatted(.dateTime.day().month())) - \(to.formatted(.dateTime.day().month().year()))"
+    }
+
+    private var statusBadge: some View {
+        Text(leaveStatus ?? "N/A")
+            .font(.caption.weight(.semibold))
+            .padding(.horizontal, 10)
+            .padding(.vertical, 4)
+            .background(Capsule().fill(statusColor.opacity(0.12)))
+            .foregroundStyle(statusColor)
+    }
+
+    private var statusColor: Color {
+        switch leaveStatus {
+        case "APPROVED":
+            return .green
+        case "PENDING":
+            return .orange
+        case "REJECTED":
+            return .red
+        default:
+            return Color.accentColor
         }
     }
 }
