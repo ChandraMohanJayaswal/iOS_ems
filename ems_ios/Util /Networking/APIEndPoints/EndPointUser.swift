@@ -33,9 +33,8 @@ enum EndPointUser: APIEndPoint {
             return [
                 "Authorization":
                     "Bearer \(KeychainSwift().get("user_token") ?? "")",
-                "Content-Type": "application/json",
+                "Content-Type": "application/json"
             ]
-
         }
     }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Role: Decodable {
+struct Role: Codable { // Codable = Decodable + Encodable
     let title: String?
     enum CodingKeys: String, CodingKey {
         case title
@@ -15,5 +15,10 @@ struct Role: Decodable {
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         title = container.decodeSafe(String.self, forKey: .title)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(title, forKey: .title)
     }
 }

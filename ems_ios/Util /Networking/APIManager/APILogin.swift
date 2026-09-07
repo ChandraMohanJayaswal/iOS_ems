@@ -31,17 +31,9 @@ extension APILogin {
                 Login.self,
                 from: data
             )
-            if let token = decoded.token {
-                UserDefaultsManager.shared.login(
-                    id: decoded.user?.id ?? 0,
-                    firstName: decoded.user?.firstName ?? "",
-                    lastName: decoded.user?.lastName ?? "",
-                    gender: decoded.user?.gender ?? "",
-                    emailAddress: decoded.user?.emailAddress ?? "",
-                    mobileNumber: decoded.user?.mobileNumber ?? "",
-                    title: decoded.user?.role?.title ?? "",
-                    token: token
-                )
+            if let token = decoded.token, let user = decoded.user {
+                
+                EMSManager.shared.login(user: user,token: token)
             }
             success()
         } catch {

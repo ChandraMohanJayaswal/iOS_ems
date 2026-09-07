@@ -7,21 +7,18 @@
 import SwiftUI
 
 struct ViewCalendar: View {
+    let daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    let columns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 7)
     @EnvironmentObject var coordinator: RouteCoordinator
     @StateObject var viewModel = ViewModelPublicHolidays()
     @State var isSheetPresented: Bool = false
-    let daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-    let columns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 7)
-
     @State private var currentMonth: Date = Date.now
     @State private var currentDate: Date = Date.now
     @State private var selectedDate: Date = Date.now
-
     @State private var selectedMonth = Calendar.current.component(
         .month,
         from: Date()
     )
-
     @State private var selectedYear = Calendar.current.component(
         .year,
         from: Date()

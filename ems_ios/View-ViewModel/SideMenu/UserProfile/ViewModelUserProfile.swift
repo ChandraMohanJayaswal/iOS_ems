@@ -23,12 +23,12 @@ class ViewModelUserProfile: ObservableObject {
     @Published var emailAddress: String
     @Published var isSheetShown: Bool = false
     init() {
-        self.role = UserDefaults.standard.string(forKey: "title") ?? "NA"
-        self.firstName = UserDefaults.standard.string(forKey: "firstName") ?? "NA"
-        self.lastName = UserDefaults.standard.string(forKey: "lastName") ?? "NA"
-        self.gender = UserDefaults.standard.string(forKey: "gender") == "MALE" ? .male : .female
+        self.role = EMSManager.shared.currentUser?.role?.title ?? "NA"
+        self.firstName = EMSManager.shared.currentUser?.firstName ?? "NA"
+        self.lastName = EMSManager.shared.currentUser?.lastName ?? "NA"
+        self.gender = EMSManager.shared.currentUser?.gender == "MALE" ? .male : .female
         self.dob = Date()
-        self.mobileNumber = UserDefaults.standard.string(forKey: "mobileNumber") ?? "NA"
-        self.emailAddress = UserDefaults.standard.string(forKey: "emailAddress") ?? "NA"
+        self.mobileNumber = EMSManager.shared.currentUser?.mobileNumber ?? "NA"
+        self.emailAddress = EMSManager.shared.currentUser?.emailAddress ?? "NA"
     }
 }

@@ -41,12 +41,12 @@ struct ViewSplash: View {
                 .onAppear {
                     angle = 360
                     scaledValue = 1.2
-                    if viewModel.shouldSkipSplash {
-                        coordinator.navigate(to: .tabbar)
-                    }
+//                    if viewModel.shouldSkipSplash {
+//                        coordinator.navigate(to: .tabbar)
+//                    }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                        coordinator.navigate(to: .tabbar)
-                        if UserDefaults.standard.bool(forKey: "isUserLoggedIn") {
+                        if EMSManager.shared.isLoggedIn {
+                            coordinator.navigate(to: .tabbar)
                         } else {
                             coordinator.navigate(to: .login)
                         }

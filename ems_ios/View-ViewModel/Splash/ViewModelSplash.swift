@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 class ViewModelSplash: ObservableObject {
-    var shouldSkipSplash: Bool {
-        ProcessInfo.processInfo.arguments.contains("skipSplash")
-    }
+//    var shouldSkipSplash: Bool {
+//        ProcessInfo.processInfo.arguments.contains("skipSplash")
+//    }
 }
