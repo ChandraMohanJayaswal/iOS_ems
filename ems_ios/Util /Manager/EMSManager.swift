@@ -7,6 +7,14 @@ import Foundation
 //
 import KeychainSwift
 
+private extension EMSManager {
+    enum Keys {
+        static let loggedUser = "loggedUser"
+        static let userToken = "user_token"
+        static let isUserLoggedIn = "isUserLoggedIn"
+    }
+}
+
 final class EMSManager {
     static let shared = EMSManager()
     private let userDefaults: UserDefaults
@@ -18,14 +26,16 @@ final class EMSManager {
         self.keychain = keychain
     }
     var currentUser: User? {
-        guard let data = userDefaults.data(forKey: "loggedUser") else { return nil }
+        guard let data = userDefaults.data(forKey: Keys.loggedUser) else {
+            return nil
+        }
         return try? decoder.decode(User.self, from: data)
     }
     var token: String? {
-        keychain.get("user_token")
+        keychain.get(Keys.userToken)
     }
     var isLoggedIn: Bool {
-        userDefaults.bool(forKey: "isUserLoggedIn")
+        userDefaults.bool(forKey: Keys.isUserLoggedIn)
     }
     func login(
         user: User,
@@ -33,9 +43,9 @@ final class EMSManager {
     ) {
         do {
             let data = try encoder.encode(user)
-            userDefaults.set(data, forKey: "loggedUser")
-            userDefaults.set(true, forKey: "isUserLoggedIn")
-            keychain.set(token, forKey: "user_token")
+            userDefaults.set(data, forKey: Keys.loggedUser)
+            userDefaults.set(true, forKey: Keys.isUserLoggedIn)
+            keychain.set(token, forKey: Keys.userToken)
         } catch {
             print("Failed to encode user: \(error)")
         }
@@ -43,8 +53,8 @@ final class EMSManager {
 
     func signOut() {
         keychain.clear()
-        userDefaults.set(false, forKey: "isUserLoggedIn")
-        userDefaults.removeObject(forKey: "loggedUser")
+        userDefaults.set(false, forKey: Keys.isUserLoggedIn)
+        userDefaults.removeObject(forKey: Keys.loggedUser)
         if let bundleID = Bundle.main.bundleIdentifier { //Clear all user Defaults
             UserDefaults.standard.removePersistentDomain(forName: bundleID)
         }
