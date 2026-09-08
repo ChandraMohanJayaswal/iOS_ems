@@ -25,8 +25,8 @@ enum EndPointLogin: APIEndPoint {
     }
     var headers: [String: String]? {
         switch self {
-        case .login:
-            return ["Content-Type": "application/json"]
+        default:
+            return nil
         }
     }
     var parameters: [String: Any]? {

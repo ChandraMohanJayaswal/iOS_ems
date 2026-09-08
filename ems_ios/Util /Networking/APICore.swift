@@ -33,7 +33,12 @@ final class DefaultAPIClient<EndpointType: APIEndPoint> {
         let request = try buildRequest(for: endpoint)
         logRequest(request)
         do {
-            let (data, _) = try await URLSession.shared.data(for: request)
+            let (data, response) = try await URLSession.shared.data(for: request)
+            
+            print("STATUS:", (response as? HTTPURLResponse)?.statusCode ?? 0)
+
+            print("RAW RESPONSE:")
+            print(String(data: data, encoding: .utf8) ?? "Unable to convert response to String")
             logResponse(data)
             return try extractData(from: data)
         } catch let error as APIError {

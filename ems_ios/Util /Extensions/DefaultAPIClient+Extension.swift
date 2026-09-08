@@ -50,6 +50,21 @@ extension DefaultAPIClient {
         to request: inout URLRequest,
         from endpoint: EndpointType
     ) {
+        request.setValue(
+            "application/json",
+            forHTTPHeaderField: "Content-Type"
+        )
+
+        request.setValue(
+            "*/*",
+            forHTTPHeaderField: "Accept"
+        )
+        if let token = EMSManager.shared.token {
+            request.setValue(
+                "Bearer \(token)",
+                forHTTPHeaderField: "Authorization"
+            )
+        }
         for (key, value) in endpoint.headers ?? [:] {
             request.setValue(
                 value,

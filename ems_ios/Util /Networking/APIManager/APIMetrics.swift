@@ -6,13 +6,13 @@
 //
 import Foundation
 protocol APIMetrics {
-    func getMetrics(success: @escaping (Metrics) -> Void, failure: @escaping (Error) -> Void) async
+    func getMetrics(month: Int?, success: @escaping (Metrics) -> Void, failure: @escaping (Error) -> Void) async
 }
 extension APIMetrics {
-    func getMetrics(success: @escaping (Metrics) -> Void, failure: @escaping (Error) -> Void) async {
+    func getMetrics(month: Int? = nil, success: @escaping (Metrics) -> Void, failure: @escaping (Error) -> Void) async {
         let apiClient = DefaultAPIClient<EndPointHome>()
         do {
-            let data = try await apiClient.request(EndPointHome.getMetrics)
+            let data = try await apiClient.request(EndPointHome.getMetrics(month: month))
             let decoded = try JSONDecoder().decode(
                 MetricsResponse.self,
                 from: data

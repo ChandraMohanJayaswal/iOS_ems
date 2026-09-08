@@ -7,7 +7,7 @@
 import KeychainSwift
 import Foundation
 enum EndPointHome: APIEndPoint {
-    case getMetrics
+    case getMetrics(month: Int?)
     var baseURL: URL {
         URL(string: AppConfig.baseURL)!
     }
@@ -25,15 +25,19 @@ enum EndPointHome: APIEndPoint {
     }
     var headers: [String: String]? {
         switch self {
-        case .getMetrics:
-            return ["Authorization": "Bearer \(EMSManager.shared.token ?? " ")"]
+        default:
+            return nil
 
         }
     }
     var parameters: [String: Any]? {
         switch self {
-        case .getMetrics:
-            return ["userId": EMSManager.shared.currentUser?.id ?? 0]
+        case .getMetrics(let month):
+            if let month = month {
+                return ["userId": EMSManager.shared.currentUser?.id ?? 0, "month": month]
+            } else {
+                return ["userId": EMSManager.shared.currentUser?.id ?? 0]
+            }
         }
     }
 }

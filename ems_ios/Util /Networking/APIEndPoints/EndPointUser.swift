@@ -29,12 +29,8 @@ enum EndPointUser: APIEndPoint {
 
     var headers: [String: String]? {
         switch self {
-        case .getLineManager:
-            return [
-                "Authorization":
-                    "Bearer \(EMSManager.shared.token ?? "")",
-                "Content-Type": "application/json"
-            ]
+        default:
+            return nil
         }
     }
 

@@ -38,12 +38,8 @@ enum EndPointPersonalLeave: APIEndPoint {
     }
     var headers: [String: String]? {
         switch self {
-        case .postPersonalLeave, .getPersonalLeave:
-            return [
-                "Authorization":
-                    "Bearer \(EMSManager.shared.token ?? "")",
-                "Content-Type": "application/json"
-            ]
+        default:
+            return nil
         }
     }
     var parameters: [String: Any]? {

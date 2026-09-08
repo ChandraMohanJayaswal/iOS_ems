@@ -27,12 +27,8 @@ enum EndPointWeekend: APIEndPoint {
     }
     var headers: [String: String]? {
         switch self {
-        case .getWeekend:
-            return [
-                "Authorization":
-                    "Bearer \(EMSManager.shared.token ?? "")",
-                "Content-Type": "application/json"
-            ]
+        default:
+            return nil
         }
     }
     var parameters: [String: Any]? {
