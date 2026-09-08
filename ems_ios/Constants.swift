@@ -48,6 +48,8 @@ enum TABINDEX: Int {
     case PUBLICHOLIDAYS = 1
     case LEAVEREQUESTS = 2
     case PERSONALLEAVES = 3
+    case PROFILE = 4
+    case SETTINGS = 5
 }
 enum UISTATE {
     case loading

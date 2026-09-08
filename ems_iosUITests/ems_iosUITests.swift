@@ -46,19 +46,13 @@ final class ems_iosUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Home"].exists)
         app.tabBars.buttons["tab_public_holidays"].tap()
         XCTAssertTrue(app.staticTexts["Public Holidays"].exists)
-        app.tabBars.buttons["tab_leave_requests"].tap()
-        XCTAssertTrue(app.staticTexts["Leave Requests"].exists)
-        app.tabBars.buttons["tab_personal_leave"].tap()
-        XCTAssertTrue(app.staticTexts["Personal Leaves"].exists)
-    }
-    func testSideMenu() {
-        app.buttons["sidemenuButton"].tap()
-        XCTAssertTrue(app.staticTexts["About Us"].exists)
-        XCTAssertTrue(app.staticTexts["Contact Us"].exists)
-        XCTAssertTrue(app.staticTexts["Sign Out"].exists)
+        app.tabBars.buttons["tab_profile"].tap()
+        XCTAssertTrue(app.staticTexts["Profile"].exists)
+        app.tabBars.buttons["tab_settings"].tap()
+        XCTAssertTrue(app.staticTexts["Settings"].exists)
     }
     func testSignOut() {
-        app.buttons["sidemenuButton"].tap()
+        app.tabBars.buttons["tab_profile"].tap()
         app.buttons["signOutButton"].tap()
     }
 }

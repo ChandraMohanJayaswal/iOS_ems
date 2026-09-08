@@ -125,6 +125,18 @@ final class ViewModelPublicHolidays: ObservableObject {
         }
         return .primary
     }
+    func isPublicHoliday(_ date: Date) -> Bool {
+        for holiday in holidayList {
+            let isHoliday = Calendar.current.isDate(
+                date,
+                inSameDayAs: holiday.date
+            )
+            if isHoliday && !holiday.description.contains("Weekend") {
+                return true
+            }
+        }
+        return false
+    }
     func isDateHoliday(_ date: Date) -> [String] {
         var descriptions: [String] = []
         for holiday in holidayList {

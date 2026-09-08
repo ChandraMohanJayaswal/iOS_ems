@@ -12,7 +12,6 @@ enum AppScreen {
     case login
     case splash
     case tabbar
-    case sideMenu
     case userProfile
     case onBoarding
     case requestLeave
@@ -40,10 +39,6 @@ struct ViewRoot: View {
                     .environmentObject(coordinator)
         case .tabbar:
             ViewTabBar()
-                .environmentObject(coordinator)
-        case .sideMenu:
-            ViewSideMenu()
-                .transition(.move(edge: .leading))
                 .environmentObject(coordinator)
         case .userProfile:
             NavigationStack {

@@ -28,6 +28,26 @@ struct ViewTabBar: View {
                 }
             }
             .accessibilityIdentifier("tab_public_holidays")
+            Tab(
+                "Profile",
+                systemImage: "person.crop.circle",
+                value: TABINDEX.PROFILE.rawValue
+            ) {
+                NavigationStack {
+                    ViewProfile()
+                }
+            }
+            .accessibilityIdentifier("tab_profile")
+            Tab(
+                "Settings",
+                systemImage: "gearshape",
+                value: TABINDEX.SETTINGS.rawValue
+            ) {
+                NavigationStack {
+                    ViewSettings()
+                }
+            }
+            .accessibilityIdentifier("tab_settings")
         }
         .tint(darkBlue)
         .tabBarMinimizeBehavior(.onScrollDown)
