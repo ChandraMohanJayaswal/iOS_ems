@@ -1,188 +1,186 @@
-# Google Stitch Design Prompt — EMS (Employee Management System)
+# EMS (Employee Management System) — Design Documentation
 
-Design a complete, production-ready UI design system and full set of screen mockups for an iOS employee management app called **"EMS"**, built with SwiftUI. The output should give me a consistent theme from logo and icons to reusable components and every screen, so I can improve the existing app's design.
+This document reflects the **actual implemented state** of the iOS EMS app (SwiftUI), verified against the current codebase. It documents the design system in use, each screen as built, and open gaps / planned improvements so future UI work targets the real app.
 
----
-
-## 1. App Overview
-
-- **Name:** EMS (short for Employee Management System)
+- **Name:** EMS (Employee Management System)
 - **Developer:** Chronelab Technologies
 - **Platform:** iOS (iPhone), SwiftUI, portrait orientation
-- **Purpose:** Employees manage their work attendance, leave requests, public holidays, and personal profile.
-- **Audience:** Corporate employees and managers across departments.
-- **Tone:** Professional, trustworthy, modern, friendly — not corporate-stiff. Clean, confident, high polish.
-
-Key user flows that all screens must support:
-
-1. Launch app → Splash → Onboarding (first-time) → Login → Main tabs.
-2. View monthly/yearly attendance metrics on Home.
-3. Browse the month calendar, see public holidays / weekends / personal leave days.
-4. Request a new leave (full or partial day) and confirm submission.
-5. Open the side menu → view / edit personal profile → sign out.
+- **Bundle ID:** `com.chronelab.ios-ems`
+- **Display name:** EMS
+- **Targets:** `iOS_EMS` (app), `iOS_EMSTests`, `iOS_EMSUITests`
+- **Purpose:** Employees manage work attendance, leave requests, public holidays, and their personal profile.
 
 ---
 
-## 2. Brand & Design Direction
+## 1. App Flow (as implemented)
 
-### Colors (existing palette to refine into one cohesive system)
-The app currently uses an indigo/blue palette. Please define a **single brand color system** with name, hex, and usage, including **light and dark mode** variants.
+1. **Splash** (`ViewSplash`) → waits ~3s → `Login` (if not logged in) or `Tab Bar` (if logged in).
+   - Routing lives in `RouteCoordinator` (single `AppScreen` enum + `currentScreen` switch). Screens: `login`, `splash`, `tabbar`, `userProfile`, `onBoarding`, `requestLeave`.
+2. **Onboarding** (`ViewOnBoarding`) — defined in the code and routed from `AppScreen.onBoarding`, but **not yet wired into the launch flow** (see Gaps).
+3. **Login** (`ViewLogin`) → on success navigates to the Tab Bar.
+4. **Tab Bar** (`ViewTabBar`) — **4 tabs**: Home, Calendar, Profile, Settings.
 
-- Primary / Brand blues:
-  - `#4A4EF2` primaryBlue
-  - `#3E41E8` royalBlue
-  - `#262CCF` darkBlue (currently used for primary buttons and tab tint)
-  - `#5D62FF` accentBlue
-  - `#52/56/F9`-ish bright indigo glow for gradients
-- Lavender neutrals (login form fields): `#C9CCF8` paleLavender, `#8E92C9` mutedLavender, `#E8EAFF` softWhite, `#F2F2ED` ashWhite
-- Neutral / semantic (keep consistent):
-  - `#0071BC` info blue
-  - `#22C55E` success / approved green
-  - `#F59E0B` warning / pending amber
-  - `#EF4444` error / rejected red
-  - `#A92525` dark red (past-day holidays)
-  - `#B7B9C3` light gray, `#686060` warm gray (muted/disabled/dates outside month)
-
-Please either confirm this palette as-is (cleanly documented) or recommend an improved, more cohesive version with the same personality — and give every color a light-mode and dark-mode value.
-
-### Typography
-- Fonts: **Poppins** (display/headings, big numbers, page titles and metric values) + **Inter** (body, subheadline, captions, labels, buttons). Both bundled as static TTFs (Regular 400, Medium 500, SemiBold 600, Bold 700) and registered via `UIAppFonts`.
-- Keep a clean hierarchy with named type styles:
-  - Large title (28–34), Title 1/2/3, Headline, Subheadline, Body, Caption, Caption 2.
-  - Poppins acts as the rounded display style for big numbers (metrics, counters).
-- Provide line-height and weight guidance per style.
-- SF Symbols always use the system font (custom fonts do not render symbol glyphs).
-
-### Iconography
-- Use Apple SF Symbols for consistency (list the recommended symbol or alternative for each key action/state: home, calendar, leave, menu, edit, sign out, holidays, weekend, success/pending/rejected status, notifications, etc.).
-- Icon style guidance: stroke weight, grid sizing (e.g., 24pt within 44pt touch targets), color usage.
-
-### Logo & App Icon
-Design a **logo and app icon** for "EMS":
-- A memorable monogram/mark that reads as an employee-management / people-organization concept (e.g., stylized people + calendar/clock motif), using the brand indigo gradient.
-- App icon on both light and dark background and rounded-rect mask.
-- A smaller standalone mark for the splash screen and login header.
-- Optional: a simple horizontal lockup "EMS" wordmark + subline "By Chronelab Technologies".
-
-### Shape & Elevation Language
-- Cards: rounded rectangles, corner radii from 12 (buttons/inputs) to 20–24 (cards/charts), subtle soft shadows (low opacity, y-offset).
-- Pills/badges: capsule shape (full round) for tags, status, and small controls.
-- Buttons: capsule or 12pt rounded-rect primary buttons.
-- Surfaces: grouped background (light gray) behind cards; floating cards on `.white` / `.background`.
-- Accessory: current app uses a subtle `glassEffect` on toasts — keep the floating-pill toast concept.
+> ⚠️ **Gap:** `isFirstTimeLoggedIn` (UserDefaults) is **not implemented**. There is no logic that decides Splash → Onboarding (first launch) vs Splash → Login. Onboarding is reachable only via the coordinator's `onBoarding` case, which nothing currently triggers.
 
 ---
 
-## 3. Screen-by-Screen Design Brief
+## 2. Brand & Design System (as built)
 
-Design every screen in iPhone size (e.g., 390x844), light and dark, and with a realistic data states.
+### 2.1 Colors — `Util /Constants.swift`
 
-### 3.1 Splash
-- Centered **"EMS"** wordmark in brand indigo, heavy weight, large title.
-- Subline: **"By Chronelab Technologies"** in gray.
-- Decorative animated mark: people icon with a rotating gear badge (top-trailing). Suggest a cleaner, calmer premium version of this animation concept.
-- Auto-advances after ~3s to Login (or Home if already logged in).
+The app now uses a single tokenized palette. All UI brand colors point at these values:
 
-### 3.2 Onboarding (3 pages) — first-time users
-Full-screen vertical gradient (indigo → deep blue). Left-aligned or centered content:
-1. **Welcome** — "Manage your team" — illustration of people/team.
-2. **Features** — "Analytics, Tracking, Management" — illustration of analytics/dashboard.
-3. **Employee Management System** — "Manage. Engage. Grow" — people icon tile + CTA.
+| Name | Hex | Usage |
+|------|-----|-------|
+| `blue` | `#262CCF` | Primary brand / tints / buttons / certain icons |
+| `orange` | `#FFA528` | Accent (splash/login decorative shapes, Leave chart, Pending badge) |
+| `red` | `#FF5E3A` | Destructive / Casual Leave stat / holiday marks / Rejected & Close |
+| `neutral` | `#0E1236` | Dark profile icons (back / edit chevrons) |
+| `warmGray` | `#686060` | Muted / secondary text |
+| `lightGray` | `#B7B9C3` | Dates outside range / muted fills |
 
-Elements:
-- Page dots indicator (animated; active dot wider/longer than inactive).
-- Bottom button: white pill with brand-colored text — "Next" on pages 1–2, **"Get Started"** on page 3.
-- Subtle spring animations on page change.
-- Provide the illustrations as clean, flat, brand-colored vector concepts.
+Additional colors used inline (not tokenized): `.green` (Worked chart bar, Approved), `.yellow` (Sick Leave stat), `.cyan` (Calendar "Today" indicator + selected-day fill + request "+" button), `.gray`, `.secondary`, `Color.accentColor`.
 
-### 3.3 Login
-- Decorative wash: two soft lavender gradient circles bleeding off-screen (top-left and bottom-right) over the background.
-- Centered logo tile: "people" icon in a rounded lavender square.
-- Title **"Welcome Back"** + subtitle **"Sign in to continue to your account"**.
-- Email field (envelope icon) and Password field (lock icon + show/hide eye toggle) — rounded 12pt inputs on pale lavender background with subtle border.
-- **Sign In** button: full-width, brand dark blue, disabled state gray; shows a spinner while loading.
-- "Forgot Password?" link below.
-- Error handling: alert dialog with message, plus inline field validation feedback.
+> **Note:** The previous broad indigo/lavender palette (primaryBlue/royalBlue/accentBlue/paleLavender/softWhite, etc.) was consolidated: only the used colors remain in `Constants.swift`. Unused constants were removed.
 
-### 3.4 Home (Dashboard tab)
-- **Header:** Greeting "Hi, {FirstName}" (large bold title) on its own row.
-- Second row: a **month/year period picker** pill (calendar icon + current selection + up/down chevron) and a pill showing fiscal year + current month. The period picker menu offers **Full Year** plus each month (Jan–Dec); choosing one refetches metrics for that period.
-- **Statistics section title:** dynamically "Statistics for this Month" (or "Statistics for this Year" when Full Year is selected).
-- **Attendance metrics card** containing:
-  - A grouped bar chart of **Working / Worked / Leave** days (brand-colored bars: blue, green, orange), legend included.
-  - Stat tiles in two rows: Working, Worked, Leave (number + label) and **Casual Leave balance / Sick Leave balance** (with red/yellow accent).
-- Pull-to-refresh support.
-- Badge style consistent with the rest of the app (capsule, tinted background).
+### 2.2 Typography — `Util /CustomUI/Fonts.swift`
 
-### 3.5 Calendar tab
-- **Header:** month picker pill + year picker pill (same capsule style as Home picker) + a **"Today"** text button in cyan.
-- **Weekday row:** Sun–Sat, caption, secondary color.
-- **Calendar grid:** 7 columns, spacious cells; today marked with a small dot; selected day highlighted with a filled circle (tinted brand/cyan).
-- **Day color coding:** public holidays = red, weekends = gray, past days = muted gray, regular = primary.
-- **Holiday legend / selected-date panel:** caption area showing holiday/description for the selected date with a colored left accent bar.
-- **Personal Leaves section:** section title + circular "+" button (requests a leave, opens Request Leave sheet).
-- **Segmented filter:** All / Approved / Pending / Rejected.
-- **Leave request list items:** leading circular icon tile (calendar badge clock), leave type + date range, trailing status badge (Approved green / Pending orange / Rejected red). Tapping opens a detail sheet.
-- Empty state for "no leaves" with friendly illustration + caption.
+Two bundled static fonts, registered via `UIAppFonts` in `ems-ios-Info.plist` (all as TTFs):
 
-### 3.6 Request Leave (form, presented as sheet)
-- Form sections:
-  - **Line Manager** — multi-select menu (checkmarks), shows "N selected".
-  - **Leave Type** — dropdown picker.
-  - **Partial Leave** toggle; when on, a **Duration** picker surfaces (Quarter day 0.25 / Half day 0.5).
-  - **Leave From Date / Leave To Date** date pickers (To hidden for partial).
-  - **Description** multiline text field.
-- **Submit button** (full-width) disabled until valid; on tap → confirmation alert → on success a capsule **toast** "Leave request submitted" (green check icon) slides in from top.
-- Inline validation states for required fields.
+- **Poppins** (display/headings) — `Poppins-Regular|Medium|SemiBold|Bold`. Used via `.poppins(.weight, size:)`.
+- **Inter** (body/labels) — `Inter-Regular|Medium|SemiBold|Bold`. Used via `.inter(.weight, size:)`.
 
-### 3.7 Side Menu (slide-in from left)
-- 300pt wide white panel over a dimmed scrim (tap outside to close).
-- **User profile header:** avatar tile (rounded-square, brand blue with person icon), name + email; tapping navigates to Profile.
-- Divider-separated rows: **About Us**, **Contact Us**, **Sign Out** (red, do not mute).
-- Rows use icon + label + chevron format. Deliver a refined, consistent menu list design.
+Helper API: `extension Font { static func poppins(_ weight: PoppinsWeight = .regular, size: CGFloat) -> Font }` and `static func inter(...)`.
 
-### 3.8 User Profile
-- Navigation title **"Profile Details"** (principal), back chevron (leading), edit pencil (trailing).
-- **Form list** of read-only rows: Role, Name, Gender, Date of Birth, Mobile No, Email Address (label left, value right-align).
-- **Edit Profile sheet (modal):** editable form — First Name, Last Name, Gender (segmented Male/Female/Others), Date of birth (date picker), Mobile Number, Email Address — plus a Save button.
-- Grouped/list layout with standard iOS section styling, styled to match the overall theme.
+Observed usage:
+- Titles/nav headers: `.poppins(.bold, size: 22)` (headers), `.poppins(.bold, size: 20)`, `.poppins(.bold, size: 34)` (splash/onboarding titles).
+- Metric values / big numbers: `.poppins(.bold, size: 17)`.
+- Body/interaction: `.inter(size: 12/15)`, `.inter(.semibold, size: 12/17)`, `.inter(.medium, size: 15)`.
+- Tab bar labels: `Poppins-Medium` at 10pt via `UITabBarAppearance` (`EMSApp.applyTabBarAppearance`).
+- **SF Symbols always use the system font** (custom fonts do not render symbol glyphs).
 
-### 3.9 Placeholder screens (will be built later)
-- **Users** and **Utility** — currently bare placeholders. Provide recommended layouts: a user directory/list screen with search, and a utilities/misc settings screen — so the design system covers them too.
+### 2.3 App icon & assets — `Assets.xcassets`
+
+Contains image sets: `AppIcon` (with `screen.png`), `SplashLogo`, `People`, `employeeLogo`, `peopleIcon`, plus `AccentColor` colorset. There is an **AccentColor colorset** defined in assets, distinct from the code-level `Color.accentColor`.
 
 ---
 
-## 4. Design System Deliverables
+## 3. Screens (as implemented)
 
-Produce a design system that makes every screen feel like one app:
+### 3.1 Splash — `ViewSplash.swift` + `LoadingBar.swift` + `SyncIndicator.swift`
+- Background: oversized decorative outline shapes (circles/rounded rects/rotated squares) with `orange.opacity(0.5–0.6)` fills/strokes.
+- Centered **"EMS"** wordmark (`.poppins(.bold, size: 34)` in `blue`), subline **"By Chronelab Technologies"** (`.inter(.bold, size: 24)`, gray).
+- A "workspace window" mockup card: rounded rect with law-shadow, an `Image("SplashLogo")`, three colored status dots, and a yellow **"Employee Portal"** tag.
+- `LoadingBar()` (animated capsule) + `SyncIndicator()` (spinning trim circle) + "Synchronizing attendance..." label (monospaced caption).
+- Auto-advance after 3s → Login or Tab Bar based on `EMSManager.shared.isLoggedIn`.
 
-1. **Tokenized color palette** — brand + neutral + semantic + status, light & dark, with usage rules.
-2. **Typography scale** — named styles, weights, sizes, line heights, usage.
-3. **Logo & app icon** — full set (mark, monogram, wordmark, icon variants).
-4. **Iconography set** — SF Symbols list with color/fill guidance for every action and state.
-5. **Component library:**
-   - Buttons: primary, secondary/outline, ghost, disabled, loading; pill & rectangular variants.
-   - Inputs & form fields: text, secure (with eye toggle), multi-line, pickers, date pickers, toggles, segmented control.
-   - Pills/badges: status badges (approved/pending/rejected), period selector pill, holiday tag.
-   - Cards: stat card, leave request card, holiday card.
-   - Calendar: day cell (normal, today, selected, holiday, weekend, out-of-month), weekday header.
-   - Chart card with bar-chart legend.
-   - Navigation & toolbar: header layout (menu leading, title, bell trailing), back bars for sheets.
-   - Tab bar: Home + Calendar (2 tabs currently), selected/unselected states.
-   - Toast (capsule), alert dialogs, empty states, loading skeleton/spinner.
-6. **State examples** for key screens: loading, loaded, empty, error.
-7. **Accessibility & touch targets:** min 44pt targets, contrast ratios, dynamic-type notes.
+### 3.2 Onboarding — `ViewOnBoarding.swift`
+- **Not wired into launch flow yet.** Three pages driven by `OnBoardingPage` enum: `firstPage` ("Welcome" / "Manage your team"), `secondPage` ("Features" / "Analytics, Tracking, Management"), `thirdPage` ("Employee Management System" / "Manage. Engage. Grow").
+- Full-screen `LinearGradient(colors: [.blue, blue])` (top→bottom).
+- `TabView` with `.page` style, spring animation; animated page dots (active dot larger — 12 vs 8).
+- Per-page content: title (`.poppins(.bold, size: 34)`), a `Circle` stroke + `Image("People")`, description (`.inter(.medium, size: 15)`); page 3 adds a `person.2.fill` tile.
+- Bottom pill button (white, 12pt radius, `blue` text): **"Next"** on pages 1–2, **"Get Started"** on page 3 → `coordinator.navigate(to: .login)`.
+- Entrance animations via `isAnimating` + `.spring()/.smooth` offsets.
+
+### 3.3 Login — `ViewLogin.swift`
+- Same decorative background shapes as Splash (`orange` accents).
+- "EMS" + "By Chronelab Technologies" header; a "workspace window" card (with `SplashLogo`, status dots, yellow **"Login"** tag).
+- Form (`loginForm`):
+  - Work Email — envelope icon, rounded field, `.white` bg with gray border.
+  - Password — lock icon, show/hide eye toggle (`eye`/`eye.slash`), `SecureField` vs `TextField`.
+  - "Forgot Password?" link (`.foregroundStyle(blue)`).
+  - **Sign In** button — full width, `blue` bg when valid / `Color.gray` when disabled; shows a `ProgressView` spinner while loading; green-arrow icon. Disabled until `viewModel.isFormValid`.
+- Accessibility identifiers: `email`, `passwordField`, `toggleHidePassword`, `loginButton`.
+- On success (`!.errorOccured`) → `coordinator.navigate(to: .tabbar)`.
+
+### 3.4 Home (Dashboard) — `ViewHome.swift` + `ViewModelHome.swift`
+- `ScrollView` with `.refreshable` (pull-to-refresh) calling `getMetrics()`.
+- `.header(title: "Home")` (principal nav title via `HeaderModifier`), background `systemGroupedBackground`.
+- **Header row:** `periodPicker` (Menu: Full Year + Jan–Dec, labeled with a calendar icon + chevrons) and a fiscal-year/month capsule.
+- **Attendance card** (`attendanceCard`, 24pt radius, soft shadow):
+  - `Charts` iOS bar chart, `chartForegroundStyleScale(["Working": blue, "Worked": .green, "Leave": orange])`.
+  - Stat tiles (`.poppins(.bold, size: 17)` values): Working (blue), Worked (green), Leave (orange) in one row; **Casual leave** (red) and **Sick leave** (yellow) in the second row. Separated by `Divider()`s.
+
+### 3.5 Calendar — `ViewCalendar.swift` + `ViewModelCalendar.swift`
+- Cards: `calendarCard`, `dateInfoCard`, `personalLeavesCard`; `.header(title: "Calendar")`.
+- **Month/Year pickers**: two pill Menus (month names + years 2020–2030) in `Color.accentColor`; a **"Today"** button (`.cyan`).
+- **Weekday header**: Sun–Sat, `.inter(.semibold, size: 12)`, secondary.
+- **Day grid**: 7 columns; today marked with a `.cyan` dot; selected day filled with a `.cyan.opacity(0.18)` circle; public holidays show a **red** dot (`red`).
+- Day text color via `viewModel.checkDateColor(day)` (past holidays = `darkRed`→ now `red`, etc.).
+- **Date info card**: weekday/date title (`.poppins(.bold, size: 20)`), holiday description list with a colored left accent bar (`checkDateColor`).
+- **Personal Leaves card**: title + circular cyan **"+"** button (opens `ViewRequestLeave` sheet); segmented filter (All/Approved/Pending/Rejected via `LeaveStatusType`); list of `LeaveRequestItem`s.
+
+### 3.6 LeaveRequestItem — `Util /CustomUI/LeaveRequestItem.swift`
+- Row: leading `calendar.badge.clock` icon tile (accent tint), leave type (`.poppins(.semibold, size: 17)`), date range (`.inter size 12), trailing **status badge** (`statusColor`): APPROVED `.green`, PENDING `orange`, REJECTED `red`.
+- Tap → detail sheet (Leave Type, Requested Date Time, From/To, Description, Status, Comment) with red close button.
+
+### 3.7 Request Leave (sheet) — `ViewRequestLeave.swift` + `ViewModelRequestLeave.swift`
+- `Form` with: `MultiSelectPicker` Line Manager (checkmark multi-select, "N selected"), Leave Type `Picker`, **Partial Leave** toggle (reveals Duration picker: Quarter day 0.25 / Half day 0.5), Leave From/To `DatePicker`s (To hidden for partial), Description multiline `TextField`.
+- **Submit** button disabled until `isFormValid`; tap → confirmation alert ("Send leave request?") → on success, a green check **toast** "Leave request submitted" (`ToastModifier`, capsule, `glassEffect`).
+- All form controls use `.inter(size: 15/17)`.
+
+### 3.8 Tab Bar — `Util /Coordinator/TabBar.swift`
+- 4 tabs via `TabValue` (iOS 18+ `Tab`): Home (`house`), Calendar (`calendar`), Profile (`person.crop.circle`), Settings (`gearshape`).
+- `.tint(blue)`; `.tabBarMinimizeBehavior(.onScrollDown)`.
+- Accessibility identifiers: `tab_home`, `tab_public_holidays`, `tab_profile`, `tab_settings`.
+- Each tab wrapped in its own `NavigationStack`.
+
+### 3.9 Profile (tab) — `ViewProfile.swift`
+- `profileCard`: avatar (`person.circle.fill`, `blue`), name + role, trailing edit pencil (`blue` circle) → opens `EditProfileSheet`.
+- `detailsCard`: read-only rows — Role, Gender, Mobile No, Email Address.
+- **Sign Out** button (`door.right.hand.open`, `red` bg) → `EMSManager.shared.signOut()` → navigate to Login.
+
+### 3.10 User Profile (detail flow) — `ViewUserProfile.swift` + `ProfileForm.swift` + `ProfileRow.swift` + `ProfileHeader.swift`
+- `ProfileHeader` toolbar: **"Profile Details"** title (`.poppins(.bold, size: 22)`), back chevron (`neutral`), edit pencil (`neutral`).
+- `ProfileForm` (read-only `Form`): Role, Name, Gender, Date of Birth, Mobile No, Email Address (via `ProfileRow`: `"title:"` + value, `.inter size 15`).
+
+### 3.11 Edit Profile (sheet) — `EditProfileSheet.swift`
+- Editable `Form`: First Name, Last Name, Gender (segmented), Date of birth (date picker), Mobile Number, Email Address — all `.inter(size: 17)`.
+- **Save** button (`opticaldisc` icon) → `onSave`.
+
+### 3.12 Settings (tab) — `ViewSettings.swift`
+- `.header(title: "Settings")`; a list of `SettingsItem` rows (icon tile in `blue`, title, chevron): Notifications, About Us, Contact Us, Privacy Policy, Terms & Conditions. Rows are currently non-functional buttons.
 
 ---
 
-## 5. Output Format
+## 4. Shared Components
 
-Deliver, in order:
-1. Design principles & theme summary (3–5 bullets).
-2. Color system + type scale + spacing/radius grid.
-3. Logo, app icon, iconography.
-4. Core components library.
-5. Full mockups for every screen in **3. Screen-by-Screen Design Brief** (light mode, and dark mode where it changes meaningfully), with annotations.
-6. Any recommended motion/transition guidance (screens' transitions, list animations, toast, pulse for calendar today dot).
+- **Header modifier** — `HeaderModifier` / `View.header(title:)`: inline nav title (`.poppins(.bold, size: 22)`) + top divider. Used by Home, Calendar, Profile, Settings.
+- **Toast** — `ToastModifier` / `View.toast(isPresented:message:icon:)`: top capsule, auto-dismiss after 3s, slide+opacity transition, `glassEffect`.
+- **LeaveRequestItem** — status-badge list row + detail sheet (see 3.6).
+- **MultiSelectPicker** — generic menu-based multi-select (defined in `ViewRequestLeave.swift`).
+- **Fonts** — `PoppinsWeight` / `InterWeight` enums + `.poppins()` / `.inter()` helpers.
+- **Tab bar appearance** — Poppins-Medium 10pt labels applied globally in `EMSApp`.
 
-Make everything consistent, elegant, and immediately buildable in SwiftUI.
+---
+
+## 5. State / Persistence
+
+- `EMSManager` (singleton) wraps `UserDefaults` + `KeychainSwift`:
+  - Keys: `loggedUser` (JSON `User`), `user_token` (Keychain), `isUserLoggedIn` (Bool).
+  - `login(user:token:)`, `signOut()` (clears Keychain + `removePersistentDomain`), computed `currentUser`, `token`, `isLoggedIn`.
+- **No `isFirstTimeLoggedIn` flag exists yet** — this is a pending requirement (see Gaps).
+
+---
+
+## 6. Gaps & Next Steps
+
+1. **Add `isFirstTimeLoggedIn` to UserDefaults** (pending, in TODO). Wire Onboarding into the launch flow:
+   - First launch → Splash → **Onboarding** → Login.
+   - Returning user (already logged in) → Splash → Tab Bar.
+2. **Onboarding UI refresh** — the screen exists but needs a design polish pass to match the rest of the app (it is not currently reachable at launch).
+3. **Settings rows** (Notifications/About/Contact/Privacy/Terms) are placeholders — no destinations wired.
+4. **`routeCoordinator.requestLeave` case** in `ViewRoot` has a commented-out body — Request Leave is only reachable from the Calendar "+" sheet, not the coordinator.
+5. **Dark mode** — current palette identifies colors as light-mode values; no explicit dark-variant tokens or asset catalog color sets are used for the UI background beyond `systemGroupedBackground` / `.background`.
+6. **App icon** — `AppIcon.appiconset` contains placeholder `screen.png`; final branded icon not yet set.
+7. **Empty states** — Calendar "no leaves" empty state and loading skeletons are not yet implemented.
+8. **Unit tests** — `TestViewModelPublicHolidays` currently doesn't compile (references removed types like `PublicHolidaysAPIResponseDetails` / `allpublicHolidayList` / `truncateDescription`); left as-is pending a decision.
+
+---
+
+## 7. Conventions for Ongoing UI Work
+
+- Always use the tokenized colors (`blue`, `orange`, `red`, `neutral`, `warmGray`, `lightGray`) from `Constants.swift` rather than inline `Color(red:...)`.
+- Use `.poppins(...)` for display/headings/numbers and `.inter(...)` for body/labels; keep system font for SF Symbols.
+- Reuse shared components (`header(title:)`, `toast`, `LeaveRequestItem`) where possible.
+- System colors such as `.green`/`.yellow`/`.cyan` may remain for status/accent semantics; add a token if a color is reused more than twice.

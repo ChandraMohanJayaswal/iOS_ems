@@ -75,7 +75,7 @@ extension ViewHome {
     fileprivate var periodPicker: some View {
         Menu {
             Picker("Period", selection: $viewModel.selectedPeriod) {
-                ForEach(HomeMetricsPeriod.allCases) { period in
+                ForEach(Months.allCases) { period in
                     Text(period.title)
                         .tag(period)
                 }
