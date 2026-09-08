@@ -93,6 +93,7 @@ struct ViewCalendar: View {
                 HStack(spacing: 6) {
                     Image(systemName: "calendar")
                     Text(monthName(selectedMonth))
+                        .font(.inter(.semibold, size: 12))
                     Image(systemName: "chevron.up.chevron.down")
                         .font(.caption2.weight(.bold))
                         .opacity(0.7)
@@ -119,6 +120,7 @@ struct ViewCalendar: View {
                 HStack(spacing: 6) {
                     Image(systemName: "calendar")
                     Text(verbatim: "\(selectedYear)")
+                        .font(.inter(.semibold, size: 12))
                     Image(systemName: "chevron.up.chevron.down")
                         .font(.caption2.weight(.bold))
                         .opacity(0.7)
@@ -149,7 +151,7 @@ struct ViewCalendar: View {
 
                 selectedDate = Date.now
             }
-            .font(.subheadline.weight(.semibold))
+            .font(.inter(.semibold, size: 15))
             .foregroundStyle(.cyan)
         }
     }
@@ -158,7 +160,7 @@ struct ViewCalendar: View {
         HStack(spacing: 0) {
             ForEach(daysOfWeek.indices, id: \.self) { index in
                 Text(daysOfWeek[index])
-                    .font(.caption.weight(.semibold))
+                    .font(.inter(.semibold, size: 12))
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity)
             }
@@ -196,14 +198,14 @@ struct ViewCalendar: View {
                     )
                 )
                 .font(
-                    .system(
-                        size: 14,
-                        weight: Calendar.current.isDate(
+                    .inter(
+                        Calendar.current.isDate(
                             day,
                             inSameDayAs: selectedDate
                         )
                             ? .semibold
-                            : .regular
+                            : .regular,
+                        size: 14
                     )
                 )
                 .foregroundStyle(
@@ -240,7 +242,7 @@ struct ViewCalendar: View {
                 inSameDayAs: Date.now
             ) {
                 Text("Today")
-                    .font(.title3.weight(.bold))
+                    .font(.poppins(.bold, size: 20))
             } else {
                 Text(
                     selectedDate.formatted(
@@ -250,7 +252,7 @@ struct ViewCalendar: View {
                             .month(.wide)
                     )
                 )
-                .font(.title3.weight(.bold))
+                .font(.poppins(.bold, size: 20))
             }
 
             HStack(alignment: .top, spacing: 12) {
@@ -260,7 +262,7 @@ struct ViewCalendar: View {
                         .joined(separator: "\n")
                 )
                 .padding(.leading)
-                .font(.subheadline)
+                .font(.inter(size: 15))
                 .foregroundStyle(.secondary)
                 .lineSpacing(3)
                 .fixedSize(horizontal: false, vertical: true)
@@ -284,7 +286,7 @@ struct ViewCalendar: View {
         VStack(spacing: 12) {
             HStack {
                 Text("Personal Leaves")
-                    .font(.title3.weight(.bold))
+                    .font(.poppins(.bold, size: 20))
                 Spacer()
                 Button {
                     isSheetPresented = true

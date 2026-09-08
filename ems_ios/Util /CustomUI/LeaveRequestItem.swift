@@ -28,10 +28,10 @@ struct LeaveRequestItem: View {
 
             VStack(alignment: .leading, spacing: 3) {
                 Text(leaveType ?? "Leave")
-                    .font(.headline)
+                    .font(.poppins(.semibold, size: 17))
 
                 Text(dateRangeText)
-                    .font(.caption)
+                    .font(.inter(size: 12))
                     .foregroundStyle(.secondary)
             }
 
@@ -126,7 +126,7 @@ struct LeaveRequestItem: View {
 
     private var statusBadge: some View {
         Text(leaveStatus ?? "N/A")
-            .font(.caption.weight(.semibold))
+            .font(.inter(.semibold, size: 12))
             .padding(.horizontal, 10)
             .padding(.vertical, 4)
             .background(Capsule().fill(statusColor.opacity(0.12)))

@@ -50,11 +50,10 @@ struct ViewLogin: View {
                             RoundedRectangle(cornerRadius: 20)
                         )
                     Text("Welcome Back")
-                        .fontWeight(.medium)
-                        .font(.system(size: 25))
+                        .font(.poppins(.medium, size: 25))
                         .padding(.bottom, 5)
                     Text("Sign in to continue to your account")
-                        .font(Font.system(size: 14))
+                        .font(.inter(size: 14))
                     HStack {
                         Image(systemName: "envelope")
                             .foregroundStyle(Color.black.opacity(0.5))
@@ -162,7 +161,7 @@ struct ViewLogin: View {
                             } else if viewModel.uiState == .idle {
                                 Text("Sign In")
                                     .foregroundStyle(.white)
-                                    .font(.headline)
+                                    .font(.inter(.semibold, size: 17))
                             }
                         }
                     )

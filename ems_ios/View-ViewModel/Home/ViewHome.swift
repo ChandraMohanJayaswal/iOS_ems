@@ -28,7 +28,7 @@ struct ViewHome: View {
                 header
                 VStack(alignment: .leading, spacing: 14) {
                     Text(statisticsTitle)
-                        .font(.title3.bold())
+                        .font(.poppins(.bold, size: 20))
                     attendanceCard
                 }
             }
@@ -59,11 +59,11 @@ extension ViewHome {
     fileprivate var header: some View {
         VStack(alignment: .leading, spacing: 14) {
             Text("Hi, \(EMSManager.shared.currentUser?.firstName ?? "NA")")
-                .font(.system(size: 22, weight: .bold))
+                .font(.poppins(.bold, size: 22))
             HStack(alignment: .center, spacing: 10) {
                 periodPicker
                 Text("\(viewModel.metrics?.fiscalYear ?? "") \(viewModel.metrics?.currentMonth ?? "")")
-                    .font(.caption.weight(.semibold))
+                    .font(.inter(.semibold, size: 12))
                     .padding(.horizontal, 10)
                     .padding(.vertical, 6)
                     .background(
@@ -88,6 +88,7 @@ extension ViewHome {
             HStack(spacing: 6) {
                 Image(systemName: "calendar")
                 Text(viewModel.selectedPeriod.title)
+                    .font(.inter(.semibold, size: 12))
                 Image(systemName: "chevron.up.chevron.down")
                     .font(.caption2.weight(.bold))
                     .opacity(0.7)
@@ -193,11 +194,11 @@ extension ViewHome {
     ) -> some View {
         VStack(spacing: 4) {
             Text(value)
-                .font(.headline)
+                .font(.poppins(.bold, size: 17))
                 .foregroundStyle(color)
 
             Text(title)
-                .font(.caption)
+                .font(.inter(size: 12))
                 .foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity)

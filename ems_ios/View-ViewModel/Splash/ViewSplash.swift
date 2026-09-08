@@ -13,9 +13,8 @@ struct ViewSplash: View {
     @State private var scaledValue: CGFloat = 1
     var body: some View {
         Text("EMS")
-            .font(.largeTitle)
+            .font(.poppins(.bold, size: 34))
             .foregroundStyle(.blue)
-            .fontWeight(.heavy)
         Text("By Chronelab Technologies")
             .foregroundStyle(.gray)
         ZStack(alignment: .topTrailing) {

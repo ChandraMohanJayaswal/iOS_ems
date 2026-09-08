@@ -76,7 +76,7 @@ struct ViewOnBoarding: View {
                         coordinator.navigate(to: .login)
                     }
                     .padding()
-                    .font(.headline)
+                    .font(.inter(.semibold, size: 17))
                     .frame(width: 350)
                     .foregroundStyle(royalBlue)
                     .background(.white)
@@ -88,7 +88,7 @@ struct ViewOnBoarding: View {
                         self.currentPage += 1
                     }
                     .padding()
-                    .font(.headline)
+                    .font(.inter(.semibold, size: 17))
                     .frame(width: 350)
                     .foregroundStyle(royalBlue)
                     .background(.white)
@@ -126,8 +126,7 @@ struct OnBoardingPageView: View {
                     )
             }
             Text(page.title)
-                .font(.largeTitle)
-                .fontWeight(.heavy)
+                .font(.poppins(.bold, size: 34))
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.white)
                 .offset(x: 0, y: isAnimating ? 0 : -200)
@@ -150,8 +149,7 @@ struct OnBoardingPageView: View {
                     .animation(.smooth.delay(0.2), value: isAnimating)
             }
             Text(page.description)
-                .font(.subheadline)
-                .fontWeight(.medium)
+                .font(.inter(.medium, size: 15))
                 .foregroundStyle(.white)
                 .offset(x: 0, y: isAnimating ? 0 : 200)
                 .animation(.smooth, value: isAnimating)

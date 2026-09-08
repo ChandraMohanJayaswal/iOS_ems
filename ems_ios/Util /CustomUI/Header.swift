@@ -10,14 +10,15 @@ struct HeaderModifier: ViewModifier {
     let title: String
     func body(content: Content) -> some View {
         content
+            .overlay(alignment: .top) {
+                Divider()
+                    .frame(maxWidth: .infinity)
+            }
             .toolbarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text(title)
-                        .font(.system(size: 22, weight: .bold))
-                }
-                ToolbarItem(placement: .bottomBar) {
-                    Divider()
+                        .font(.poppins(.bold, size: 22))
                 }
             }
     }
