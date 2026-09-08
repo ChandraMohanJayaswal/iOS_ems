@@ -1,0 +1,43 @@
+import Foundation
+//
+//  EndPointUser.swift
+//  iOS_EMS
+//
+//  Created by MacMini on 23/08/2026.
+//
+import KeychainSwift
+
+enum EndPointUser: APIEndPoint {
+    case getLineManager
+    var baseURL: URL {
+        return URL(string: AppConfig.baseURL)!
+    }
+
+    var path: String {
+        switch self {
+        case .getLineManager:
+            return "/api/user/line-managers"
+        }
+    }
+
+    var method: HTTPMethod {
+        switch self {
+        case .getLineManager:
+            return .get
+        }
+    }
+
+    var headers: [String: String]? {
+        switch self {
+        default:
+            return nil
+        }
+    }
+
+    var parameters: [String: Any]? {
+        switch self {
+        case .getLineManager:
+            return nil
+        }
+    }
+}

@@ -1,0 +1,33 @@
+//
+//  ProfileHeader.swift
+//  iOS_EMS
+//
+//  Created by MacMini on 07/09/2026.
+//
+
+import SwiftUI
+
+struct ProfileHeader: ToolbarContent {
+    let title: String
+    let onBack: () -> Void
+    let onEdit: () -> Void
+    var body: some ToolbarContent {
+        ToolbarItem(placement: .principal) {
+            Text(title)
+                .font(.poppins(.bold, size: 22))
+        }
+        ToolbarItem(placement: .topBarLeading) {
+            Button(action: onBack) {
+                Image(systemName: "chevron.left")
+                    .foregroundStyle(neutral)
+            }
+        }
+        ToolbarItem(placement: .topBarTrailing) {
+            Button(action: onEdit) {
+                Image(systemName: "pencil")
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundStyle(neutral)
+            }
+        }
+    }
+}
