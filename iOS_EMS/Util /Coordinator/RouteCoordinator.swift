@@ -1,0 +1,58 @@
+//
+//  RouteCoordinator.swift
+//  Falchaa
+//
+//  Created by MacMini on 25/12/2025.
+//
+
+import Foundation
+import SwiftUI
+import Combine
+enum AppScreen {
+    case login
+    case splash
+    case tabbar
+    case userProfile
+    case onBoarding
+    case requestLeave
+}
+class RouteCoordinator: ObservableObject {
+    @Published var selectedTab: Int = 0
+    @Published var currentScreen: AppScreen = .splash
+    func navigate(to screen: AppScreen) {
+        currentScreen = screen
+    }
+
+    deinit {
+        print("RouteCoordinator deinitialized")
+    }
+}
+struct ViewRoot: View {
+    @EnvironmentObject var coordinator: RouteCoordinator
+    var body: some View {
+        switch coordinator.currentScreen {
+        case .login:
+            ViewLogin()
+                .environmentObject(coordinator)
+        case .splash:
+                ViewSplash()
+                    .environmentObject(coordinator)
+        case .tabbar:
+            ViewTabBar()
+                .environmentObject(coordinator)
+        case .userProfile:
+            NavigationStack {
+                ViewUserProfile()
+                    .environmentObject(coordinator)
+            }
+        case .onBoarding:
+            ViewOnBoarding()
+                .environmentObject(coordinator)
+        case .requestLeave:
+            NavigationStack {
+//                ViewRequestLeave()
+//                    .environmentObject(coordinator)
+            }
+        }
+    }
+}
