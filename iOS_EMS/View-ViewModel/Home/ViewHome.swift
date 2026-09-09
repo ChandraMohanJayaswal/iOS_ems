@@ -27,6 +27,7 @@ struct ViewHome: View {
             VStack(alignment: .leading, spacing: 24) {
                 header
                 attendanceCard
+                hoursCard
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 16)
@@ -106,6 +107,15 @@ extension ViewHome {
     fileprivate var attendanceCard: some View {
 
         VStack(spacing: 20) {
+            HStack(spacing: 8) {
+                Image(systemName: "calendar")
+                    .font(.caption.weight(.bold))
+                    .foregroundStyle(blue)
+                Text("Monthly Attendance")
+                    .font(.poppins(.semibold, size: 16))
+                Spacer()
+            }
+
             Chart(viewModel.data, id: \.0) { item in
                 BarMark(
                     x: .value("Type", item.0),
@@ -175,6 +185,81 @@ extension ViewHome {
     }
 
     fileprivate func attendanceStat(
+        value: String,
+        title: String,
+        color: Color
+    ) -> some View {
+        VStack(spacing: 4) {
+            Text(value)
+                .font(.poppins(.bold, size: 17))
+                .foregroundStyle(color)
+
+            Text(title)
+                .font(.inter(size: 12))
+                .foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity)
+    }
+}
+
+extension ViewHome {
+
+    fileprivate var hoursCard: some View {
+        let total = viewModel.metrics?.totalWorkingHours ?? 0
+
+        return VStack(spacing: 20) {
+            HStack(spacing: 8) {
+                Image(systemName: "clock.fill")
+                    .font(.caption.weight(.bold))
+                    .foregroundStyle(blue)
+                Text("Monthly Hours")
+                    .font(.poppins(.semibold, size: 16))
+                Spacer()
+            }
+
+            Chart(viewModel.hoursData, id: \.0) { item in
+                SectorMark(
+                    angle: .value("Hours", item.1),
+                    innerRadius: .ratio(0.62),
+                    angularInset: 3
+                )
+                .cornerRadius(6)
+                .foregroundStyle(by: .value("Type", item.0))
+            }
+            .chartForegroundStyleScale([
+                "Worked": blue,
+                "Remaining": red
+            ])
+            .frame(height: 200)
+
+            HStack(spacing: 0) {
+                hoursStat(
+                    value: "\(viewModel.metrics?.totalWorkedHours ?? 0)",
+                    title: "Worked Hours",
+                    color: blue
+                )
+
+                Divider()
+                    .frame(height: 35)
+
+                hoursStat(
+                    value: "\(total)",
+                    title: "Total Working Hours",
+                    color: .green
+                )
+            }
+        }
+        .padding(20)
+        .background(.background)
+        .clipShape(RoundedRectangle(cornerRadius: 24))
+        .shadow(
+            color: .black.opacity(0.04),
+            radius: 12,
+            y: 5
+        )
+    }
+
+    fileprivate func hoursStat(
         value: String,
         title: String,
         color: Color

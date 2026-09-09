@@ -25,9 +25,11 @@ struct Metrics: Codable {
     let balanceSickLeave: Double?
     let fiscalYear: String?
     let currentMonth: String?
+    let totalWorkingHours: Int?
+    let totalWorkedHours: Int?
     enum CodingKeys: String, CodingKey {
         case totalWorkingDays, totalWorkedDays, totalLeave, balanceCasualLeave,
-            balanceSickLeave, fiscalYear, currentMonth
+            balanceSickLeave, fiscalYear, currentMonth, totalWorkingHours, totalWorkedHours
     }
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -38,5 +40,7 @@ struct Metrics: Codable {
         self.balanceSickLeave = container.decodeSafe(Double.self, forKey: .balanceSickLeave)
         self.fiscalYear = container.decodeSafe(String.self, forKey: .fiscalYear)
         self.currentMonth = container.decodeSafe(String.self, forKey: .currentMonth)
+        self.totalWorkingHours = container.decodeSafe(Int.self, forKey: .totalWorkingHours)
+        self.totalWorkedHours = container.decodeSafe(Int.self, forKey: .totalWorkedHours)
     }
 }

@@ -14,7 +14,6 @@ final class ViewModelHomeService: ViewModelHomeServiceProtocol {
     }
 }
 
-
 class ViewModelHome: ObservableObject {
     let apiService: ViewModelHomeServiceProtocol
     @Published var metrics: Metrics?
@@ -27,6 +26,15 @@ class ViewModelHome: ObservableObject {
             ("Working", metrics.totalWorkingDays ?? 30),
             ("Worked", metrics.totalWorkedDays ?? 10),
             ("Leave", metrics.totalLeave ?? 20)
+        ]
+    }
+    var hoursData: [(String, Int)] {
+        guard let metrics else { return [] }
+        let worked = metrics.totalWorkedHours ?? 0
+        let total = metrics.totalWorkingHours ?? 0
+        return [
+            ("Worked", min(worked, total)),
+            ("Remaining", max(total - worked, 0))
         ]
     }
     init(apiService: ViewModelHomeServiceProtocol = ViewModelHomeService()) {

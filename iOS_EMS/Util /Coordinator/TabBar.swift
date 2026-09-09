@@ -21,7 +21,7 @@ struct ViewTabBar: View {
             Tab(
                 "Calendar",
                 systemImage: "calendar",
-                value: TABINDEX.PUBLICHOLIDAYS.rawValue
+                value: TABINDEX.CALENDAR.rawValue
             ) {
                 NavigationStack {
                     ViewCalendar()
