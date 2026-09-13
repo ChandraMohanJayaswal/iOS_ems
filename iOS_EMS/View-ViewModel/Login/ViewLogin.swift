@@ -291,7 +291,6 @@ private extension ViewLogin {
 
             // Sign in
             Button {
-
                 Task {
                     await viewModel.login()
                     if !viewModel.errorOccured {
