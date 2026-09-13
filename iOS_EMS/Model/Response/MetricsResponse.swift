@@ -20,7 +20,7 @@ struct MetricsResponse: Codable {
 struct Metrics: Codable {
     let totalWorkingDays: Int?
     let totalWorkedDays: Int?
-    let totalLeave: Int?
+    let totalLeave: Double?
     let balanceCasualLeave: Double?
     let balanceSickLeave: Double?
     let fiscalYear: String?
@@ -35,7 +35,7 @@ struct Metrics: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.totalWorkingDays = container.decodeSafe(Int.self, forKey: .totalWorkingDays)
         self.totalWorkedDays = container.decodeSafe(Int.self, forKey: .totalWorkedDays)
-        self.totalLeave = container.decodeSafe(Int.self, forKey: .totalLeave)
+        self.totalLeave = container.decodeSafe(Double.self, forKey: .totalLeave)
         self.balanceCasualLeave = container.decodeSafe(Double.self, forKey: .balanceCasualLeave)
         self.balanceSickLeave = container.decodeSafe(Double.self, forKey: .balanceSickLeave)
         self.fiscalYear = container.decodeSafe(String.self, forKey: .fiscalYear)

@@ -20,12 +20,12 @@ class ViewModelHome: ObservableObject {
     @Published var selectedPeriod: Months = Months(
         rawValue: Calendar.current.component(.month, from: Date())
     ) ?? .fullYear
-    var data: [(String, Int)] {
+    var data: [(String, Double)] {
         guard let metrics else { return [] }
         return [
-            ("Working", metrics.totalWorkingDays ?? 30),
-            ("Worked", metrics.totalWorkedDays ?? 10),
-            ("Leave", metrics.totalLeave ?? 20)
+            ("Working", Double(metrics.totalWorkingDays ?? 30) ),
+            ("Worked", Double(metrics.totalWorkedDays ?? 30)),
+            ("Leave", metrics.totalLeave ?? 5.0)
         ]
     }
     var hoursData: [(String, Int)] {
