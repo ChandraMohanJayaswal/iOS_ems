@@ -50,7 +50,6 @@ private struct CalendarCardPreview: View {
         from: Date()
     )
     @State private var selectedDate = Date.now
-
     var body: some View {
         CalendarCard(
             selectedMonth: $selectedMonth,

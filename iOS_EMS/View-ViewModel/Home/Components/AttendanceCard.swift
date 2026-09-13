@@ -30,7 +30,7 @@ struct AttendanceCard: View {
             .chartForegroundStyleScale([
                 "Working": blue,
                 "Worked": .green,
-                "Leave": orange,
+                "Leave": orange
             ])
             .frame(height: 250)
 
@@ -49,7 +49,7 @@ struct AttendanceCard: View {
                     value: "\(totalLeave ?? 0)",
                     title: "Leave",
                     color: orange
-                ),
+                )
             ])
 
             StatRow(stats: [
@@ -62,7 +62,7 @@ struct AttendanceCard: View {
                     value: "\(sickLeaveBalance ?? 0)",
                     title: "Sick leave",
                     color: amber
-                ),
+                )
             ])
         }
     }
@@ -73,7 +73,7 @@ struct AttendanceCard: View {
         chartData: [
             ("Working", 20),
             ("Worked", 15),
-            ("Leave", 2),
+            ("Leave", 2)
         ],
         totalWorkingDays: 20,
         totalWorkedDays: 15,

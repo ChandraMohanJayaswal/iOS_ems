@@ -37,7 +37,6 @@ struct User: Codable { // Codable = Decodable + Encodable
         role = container.decodeSafe(Role.self, forKey: .role)
         id = container.decodeSafe(Int.self, forKey: .id)
     }
-    
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(id, forKey: .id)
