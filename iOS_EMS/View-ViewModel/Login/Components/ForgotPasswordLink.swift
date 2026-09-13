@@ -21,3 +21,8 @@ struct ForgotPasswordLink: View {
         }
     }
 }
+
+#Preview {
+    ForgotPasswordLink()
+        .padding()
+}

@@ -36,3 +36,12 @@ struct SignInButton: View {
         .clipShape(RoundedRectangle(cornerRadius: 11))
     }
 }
+
+#Preview {
+    VStack(spacing: 16) {
+        SignInButton(isFormValid: false, isLoading: false, action: {})
+        SignInButton(isFormValid: true, isLoading: false, action: {})
+        SignInButton(isFormValid: true, isLoading: true, action: {})
+    }
+    .padding()
+}

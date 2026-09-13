@@ -28,3 +28,20 @@ struct HomeHeader: View {
         }
     }
 }
+
+#Preview {
+    HomeHeaderPreview()
+}
+
+private struct HomeHeaderPreview: View {
+    @State private var selectedPeriod: Months = .september
+
+    var body: some View {
+        HomeHeader(
+            selectedPeriod: $selectedPeriod,
+            fiscalYear: "2026",
+            currentMonth: "Q1"
+        )
+        .padding()
+    }
+}

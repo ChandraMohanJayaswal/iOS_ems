@@ -28,3 +28,9 @@ struct OnBoardingButton: View {
         .padding()
     }
 }
+
+#Preview {
+    OnBoardingButton(title: "Continue") {
+        print("Tapped")
+    }
+}

@@ -47,3 +47,16 @@ struct HoursCard: View {
         }
     }
 }
+
+#Preview {
+    HoursCard(
+        hoursData: [
+            ("Worked", 120),
+            ("Remaining", 40),
+        ],
+        workedHours: 120,
+        workingHours: 160
+    )
+    .padding()
+    .background(Color(uiColor: .systemGroupedBackground))
+}

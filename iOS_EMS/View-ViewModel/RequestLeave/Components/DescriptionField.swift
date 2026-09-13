@@ -20,3 +20,9 @@ struct DescriptionField: View {
         .font(.inter(size: 15))
     }
 }
+
+#Preview {
+    @Previewable @State var text = ""
+    DescriptionField(text: $text)
+        .padding()
+}

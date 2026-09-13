@@ -51,3 +51,7 @@ struct EditProfileSheet: View {
         }
     }
 }
+
+#Preview {
+    EditProfileSheet(viewModel: ViewModelUserProfile()) {}
+}

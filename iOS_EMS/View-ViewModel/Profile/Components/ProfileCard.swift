@@ -42,3 +42,7 @@ struct ProfileCard: View {
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }
+
+#Preview {
+    ProfileCard(onEdit: {})
+}

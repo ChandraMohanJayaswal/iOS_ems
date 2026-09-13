@@ -17,3 +17,8 @@ struct SyncStatusView: View {
         }
     }
 }
+
+#Preview {
+    SyncStatusView()
+        .padding()
+}

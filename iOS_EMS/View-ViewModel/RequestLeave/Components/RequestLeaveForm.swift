@@ -45,3 +45,13 @@ struct RequestLeaveForm: View {
         }
     }
 }
+
+#Preview {
+    @Previewable @State var isPartial = false
+    RequestLeaveForm(
+        viewModel: ViewModelRequestLeave(),
+        isPartial: $isPartial
+    ) {
+        print("Submit tapped")
+    }
+}

@@ -36,3 +36,25 @@ struct LoginForm: View {
         }
     }
 }
+
+#Preview {
+    LoginFormPreview()
+}
+
+private struct LoginFormPreview: View {
+    @State private var email = ""
+    @State private var password = ""
+    @State private var showPassword = false
+
+    var body: some View {
+        LoginForm(
+            email: $email,
+            password: $password,
+            showPassword: $showPassword,
+            isFormValid: true,
+            isLoading: false,
+            onSignIn: {}
+        )
+        .padding()
+    }
+}

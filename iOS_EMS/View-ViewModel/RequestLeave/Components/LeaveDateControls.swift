@@ -31,3 +31,22 @@ struct LeaveDateControls: View {
         }
     }
 }
+
+#Preview {
+    @Previewable @State var leaveFromDate = Date()
+    @Previewable @State var leaveToDate = Date()
+    VStack {
+        LeaveDateControls(
+            leaveFromDate: $leaveFromDate,
+            leaveToDate: $leaveToDate,
+            isPartial: false
+        )
+        Divider()
+        LeaveDateControls(
+            leaveFromDate: $leaveFromDate,
+            leaveToDate: $leaveToDate,
+            isPartial: true
+        )
+    }
+    .padding()
+}

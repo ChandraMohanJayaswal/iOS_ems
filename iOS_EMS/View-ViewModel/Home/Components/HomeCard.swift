@@ -28,3 +28,16 @@ struct HomeCard<Content: View>: View {
         )
     }
 }
+
+#Preview {
+    VStack {
+        HomeCard {
+            Text("Content goes here")
+        }
+        HomeCard {
+            Text("Another card")
+        }
+    }
+    .padding()
+    .background(Color(uiColor: .systemGroupedBackground))
+}

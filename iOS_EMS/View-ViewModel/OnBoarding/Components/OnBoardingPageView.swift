@@ -27,3 +27,7 @@ struct OnBoardingPageView: View {
         .frame(maxWidth: .infinity)
     }
 }
+
+#Preview {
+    OnBoardingPageView(page: .secondPage)
+}

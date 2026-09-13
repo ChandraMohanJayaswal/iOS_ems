@@ -22,3 +22,8 @@ struct CardHeader: View {
         }
     }
 }
+
+#Preview {
+    CardHeader(icon: "calendar", title: "Monthly Attendance")
+        .padding()
+}

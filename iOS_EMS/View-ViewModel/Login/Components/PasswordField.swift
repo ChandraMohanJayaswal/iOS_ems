@@ -58,3 +58,17 @@ struct PasswordField: View {
         }
     }
 }
+
+#Preview {
+    PasswordFieldPreview()
+}
+
+private struct PasswordFieldPreview: View {
+    @State private var password = ""
+    @State private var showPassword = false
+
+    var body: some View {
+        PasswordField(password: $password, showPassword: $showPassword)
+            .padding()
+    }
+}

@@ -39,3 +39,16 @@ struct PeriodPicker: View {
         .fixedSize()
     }
 }
+
+#Preview {
+    PeriodPickerPreview()
+}
+
+private struct PeriodPickerPreview: View {
+    @State private var selectedPeriod: Months = .fullYear
+
+    var body: some View {
+        PeriodPicker(selectedPeriod: $selectedPeriod)
+            .padding()
+    }
+}

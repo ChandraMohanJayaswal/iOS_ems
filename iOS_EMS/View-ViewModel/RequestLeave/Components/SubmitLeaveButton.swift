@@ -24,3 +24,15 @@ struct SubmitLeaveButton: View {
         .disabled(!isFormValid)
     }
 }
+
+#Preview {
+    VStack(spacing: 8) {
+        SubmitLeaveButton(isFormValid: true) {
+            print("Submit tapped")
+        }
+        SubmitLeaveButton(isFormValid: false) {
+            print("Submit tapped")
+        }
+    }
+    .padding()
+}

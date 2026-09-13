@@ -20,3 +20,7 @@ struct ProfileForm: View {
         }
     }
 }
+
+#Preview {
+    ProfileForm(viewModel: ViewModelUserProfile())
+}

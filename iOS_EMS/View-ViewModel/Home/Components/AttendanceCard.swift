@@ -67,3 +67,20 @@ struct AttendanceCard: View {
         }
     }
 }
+
+#Preview {
+    AttendanceCard(
+        chartData: [
+            ("Working", 20),
+            ("Worked", 15),
+            ("Leave", 2),
+        ],
+        totalWorkingDays: 20,
+        totalWorkedDays: 15,
+        totalLeave: 2,
+        casualLeaveBalance: 3,
+        sickLeaveBalance: 4
+    )
+    .padding()
+    .background(Color(uiColor: .systemGroupedBackground))
+}

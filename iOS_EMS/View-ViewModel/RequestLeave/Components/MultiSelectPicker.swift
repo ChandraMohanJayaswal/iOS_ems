@@ -60,3 +60,18 @@ struct MultiSelectPicker<Item: Identifiable>: View {
         }
     }
 }
+
+#Preview {
+    @Previewable @State var selection: Set<Int> = []
+    MultiSelectPicker(
+        title: "Line Manager",
+        items: [
+            LineManager(id: 1, fullName: "Alice Doe"),
+            LineManager(id: 2, fullName: "Bob Smith"),
+            LineManager(id: 3, fullName: "Charlie Brown")
+        ],
+        displayName: { $0.fullName ?? "NA" },
+        selection: $selection
+    )
+    .padding()
+}

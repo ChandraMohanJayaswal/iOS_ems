@@ -35,3 +35,13 @@ struct PartialLeaveSection: View {
         }
     }
 }
+
+#Preview {
+    @Previewable @State var isPartial = true
+    @Previewable @State var leaveCount: Double? = 0.5
+    PartialLeaveSection(
+        isPartial: $isPartial,
+        leaveCount: $leaveCount
+    )
+    .padding()
+}

@@ -31,3 +31,12 @@ struct ProfileHeader: ToolbarContent {
         }
     }
 }
+
+#Preview {
+    NavigationStack {
+        Text("Profile")
+            .toolbar {
+                ProfileHeader(title: "My Profile", onBack: {}, onEdit: {})
+            }
+    }
+}

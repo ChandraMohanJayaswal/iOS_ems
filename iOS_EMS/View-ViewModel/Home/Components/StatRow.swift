@@ -32,3 +32,12 @@ struct StatRow: View {
         }
     }
 }
+
+#Preview {
+    StatRow(stats: [
+        StatData(value: "15", title: "Worked", color: .green),
+        StatData(value: "2", title: "Leave", color: orange),
+        StatData(value: "3", title: "Casual", color: red),
+    ])
+    .padding()
+}

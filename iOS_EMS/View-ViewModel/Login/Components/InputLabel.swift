@@ -21,3 +21,8 @@ struct InputLabel: View {
         .padding(.bottom, 4)
     }
 }
+
+#Preview {
+    InputLabel(text: "Work Email")
+        .padding()
+}

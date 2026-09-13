@@ -27,3 +27,12 @@ struct ProfileDetailsCard: View {
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }
+
+#Preview {
+    ProfileDetailsCard(
+        role: "Admin",
+        gender: "Male",
+        mobileNumber: "+91 9876543210",
+        emailAddress: "johndoe@example.com"
+    )
+}

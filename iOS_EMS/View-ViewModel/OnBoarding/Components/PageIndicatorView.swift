@@ -25,3 +25,7 @@ struct PageIndicatorView: View {
         .padding(.bottom, 25)
     }
 }
+
+#Preview {
+    PageIndicatorView(currentPage: 1)
+}

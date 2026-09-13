@@ -20,3 +20,7 @@ struct ProfileRow: View {
         .font(.inter(size: 15))
     }
 }
+
+#Preview {
+    ProfileRow(title: "Role", value: "Admin")
+}

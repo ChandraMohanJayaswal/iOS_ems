@@ -25,3 +25,14 @@ struct MetricStat: View {
         .frame(maxWidth: .infinity)
     }
 }
+
+#Preview {
+    HStack {
+        MetricStat(value: "15", title: "Worked", color: .green)
+        Divider().frame(height: 35)
+        MetricStat(value: "2", title: "Leave", color: orange)
+        Divider().frame(height: 35)
+        MetricStat(value: "3", title: "Casual", color: red)
+    }
+    .padding()
+}

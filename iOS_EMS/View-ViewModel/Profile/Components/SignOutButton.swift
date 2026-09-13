@@ -27,3 +27,7 @@ struct SignOutButton: View {
         .padding(.top, 8)
     }
 }
+
+#Preview {
+    SignOutButton(action: {})
+}

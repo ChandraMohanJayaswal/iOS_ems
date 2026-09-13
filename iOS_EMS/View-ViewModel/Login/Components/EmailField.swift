@@ -37,3 +37,16 @@ struct EmailField: View {
         }
     }
 }
+
+#Preview {
+    EmailFieldPreview()
+}
+
+private struct EmailFieldPreview: View {
+    @State private var email = ""
+
+    var body: some View {
+        EmailField(email: $email)
+            .padding()
+    }
+}

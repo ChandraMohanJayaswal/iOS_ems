@@ -28,3 +28,16 @@ struct LeaveTypePicker: View {
         }
     }
 }
+
+#Preview {
+    @Previewable @State var selectedLeaveType = 0
+    LeaveTypePicker(
+        selectedLeaveType: $selectedLeaveType,
+        leaveTypes: [
+            LeaveType(id: 1, typeOfLeave: "Casual Leave"),
+            LeaveType(id: 2, typeOfLeave: "Sick Leave"),
+            LeaveType(id: 3, typeOfLeave: "Annual Leave")
+        ]
+    )
+    .padding()
+}
