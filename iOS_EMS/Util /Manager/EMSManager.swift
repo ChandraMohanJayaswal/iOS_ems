@@ -13,7 +13,7 @@ final class EMSManager {
     private let keychain: KeychainSwift
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
-    private init(userDefaults: UserDefaults = .standard, keychain: KeychainSwift = KeychainSwift()) {
+    init(userDefaults: UserDefaults = .standard, keychain: KeychainSwift = KeychainSwift()) {
         self.userDefaults = userDefaults
         self.keychain = keychain
     }
@@ -39,7 +39,6 @@ final class EMSManager {
             throw EMSManagerError.encodingFailed
         }
     }
-
     func signOut() {
         keychain.clear()
         userDefaults.set(false, forKey: Keys.isUserLoggedIn)
@@ -48,7 +47,6 @@ final class EMSManager {
             UserDefaults.standard.removePersistentDomain(forName: bundleID)
         }
     }
-
     deinit {
         print("EMSManager deinitialized")
     }
