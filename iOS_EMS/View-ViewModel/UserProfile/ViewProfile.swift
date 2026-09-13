@@ -36,12 +36,12 @@ struct ViewProfile: View {
                 .foregroundStyle(blue)
             VStack(alignment: .leading, spacing: 4) {
                 Text(
-                    "\(EMSManager.shared.currentUser?.firstName ?? "NA") \(EMSManager.shared.currentUser?.lastName ?? "NA")"
+                    "\(EMSManager.shared.loggedUser?.firstName ?? "NA") \(EMSManager.shared.loggedUser?.lastName ?? "NA")"
                 )
                 .font(.poppins(.bold, size: 20))
                 .foregroundStyle(.primary)
                 Text(
-                    "\(EMSManager.shared.currentUser?.role?.title ?? "NA")"
+                    "\(EMSManager.shared.loggedUser?.role?.title ?? "NA")"
                 )
                 .font(.inter(size: 15))
                 .foregroundStyle(.secondary)

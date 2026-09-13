@@ -17,7 +17,7 @@ final class EMSManager {
         self.userDefaults = userDefaults
         self.keychain = keychain
     }
-    var currentUser: User? {
+    var loggedUser: User? {
         guard let data = userDefaults.data(forKey: Keys.loggedUser) else {
             return nil
         }
@@ -31,8 +31,8 @@ final class EMSManager {
     }
     func login(user: User, token: String) throws {
         do {
-            let data = try encoder.encode(user)
-            userDefaults.set(data, forKey: Keys.loggedUser)
+            let loggedUser = try encoder.encode(user)
+            userDefaults.set(loggedUser, forKey: Keys.loggedUser)
             userDefaults.set(true, forKey: Keys.isUserLoggedIn)
             keychain.set(token, forKey: Keys.userToken)
         } catch {
