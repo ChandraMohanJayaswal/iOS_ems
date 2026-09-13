@@ -140,7 +140,6 @@ extension ViewHome {
 
                 Divider()
                     .frame(height: 35)
-
                 attendanceStat(
                     value: "\(viewModel.metrics?.totalWorkedDays ?? 0)",
                     title: "Worked",
@@ -170,7 +169,7 @@ extension ViewHome {
                 attendanceStat(
                     value: "\(viewModel.metrics?.balanceSickLeave ?? 0)",
                     title: "Sick leave",
-                    color: .yellow
+                    color: amber
                 )
             }
         }
