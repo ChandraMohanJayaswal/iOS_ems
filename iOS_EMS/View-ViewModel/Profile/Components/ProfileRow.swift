@@ -16,6 +16,7 @@ struct ProfileRow: View {
             Spacer()
             Text(value)
         }
+        .padding()
         .font(.inter(size: 15))
     }
 }

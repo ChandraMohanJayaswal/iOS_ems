@@ -8,152 +8,56 @@
 import Foundation
 import SwiftUI
 
-enum OnBoardingPage: Int, CaseIterable, Identifiable {
-    case firstPage
-    case secondPage
-    case thirdPage
-    var id: Int {
-        return self.rawValue
-    }
-    var title: String {
-        switch self {
-        case .firstPage:
-            return "Welcome"
-        case .secondPage:
-            return "Features"
-        case .thirdPage:
-            return "Employee Management System"
-        }
-    }
-    var description: String {
-        switch self {
-        case .firstPage:
-            return "Manage your team"
-        case .secondPage:
-            return "Analytics, Tracking, Management"
-        case .thirdPage:
-            return "Manage. Engage. Grow"
-        }
-    }
-}
 struct ViewOnBoarding: View {
     @EnvironmentObject var coordinator: RouteCoordinator
     @State private var currentPage = 0
-    @State private var isAnimating = false
-    @State private var circleAnimating = false
+
+    private var heroImage: String {
+        switch currentPage {
+        case 1: return "HeroImageFirst"
+        case 2: return "HeroImageSecond"
+        default: return "SplashLogo"
+        }
+    }
+
     var body: some View {
         ZStack {
-            LinearGradient(
-                gradient: Gradient(colors: [.blue, blue]),
-                startPoint: .top,
-                endPoint: .bottom
-            )
+            AppBackground()
             VStack {
+                BrandHeader()
+                    .padding(.bottom, 10)
+                AppWindow(
+                    label: "ONBOARDING 0\(self.currentPage + 1)/03",
+                    image: heroImage,
+                    fillsFrame: true
+                )
+                    .frame(height: 270)
+                    .padding(.horizontal, 32)
                 TabView(selection: $currentPage) {
                     ForEach(OnBoardingPage.allCases) { page in
-                        VStack {
-                            OnBoardingPageView(page: page)
-                        }
-                        .tag(page.rawValue)
+                        OnBoardingPageView(page: page)
+                            .tag(page.rawValue)
                     }
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                .animation(.spring(), value: currentPage)
-                HStack {
-                    ForEach(OnBoardingPage.allCases) { page in
-                        Circle()
-                            .fill(currentPage == page.rawValue ? .white : .gray)
-                            .frame(
-                                width: currentPage == page.rawValue ? 12 : 8,
-                                height: currentPage == page.rawValue ? 12 : 8
-                            )
-                            .animation(.spring(), value: currentPage)
-                    }
-                }
-                .padding(.bottom, 25)
+                Spacer()
+                PageIndicatorView(currentPage: currentPage)
                 if self.currentPage == 2 {
-                    Button("Get Started") {
+                    OnBoardingButton(title: "Get Started") {
                         coordinator.navigate(to: .login)
                     }
-                    .padding()
-                    .font(.inter(.semibold, size: 17))
-                    .frame(width: 350)
-                    .foregroundStyle(blue)
-                    .background(.white)
-                    .clipShape(
-                        RoundedRectangle(cornerRadius: 12)
-                    )
                 } else {
-                    Button("Next") {
+                    OnBoardingButton(title: "Next") {
                         self.currentPage += 1
                     }
-                    .padding()
-                    .font(.inter(.semibold, size: 17))
-                    .frame(width: 350)
-                    .foregroundStyle(blue)
-                    .background(.white)
-                    .clipShape(
-                        RoundedRectangle(cornerRadius: 12)
-                    )
                 }
             }
+            .padding(.top, 50)
             .padding(.bottom, 50)
         }
-        .ignoresSafeArea()
     }
 }
 
 #Preview {
     ViewOnBoarding()
-}
-
-struct OnBoardingPageView: View {
-    @State var page: OnBoardingPage
-    @State private var isAnimating: Bool = false
-    var body: some View {
-        VStack {
-            if page.rawValue == 2 {
-                Image(systemName: "person.2.fill")
-                    .font(.system(size: 50))
-                    .foregroundColor(.white)
-                    .frame(width: 100, height: 100)
-                    .aspectRatio(contentMode: .fit)
-                    .background(blue)
-                    .clipShape(
-                        RoundedRectangle(cornerRadius: 20)
-                    )
-            }
-            Text(page.title)
-                .font(.poppins(.bold, size: 34))
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.white)
-                .offset(x: 0, y: isAnimating ? 0 : -200)
-                .animation(.smooth.delay(0.2), value: isAnimating)
-                .frame(width: 300)
-            ZStack {
-                Circle()
-                    .stroke()
-                    .frame(width: 200, height: 200)
-                    .foregroundStyle(blue)
-                    .scaleEffect(isAnimating ? 1.2 : 0.9)
-                    .animation(
-                        .spring().delay(0.4),
-                        value: isAnimating
-                    )
-                Image("People")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .scaleEffect(isAnimating ? 0.9 : 1.2)
-                    .animation(.smooth.delay(0.2), value: isAnimating)
-            }
-            Text(page.description)
-                .font(.inter(.medium, size: 15))
-                .foregroundStyle(.white)
-                .offset(x: 0, y: isAnimating ? 0 : 200)
-                .animation(.smooth, value: isAnimating)
-        }
-        .onAppear {
-            isAnimating = true
-        }
-    }
 }
