@@ -42,3 +42,20 @@ struct MonthGrid: View {
         }
     }
 }
+#Preview {
+    MonthGridPreview()
+}
+
+private struct MonthGridPreview: View {
+    @State private var selectedDate = Date.now
+
+    var body: some View {
+        MonthGrid(
+            selectedDate: $selectedDate,
+            currentMonth: Date.now,
+            isPublicHoliday: { _ in false },
+            dayColor: { _ in .primary }
+        )
+        .padding()
+    }
+}

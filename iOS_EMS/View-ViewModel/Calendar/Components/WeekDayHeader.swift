@@ -21,3 +21,7 @@ struct WeekDayHeader: View {
         }
     }
 }
+#Preview {
+    WeekDayHeader()
+        .padding()
+}

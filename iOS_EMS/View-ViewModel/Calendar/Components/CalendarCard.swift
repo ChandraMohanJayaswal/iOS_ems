@@ -36,3 +36,31 @@ struct CalendarCard: View {
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }
+#Preview {
+    CalendarCardPreview()
+}
+
+private struct CalendarCardPreview: View {
+    @State private var selectedMonth = Calendar.current.component(
+        .month,
+        from: Date()
+    )
+    @State private var selectedYear = Calendar.current.component(
+        .year,
+        from: Date()
+    )
+    @State private var selectedDate = Date.now
+
+    var body: some View {
+        CalendarCard(
+            selectedMonth: $selectedMonth,
+            selectedYear: $selectedYear,
+            selectedDate: $selectedDate,
+            currentMonth: Date.now,
+            isPublicHoliday: { _ in false },
+            dayColor: { _ in .primary }
+        )
+        .padding()
+        .background(Color(uiColor: .systemGroupedBackground))
+    }
+}

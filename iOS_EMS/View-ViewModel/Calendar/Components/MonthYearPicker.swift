@@ -106,3 +106,27 @@ struct MonthYearPicker: View {
         .formatted(.dateTime.month(.wide)) ?? ""
     }
 }
+#Preview {
+    MonthYearPickerPreview()
+}
+
+private struct MonthYearPickerPreview: View {
+    @State private var selectedMonth = Calendar.current.component(
+        .month,
+        from: Date()
+    )
+    @State private var selectedYear = Calendar.current.component(
+        .year,
+        from: Date()
+    )
+    @State private var selectedDate = Date.now
+
+    var body: some View {
+        MonthYearPicker(
+            selectedMonth: $selectedMonth,
+            selectedYear: $selectedYear,
+            selectedDate: $selectedDate
+        )
+        .padding()
+    }
+}

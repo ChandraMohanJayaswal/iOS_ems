@@ -49,3 +49,26 @@ struct DayButton: View {
         .buttonStyle(.plain)
     }
 }
+#Preview {
+    HStack(spacing: 16) {
+        DayButton(
+            day: Date.now,
+            isSelected: false,
+            isPublicHoliday: false,
+            color: .primary
+        ) {}
+        DayButton(
+            day: Date.now,
+            isSelected: true,
+            isPublicHoliday: false,
+            color: .primary
+        ) {}
+        DayButton(
+            day: Date.now,
+            isSelected: false,
+            isPublicHoliday: true,
+            color: .primary
+        ) {}
+    }
+    .padding()
+}

@@ -146,3 +146,40 @@ struct LeaveRequestItem: View {
         }
     }
 }
+#Preview {
+    VStack(spacing: 12) {
+        LeaveRequestItem(
+            leaveType: "Annual Leave",
+            createdDateTime: Date().timeIntervalSince1970 * 1000,
+            leaveFromDate: Date().timeIntervalSince1970 * 1000,
+            leaveToDate: Date()
+                .addingTimeInterval(2 * 86400)
+                .timeIntervalSince1970 * 1000,
+            description: "Family vacation",
+            leaveStatus: "APPROVED",
+            comment: "Enjoy your break"
+        )
+        LeaveRequestItem(
+            leaveType: "Sick Leave",
+            createdDateTime: Date().timeIntervalSince1970 * 1000,
+            leaveFromDate: Date().timeIntervalSince1970 * 1000,
+            leaveToDate: Date()
+                .addingTimeInterval(86400)
+                .timeIntervalSince1970 * 1000,
+            description: "Not feeling well",
+            leaveStatus: "PENDING",
+            comment: nil
+        )
+        LeaveRequestItem(
+            leaveType: "Emergency Leave",
+            createdDateTime: Date().timeIntervalSince1970 * 1000,
+            leaveFromDate: Date().timeIntervalSince1970 * 1000,
+            leaveToDate: Date().timeIntervalSince1970 * 1000,
+            description: "Family emergency",
+            leaveStatus: "REJECTED",
+            comment: "No coverage available"
+        )
+    }
+    .padding()
+    .background(Color(uiColor: .systemGroupedBackground))
+}

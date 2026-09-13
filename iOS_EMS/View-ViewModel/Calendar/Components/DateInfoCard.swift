@@ -55,3 +55,19 @@ struct DateInfoCard: View {
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }
+#Preview {
+    VStack(spacing: 12) {
+        DateInfoCard(
+            selectedDate: Date.now,
+            holidayNames: ["Dashain Holiday", "Tihar Day"],
+            color: orange
+        )
+        DateInfoCard(
+            selectedDate: Date.now.addingTimeInterval(86400),
+            holidayNames: [],
+            color: blue
+        )
+    }
+    .padding()
+    .background(Color(uiColor: .systemGroupedBackground))
+}
