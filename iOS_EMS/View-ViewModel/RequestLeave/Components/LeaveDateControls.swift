@@ -19,6 +19,7 @@ struct LeaveDateControls: View {
             displayedComponents: [.date]
         )
         .font(.inter(size: 15))
+        .tint(blue)
         if !isPartial {
             DatePicker(
                 "Leave To Date",
@@ -26,6 +27,7 @@ struct LeaveDateControls: View {
                 displayedComponents: [.date]
             )
             .font(.inter(size: 15))
+            .tint(blue)
         }
     }
 }

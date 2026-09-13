@@ -58,11 +58,12 @@ struct MonthYearPicker: View {
             .padding(.vertical, 6)
             .background(
                 Capsule()
-                    .fill(Color.accentColor.opacity(0.12))
+                    .fill(blue.opacity(0.12))
             )
-            .foregroundStyle(Color.accentColor)
+            .foregroundStyle(blue)
         }
         .fixedSize()
+        .tint(blue)
     }
 
     private var yearMenu: some View {
@@ -88,11 +89,12 @@ struct MonthYearPicker: View {
             .padding(.vertical, 6)
             .background(
                 Capsule()
-                    .fill(Color.accentColor.opacity(0.12))
+                    .fill(blue.opacity(0.12))
             )
-            .foregroundStyle(Color.accentColor)
+            .foregroundStyle(blue)
         }
         .fixedSize()
+        .tint(blue)
     }
 
     private func monthName(_ month: Int) -> String {
