@@ -45,8 +45,8 @@ struct ViewLogin: View {
                 Text("EMS")
                     .font(.poppins(.bold, size: 34))
                     .foregroundStyle(blue)
-                Text("By Chronelab Technologies")
-                    .font(.inter(.bold, size: 24))
+                Text("Powered By Chronelab Technologies")
+                    .font(.inter(.bold, size: 12))
                     .foregroundStyle(.gray)
                 Spacer()
                 ZStack(alignment: .topLeading) {

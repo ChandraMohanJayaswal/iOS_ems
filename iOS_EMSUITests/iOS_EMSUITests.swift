@@ -25,7 +25,7 @@ final class iOS_EMSUITests: XCTestCase {
         continueAfterFailure = false
     }
     func testViewSplash() {
-        XCTAssertTrue(app.staticTexts["By Chronelab Technologies"].exists)
+        XCTAssertTrue(app.staticTexts["Powered By Chronelab Technologies"].exists)
     }
     func testLogin() {
         let emailField = app.textFields["email"]
