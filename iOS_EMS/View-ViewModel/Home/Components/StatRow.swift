@@ -37,7 +37,7 @@ struct StatRow: View {
     StatRow(stats: [
         StatData(value: "15", title: "Worked", color: .green),
         StatData(value: "2", title: "Leave", color: orange),
-        StatData(value: "3", title: "Casual", color: red),
+        StatData(value: "3", title: "Casual", color: red)
     ])
     .padding()
 }

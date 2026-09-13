@@ -33,7 +33,7 @@ extension APILogin {
             )
             if let token = decoded.token, let user = decoded.user {
                 do {
-                    try EMSManager.shared.login(user: user,token: token)
+                    try EMSManager.shared.login(user: user, token: token)
                 } catch {
                     print("Error: \(error.localizedDescription)")
                         if let recoverySuggestion = (error as? LocalizedError)?.recoverySuggestion {

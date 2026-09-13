@@ -42,7 +42,7 @@ struct HoursCard: View {
                     value: "\(workingHours ?? 0)",
                     title: "Total Working Hours",
                     color: .green
-                ),
+                )
             ])
         }
     }
@@ -52,7 +52,7 @@ struct HoursCard: View {
     HoursCard(
         hoursData: [
             ("Worked", 120),
-            ("Remaining", 40),
+            ("Remaining", 40)
         ],
         workedHours: 120,
         workingHours: 160

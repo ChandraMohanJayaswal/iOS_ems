@@ -43,7 +43,8 @@ final class EMSManager {
         keychain.clear()
         userDefaults.set(false, forKey: Keys.isUserLoggedIn)
         userDefaults.removeObject(forKey: Keys.loggedUser)
-        if let bundleID = Bundle.main.bundleIdentifier { //Clear all user Defaults
+        if let bundleID = Bundle.main.bundleIdentifier {
+            // Clear all user Defaults
             UserDefaults.standard.removePersistentDomain(forName: bundleID)
         }
     }

@@ -118,7 +118,8 @@ struct LeaveRequestItem: View {
     }
 
     private var dateRangeText: String {
-        guard let from = leaveFromDate?.date, let to = leaveToDate?.date else {
+        guard let from = leaveFromDate?.date,
+                let to = leaveToDate?.date else {
             return createdDateTime?.date.formatted(.dateTime.day().month().year()) ?? "N/A"
         }
         return "\(from.formatted(.dateTime.day().month())) - \(to.formatted(.dateTime.day().month().year()))"
