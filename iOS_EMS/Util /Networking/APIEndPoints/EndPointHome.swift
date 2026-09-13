@@ -34,9 +34,9 @@ enum EndPointHome: APIEndPoint {
         switch self {
         case .getMetrics(let month):
             if let month = month {
-                return ["userId": EMSManager.shared.currentUser?.id ?? 0, "month": month]
+                return ["userId": EMSManager.shared.loggedUser?.id ?? 0, "month": month]
             } else {
-                return ["userId": EMSManager.shared.currentUser?.id ?? 0]
+                return ["userId": EMSManager.shared.loggedUser?.id ?? 0]
             }
         }
     }
